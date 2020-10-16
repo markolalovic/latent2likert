@@ -1,5 +1,7 @@
 # responsesR
-This repository contains R package called "responsesR" for simulalation of Likert-scale data in R. Using optimal discretization and skew-normal distribution we can simulate symmetrically or asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
+This repository contains R package called *responsesR* for simulalation of Likert-scale data in R. Using optimal discretization and skew-normal distribution we can simulate symmetrically or asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
+
+&nbsp;
 
 <img src="figures/anim-location.gif" alt="Animation of location parameter." width="800">
 
@@ -7,6 +9,7 @@ This repository contains R package called "responsesR" for simulalation of Liker
 
 <img src="figures/anim-shape.gif" alt="Animation of shape parameter." width="800">
 
+&nbsp;
 
 # How to simulate Likert-scale data in R
 
@@ -79,7 +82,7 @@ responses <- rLikert(size = 10^6, levels = 100)
 barplot(table(responses)/10^6)
 ```
 
-<img src="figures/convergence-1.png" alt="Convergence 1." width="400">
+<img src="figures/convergence-1.png" alt="Convergence 1." width="500">
 
 
 ## Simulate response bias
@@ -123,6 +126,6 @@ barplot(table(responses)/10^6)
 ```
 
 
-<img src="figures/convergence-2.png" alt="Convergence 1." width="400">
+<img src="figures/convergence-2.png" alt="Convergence 1." width="500">
 
 
