@@ -1,0 +1,18 @@
+Package: responsesR
+Title: Simulate Likert scale item responses
+Version: 0.1
+Authors@R: 
+    person(given = "Marko",
+           family = "Lalovic",
+           role = c("aut", "cre"),
+           email = "marko@markolalovic.com",
+           comment = c(ORCID = "0000-0002-1305-0192"))
+Description: Using optimal discretization and skew-normal distribution we can simulate asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
+License: MIT + file LICENSE
+URL: https://github.com/markolalovic/responsesR
+BugReports: https://github.com/markolalovic/responsesR/issues
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
