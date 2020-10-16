@@ -1,5 +1,5 @@
 # responsesR
-This repository contains R package called `responsesR` for simulalation of Likert-scale data in R. Using optimal discretization and skew-normal distribution we can simulate symmetrically or asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
+This repository contains R package called "responsesR" for simulalation of Likert-scale data in R. Using optimal discretization and skew-normal distribution we can simulate symmetrically or asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
 
 <img src="figures/anim-location.gif" alt="Animation of location parameter." width="800">
 
@@ -10,9 +10,9 @@ This repository contains R package called `responsesR` for simulalation of Liker
 
 # How to simulate Likert-scale data in R
 
-To generate a sample of simulated Likert scale item responses in R we can use a simple function called `rLikert` from `responsesR`.
+To generate a sample of simulated Likert scale item responses in R we can use a simple function called `rLikert` from responsesR package.
 
-To install it from GitHub, we first need `devtools` package:
+To install the package from GitHub, we first need `devtools`:
 
 ```R
 install.packages("devtools")
@@ -69,9 +69,9 @@ for(i in 1:10) {
 <img src="figures/example-1.png" alt="Example 1." width="800">
 
 
-By default, function `rLikert` generates symmetrically distributed responses 5-point likert scale from standard normal distribution. By default, it is using 5-point Likert scale. We can set number of possible responses by setting the "levels" parameter; e.g. `levels = 10` for 10-point Likert scale.
+By default, the function `rLikert` generates symmetrically distributed responses from a standard normal distribution. Also by default, it is using the 5-point Likert scale. We can set the number of possible responses by setting the "levels" parameter; e.g. for 10-point Likert scale by setting `levels = 10`.
 
-By increasing the sample size (and number of levels), the sampling distribution converges to a normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (number of items = 1 by default):
+By increasing the sample size (and number of levels), the sampling distribution converges to a normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (the number of items = 1 by default):
 
 
 ```R
@@ -113,7 +113,7 @@ for(i in 1:10) {
 <img src="figures/example-2.png" alt="Example 1." width="800">
 
 
-By increasing the sample size (and number of levels), the sampling distribution converges to a skew normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (number of items = 1 by default):
+By increasing the sample size (and number of levels), the sampling distribution converges to a skew-normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (the number of items = 1 by default):
 
 
 ```R
