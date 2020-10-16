@@ -1,5 +1,5 @@
 # responsesR
-This repository contains R package called *responsesR* for simulalation of Likert-scale data in R. Using optimal discretization and skew-normal distribution we can simulate symmetrically or asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
+This repository contains an R package called *responsesR* for simulation of Likert-scale data in R. Using optimal discretization and skew-normal distribution we can simulate symmetrically or asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
 
 &nbsp;
 
@@ -72,9 +72,9 @@ for(i in 1:10) {
 <img src="figures/example-1.png" alt="Example 1." width="800">
 
 
-By default, the function `rLikert` generates symmetrically distributed responses from a standard normal distribution. Also by default, it is using the 5-point Likert scale. We can set the number of possible responses by setting the "levels" parameter; e.g. for 10-point Likert scale by setting `levels = 10`.
+By default, the function `rLikert` generates symmetrically distributed responses from a standard normal distribution. Also by default, it is using the 5-point Likert scale. We can set the number of possible responses by setting the "levels" parameter; e.g. for a 10-point Likert scale by setting `levels = 10`.
 
-By increasing the sample size (and number of levels), the sampling distribution converges to a normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (the number of items = 1 by default):
+By increasing the sample size (and a number of levels), the sampling distribution converges to a normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (the number of items = 1 by default):
 
 
 ```R
@@ -95,9 +95,9 @@ To simulate asymmetrically distributed responses we can:
 
 More specifically, to simulate some properties of our hypothetical survey respondents, we can try to achieve for example that they:
 
-* More strongly agree with some statement: by increasing `location` parameter.
-* Survey respondents provide common or typical answers: by decreasing `scale` parameter.
-* Survey respondents prefer the right side: by decreasing `shape` parameter.
+* More strongly agree with some statement: by increasing the `location` parameter.
+* Survey respondents provide common or typical answers: by decreasing the `scale` parameter.
+* Survey respondents prefer the right side: by decreasing the `shape` parameter.
 
 
 ```R
@@ -116,7 +116,7 @@ for(i in 1:10) {
 <img src="figures/example-2.png" alt="Example 1." width="800">
 
 
-By increasing the sample size (and number of levels), the sampling distribution converges to a skew-normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (the number of items = 1 by default):
+By increasing the sample size (and a number of levels), the sampling distribution converges to a skew-normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (the number of items = 1 by default):
 
 
 ```R
