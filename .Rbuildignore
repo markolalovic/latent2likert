@@ -4,3 +4,7 @@
 ^figures$
 ^LICENSE
 ^*.ipynb
+^*.ipynb
+^.gitattributes.save
+^.gitattributes
+^.gitignore
