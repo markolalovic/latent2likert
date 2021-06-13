@@ -1,6 +1,8 @@
 # responsesR
 This repository contains an R package called *responsesR* for simulation of Likert-scale data in R. Using optimal discretization and skew-normal distribution we can simulate symmetrically or asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
 
+***Update: The option to generate correlated Likert scale items will be added shortly***
+
 &nbsp;
 
 <img src="figures/anim-location.gif" alt="Animation of location parameter." width="800">
