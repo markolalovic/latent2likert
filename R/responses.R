@@ -5,12 +5,12 @@
 #' performs optimal discretization using Lloyd-Max algorithm to generate
 #' probabilities of a discrete random variable from which it draws the sample.
 #'
-#' @param size (positive, int)   Size of a sample; e.g.: size=100
-#' @param items (positive, int)  Number of Likert items; e.g.: items=10
-#' @param levels (positive, int) Number of possible responses; e.g.: levels=5
-#' @param location (real)        Determines the location or shift; e.g.: location=0
-#' @param scale (positive, real) Determines the scale or dispersion; e.g.: scale=1
-#' @param shape (real)           Determines the skewness or asymmetry; e.g.: shape=0
+#' @param size (positive, int)    Size of a sample; e.g.: size=100
+#' @param items (positive, int)   Number of Likert items; e.g.: items=10
+#' @param levels (positive, int)  Number of possible responses; e.g.: levels=5
+#' @param location (real)         Determines the location or shift; e.g.: location=0
+#' @param scale (positive, real)  Determines the scale or dispersion; e.g.: scale=1
+#' @param shape (real)            Determines the skewness or asymmetry; e.g.: shape=0
 #' @return responses (data.frame) Simulated Likert scale item responses; e.g.:
 #'     > rLikert(size=6, items=8)
 #'       X1 X2 X3 X4 X5 X6 X7 X8
@@ -43,14 +43,14 @@ rLikert <- function(size=1, items=1, levels=5, location=0, scale=1, shape=0) {
 #' @param xi (real)              Determines the location or shift; e.g.: xi=0
 #' @param omega (positive, real) Determines the scale or dispersion; e.g.: omega=1
 #' @param alpha (real)           Determines the skewness or asymmetry; e.g.: alpha=0
-#' @return pk, rk, xk (list)     Manifest probabilities, representatives, cutpoints
+#' @return pk, rk, xk (list)     Manifest probabilities, representatives, cut points
 simulateLikert <- function(K, xi, omega, alpha) {
   fX <- function(x) { dSN(x + meanSN(alpha), 0, 1, alpha) }
   sol <- applyLloydMax(fX, K)
   xkEst <- sol$xkEst
   pkEst <- sol$pkEst
 
-  ## simpler to apply location and scale to the cutpoints than to the PDF
+  ## simpler to apply location and scale to the cut points than to the PDF
   xk <- scaleShiftSN(xkEst, omega, xi, alpha)
   pk <- getPk(xk, fX)
   rk <- getNewRk(xk, fX)
@@ -64,7 +64,7 @@ simulateLikert <- function(K, xi, omega, alpha) {
 #'
 #' @param fX (function)     Probability density function of the latent variable
 #' @param K (positive, int) Possible number of responses
-#' @return xkEst (list)     Estimated cutpoints
+#' @return xkEst (list)     Estimated cut points
 #' @return pkEst (list)     Estimated probabilities
 #' @return rkEst (list)     Estimated representatives
 #' @return pkMeans (list)   Mean of estimated probabilities
@@ -75,7 +75,7 @@ applyLloydMax <- function(fX, K) {
   pkMeans <- c()
   pkMSEs <- c()
   for (i in 1:nIter) {
-    xk <- getNewXk(rk) # calculate new cutpoints
+    xk <- getNewXk(rk) # calculate new cut points
     rk <- getNewRk(xk, fX) # calculate new representatives
     ## calculate pk's, mean and distortion measure for pk
     pk <- getPk(xk, fX)
@@ -87,7 +87,7 @@ applyLloydMax <- function(fX, K) {
 }
 
 #' Calculates mean squared error.
-#' @param xk (vector)   Cutpoints
+#' @param xk (vector)   Cut points
 #' @param rk (vector)   Representatives
 #' @param fX (function) Probability density function of the latent variable
 #' @return mse (real)   Mean squared error
@@ -104,9 +104,9 @@ getMSE <- function(xk, rk, fX) {
   return(mse)
 }
 
-#' Calculates new cutpoints xk from representatives rk.
+#' Calculates new cut points xk from representatives rk.
 #' @param rk (vector)  Representatives
-#' @return xk (vector) Cutpoints
+#' @return xk (vector) Cut points
 getNewXk <- function(rk) {
   K <- (length(rk) - 1) # generalized to arbitrary K
   xk <- rep(0, K)
@@ -117,7 +117,7 @@ getNewXk <- function(rk) {
 }
 
 #' Calculates new representatives rk.
-#' @param xk (vector)   Cutpoints
+#' @param xk (vector)   Cut points
 #' @param fX (function) Probability density function of the latent variable
 #' @return rk (vector)  Representatives
 getNewRk <- function(xk, fX) {
@@ -134,8 +134,8 @@ getNewRk <- function(xk, fX) {
   return(rk)
 }
 
-#' Calculates probabilities pk from cutpoints xk.
-#' @param xk (vector)   Cutpoints
+#' Calculates probabilities pk from cut points xk.
+#' @param xk (vector)   Cut points
 #' @param fX (function) Probability density function of the latent variable
 #' @return pk (vector)  Probabilities
 getPk <- function(xk, fX) {
@@ -154,7 +154,7 @@ getPk <- function(xk, fX) {
 #' @param pk (vector)  Probabilities
 #' @return mean (real) Mean of pk
 getPkMean <- function(pk) {
-  domain <- (1:length(pk)) # generalized it so we can test it
+  domain <- (1:length(pk)) 
   return(sum(pk * domain))
 }
 
@@ -162,48 +162,48 @@ getPkMean <- function(pk) {
 #' @param pk (vector) Probabilities
 #' @return var (real) Variance of pk
 getPkVar <- function(pk) {
-  domain <- (1:length(pk)) # generalized it so we can test it
+  domain <- (1:length(pk)) 
   m <- getPkMean(pk)
   return(sum(pk * (domain - m)^2))
 }
 
 #' Probability density function of a skew-normal distribution.
-#' @param x (real)               Variable
-#' @param xi (real)              Determines the location or shift; e.g.: xi=0
-#' @param omega (positive, real) Determines the scale or dispersion; e.g.: omega=1
-#' @param alpha (real)           Determines the skewness or asymmetry; e.g.: alpha=0
-#' @return (real) Density at x
+#' @param x (real)                 Variable
+#' @param xi (real)                Determines the location or shift; e.g.: xi=0
+#' @param omega (positive, real)   Determines the scale or dispersion; e.g.: omega=1
+#' @param alpha (real)             Determines the skewness or asymmetry; e.g.: alpha=0
+#' @return (real)                  Density at x
 dSN <- function(x, xi, omega, alpha) {
   return(2/omega*dnorm((x - xi)/omega)*pnorm(alpha*(x - xi)/omega))
 }
 
 #' Delta parameter of skew-normal distribution
-#' @param alpha (real) Determines the skewness or asymmetry; e.g.: alpha=0
-#' @return (real)      Delta of skew-normal distribution
+#' @param alpha (real)   Determines the skewness or asymmetry; e.g.: alpha=0
+#' @return (real)        Delta of skew-normal distribution
 deltaSN <- function(alpha) {
   return(alpha / (sqrt(1 + alpha^2)))
 }
 
 #' Mean of skew-normal distribution
-#' @param alpha (real) Determines the skewness or asymmetry; e.g.: alpha=0
-#' @return (real)      Mean of skew-normal distribution
+#' @param alpha (real)   Determines the skewness or asymmetry; e.g.: alpha=0
+#' @return (real)        Mean of skew-normal distribution
 meanSN <- function(alpha) {
   return(deltaSN(alpha) * sqrt(2/pi))
 }
 
 #' Variance of skew-normal distribution
-#' @param alpha (real) Determines the skewness or asymmetry; e.g.: alpha=0
-#' @return (real)      Variance of skew-normal distribution
+#' @param alpha (real)   Determines the skewness or asymmetry; e.g.: alpha=0
+#' @return (real)        Variance of skew-normal distribution
 varSN <- function(alpha) {
   return(1 - 2*(deltaSN(alpha)^2)/pi)
 }
 
-#' Shifts and scales cutpoints of skew-normal distribution
-#' @param x (real)               Variable
-#' @param xi (real)              Determines the location or shift; e.g.: xi=0
-#' @param omega (positive, real) Determines the scale or dispersion; e.g.: omega=1
-#' @param alpha (real)           Determines the skewness or asymmetry; e.g.: alpha=0
-#' @return (real) Shifted and scaled x
+#' Shifts and scales cut points of skew-normal distribution
+#' @param x (real)                Variable
+#' @param xi (real)               Determines the location or shift; e.g.: xi=0
+#' @param omega (positive, real)  Determines the scale or dispersion; e.g.: omega=1
+#' @param alpha (real)            Determines the skewness or asymmetry; e.g.: alpha=0
+#' @return (real)                 Shifted and scaled x
 scaleShiftSN <- function(x, omega, xi, alpha) {
   return((x - meanSN(alpha))/omega + meanSN(alpha) - xi/omega)
 }

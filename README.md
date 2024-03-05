@@ -1,22 +1,20 @@
 # responsesR
-This repository contains an R package called *responsesR* for simulation of Likert-scale data in R. Using optimal discretization and skew-normal distribution we can simulate symmetrically or asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
 
-***Update: The option to generate correlated Likert scale items will be added shortly***
+* The purpose of this package is to provide an easy way to simulate Likert-scale data.
 
-&nbsp;
+* It allows users to generate symmetrically or asymmetrically distributed Likert scale item responses.
 
-<img src="figures/anim-location.gif" alt="Animation of location parameter." width="800">
+* While maintaining a nice mathematical relationship between a continuous latent distribution and simulated ordinal Likert responses.
 
-<img src="figures/anim-scale.gif" alt="Animation of location parameter." width="800">
-
-<img src="figures/anim-shape.gif" alt="Animation of shape parameter." width="800">
+* This is done by using optimal discretization of skew-normal distribution.
 
 &nbsp;
 
-# How to simulate Likert-scale data in R
 
-To generate a sample of simulated Likert scale item responses in R we can use a simple function called `rLikert` from responsesR package.
+# How-to
 
+
+## Installation
 To install the package from GitHub, we first need `devtools`:
 
 ```R
@@ -24,15 +22,15 @@ install.packages("devtools")
 library(devtools)
 ```
 
-Then, we can install it by using:
+Then install `responsesR` using:
 
 ```R
 install_github("markolalovic/responsesR")
 library(responsesR)
 ```
 
-## Simulate unbiased responses
 
+## Simulate unbiased responses
 To generate a sample of size = 100 with the number of Likert scale items = 10:
 
 ```R
@@ -44,7 +42,6 @@ The result is a data frame of simulated responses where rows correspond to obser
 ```R
 head(responses)
 ```
-
 
 <table>
 <caption>A data.frame: 6 × 10</caption>
@@ -62,7 +59,6 @@ head(responses)
 </tbody>
 </table>
 
-
 ```R
 par(mfrow=c(2, 5))
 for(i in 1:10) {
@@ -70,17 +66,15 @@ for(i in 1:10) {
 }
 ```
 
-
 <img src="figures/example-1.png" alt="Example 1." width="800">
 
+By default, the function `rLikert` generates symmetrically distributed responses from a standard normal distribution. Also by default, it is using a 5-point Likert scale. You can change the number of possible responses by setting the "levels" parameter; e.g. for a 10-point Likert scale use `levels = 10`.
 
-By default, the function `rLikert` generates symmetrically distributed responses from a standard normal distribution. Also by default, it is using the 5-point Likert scale. We can set the number of possible responses by setting the "levels" parameter; e.g. for a 10-point Likert scale by setting `levels = 10`.
-
-By increasing the sample size (and a number of levels), the sampling distribution converges to a normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (the number of items = 1 by default):
-
+The sampling distribution converges to a normal distribution. This can be observed by increasing the sample size and number of levels levels (the number of items = 1 by default):
 
 ```R
 responses <- rLikert(size = 10^6, levels = 100)
+par(mfrow=c(1, 1))
 barplot(table(responses)/10^6)
 ```
 
@@ -89,24 +83,34 @@ barplot(table(responses)/10^6)
 
 ## Simulate response bias
 
-To simulate asymmetrically distributed responses we can:
+To simulate asymmetrically distributed responses either:
 
-* Shift the distribution by using the `location` parameter.
-* Change the variability or spread by using the `scale` parameter.
-* Introduce asymmetry or skewness by using the `shape` parameter.
-
-More specifically, to simulate some properties of our hypothetical survey respondents, we can try to achieve for example that they:
-
-* More strongly agree with some statement: by increasing the `location` parameter.
-* Survey respondents provide common or typical answers: by decreasing the `scale` parameter.
-* Survey respondents prefer the right side: by decreasing the `shape` parameter.
+* shift the distribution by using the `location` parameter;
+* change the variability or spread by using the `scale` parameter;
+* or introduce asymmetry or skewness using the `shape` parameter.
 
 
+
+<img src="figures/anim-location.gif" alt="Animation of location parameter." width="800">
+
+<img src="figures/anim-scale.gif" alt="Animation of location parameter." width="800">
+
+<img src="figures/anim-shape.gif" alt="Animation of shape parameter." width="800">
+
+&nbsp;
+
+
+This way simulating some properties of hypothetical survey respondents:
+
+* strong agreement with some statement by increasing the `location` parameter;
+* common or typical answers by using the `scale` parameter;
+* preferences or tendencies using the `shape` parameter.
+
+For example:
 ```R
 responses <- rLikert(size=100, items=10,
                      location=0.3, scale=0.8, shape=-5)
 ```
-
 
 ```R
 par(mfrow=c(2, 5))
@@ -118,16 +122,19 @@ for(i in 1:10) {
 <img src="figures/example-2.png" alt="Example 1." width="800">
 
 
-By increasing the sample size (and a number of levels), the sampling distribution converges to a skew-normal distribution. We can observe this by increasing the sample size to a million and levels to 100 (the number of items = 1 by default):
-
+The sampling distribution converges to a skew-normal distribution. We can observe this by increasing the sample size and number of levels (the number of items = 1 by default):
 
 ```R
 responses <- rLikert(size = 10^6, levels = 100,
                      location=0.3, scale=0.8, shape=-5)
+par(mfrow=c(1, 1))
 barplot(table(responses)/10^6)
 ```
 
-
 <img src="figures/convergence-2.png" alt="Convergence 1." width="500">
 
+
+## Simulate correlated Likert scale items
+
+This will be added shortly.
 
