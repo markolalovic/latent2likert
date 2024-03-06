@@ -1,140 +1,228 @@
-# responsesR
 
-* The purpose of this package is to provide an easy way to simulate Likert-scale data.
+# responsesR <img src='man/figures/logo.png' align="right" height="160" />
 
-* It allows users to generate symmetrically or asymmetrically distributed Likert scale item responses.
+<!-- badges: start -->
 
-* While maintaining a nice mathematical relationship between a continuous latent distribution and simulated ordinal Likert responses.
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!-- badges: end -->
 
-* This is done by using optimal discretization of skew-normal distribution.
+The purpose of this package is to provide an easy way to simulate and
+analyse Likert-type responses.
 
-&nbsp;
+- It allows users to generate symmetrically or asymmetrically
+  distributed responses to Likert-scale items using optimal
+  discretization of a normal or skew-normal distribution.
 
+- The relationship between a continuous latent distribution and ordinal
+  Likert responses is maintained during this process. Staying within the
+  framework of the classical theory’s assumptions regarding the
+  treatment of Likert-type responses.
 
-# How-to
+- It implements the approach to convert the ordinal Likert responses to
+  possible latent values assuming that the latent distribution is normal
+  or skew-normal distribution.
 
+- Given actual responses to the Likert-scale survey questionnaire, this
+  can be utilized by the researcher to estimate not only the values of a
+  particular population, but also how they differ among different
+  populations.
+
+- The use of classical statistical methods is enabled without arbitrary
+  mapping of responses to numbers.
 
 ## Installation
-To install the package from GitHub, we first need `devtools`:
 
-```R
+You can install the latest version using `devtools`:
+
+``` r
 install.packages("devtools")
 library(devtools)
 ```
 
 Then install `responsesR` using:
 
-```R
+``` r
 install_github("markolalovic/responsesR")
 library(responsesR)
 ```
 
+# Quick Start
 
-## Simulate unbiased responses
-To generate a sample of size = 100 with the number of Likert scale items = 10:
+To generate a sample of 100 observations for 10 Likert scale items, run
 
-```R
-responses <- rLikert(size = 100, items = 10)
+``` r
+df <- genLikert(size = 100, items = 10)
 ```
 
-The result is a data frame of simulated responses where rows correspond to observations and columns to Likert scale items:
+The result is a data frame of simulated responses where rows correspond
+to observations and columns correspond to Likert scale items:
 
-```R
-head(responses)
+``` r
+head(df)
 ```
 
-<table>
-<caption>A data.frame: 6 × 10</caption>
-<thead>
-	<tr><th></th><th scope=col>X1</th><th scope=col>X2</th><th scope=col>X3</th><th scope=col>X4</th><th scope=col>X5</th><th scope=col>X6</th><th scope=col>X7</th><th scope=col>X8</th><th scope=col>X9</th><th scope=col>X10</th></tr>
-	<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
-</thead>
-<tbody>
-	<tr><th scope=row>1</th><td>2</td><td>4</td><td>2</td><td>4</td><td>1</td><td>2</td><td>4</td><td>4</td><td>3</td><td>2</td></tr>
-	<tr><th scope=row>2</th><td>4</td><td>3</td><td>3</td><td>2</td><td>4</td><td>1</td><td>2</td><td>3</td><td>2</td><td>3</td></tr>
-	<tr><th scope=row>3</th><td>3</td><td>2</td><td>3</td><td>2</td><td>1</td><td>5</td><td>3</td><td>4</td><td>5</td><td>2</td></tr>
-	<tr><th scope=row>4</th><td>2</td><td>4</td><td>3</td><td>2</td><td>3</td><td>4</td><td>2</td><td>2</td><td>5</td><td>1</td></tr>
-	<tr><th scope=row>5</th><td>5</td><td>3</td><td>1</td><td>2</td><td>4</td><td>3</td><td>3</td><td>3</td><td>1</td><td>3</td></tr>
-	<tr><th scope=row>6</th><td>2</td><td>4</td><td>2</td><td>2</td><td>2</td><td>4</td><td>2</td><td>2</td><td>3</td><td>4</td></tr>
-</tbody>
-</table>
+    ##   X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+    ## 1  3  3  4  5  2  3  2  4  3   3
+    ## 2  4  4  5  2  3  3  2  2  4   5
+    ## 3  5  3  4  2  3  1  1  3  3   4
+    ## 4  3  2  3  3  1  3  2  5  4   4
+    ## 5  3  4  2  3  3  3  4  2  3   4
+    ## 6  4  4  2  2  4  3  3  4  3   3
 
-```R
+``` r
 par(mfrow=c(2, 5))
 for(i in 1:10) {
-    barplot(table(responses[, i]))
+  barplot(table(df[, i]))
 }
 ```
 
-<img src="figures/example-1.png" alt="Example 1." width="800">
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-By default, the function `rLikert` generates symmetrically distributed responses from a standard normal distribution. Also by default, it is using a 5-point Likert scale. You can change the number of possible responses by setting the "levels" parameter; e.g. for a 10-point Likert scale use `levels = 10`.
+## Correlation
 
-The sampling distribution converges to a normal distribution. This can be observed by increasing the sample size and number of levels levels (the number of items = 1 by default):
+By default, a correlation matrix is generated randomly, which means that
+the correlations between pairs of responses to individual items are
+random:
 
-```R
-responses <- rLikert(size = 10^6, levels = 100)
+``` r
 par(mfrow=c(1, 1))
-barplot(table(responses)/10^6)
+corrplot(corr=cor(df))
 ```
 
-<img src="figures/convergence-1.png" alt="Convergence 1." width="500">
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
+In order to set a specific correlation between pairs of items, for
+example 0.5, use:
 
-## Simulate response bias
-
-To simulate asymmetrically distributed responses either:
-
-* shift the distribution by using the `location` parameter;
-* change the variability or spread by using the `scale` parameter;
-* or introduce asymmetry or skewness using the `shape` parameter.
-
-
-
-<img src="figures/anim-location.gif" alt="Animation of location parameter." width="800">
-
-<img src="figures/anim-scale.gif" alt="Animation of location parameter." width="800">
-
-<img src="figures/anim-shape.gif" alt="Animation of shape parameter." width="800">
-
-&nbsp;
-
-
-This way simulating some properties of hypothetical survey respondents:
-
-* strong agreement with some statement by increasing the `location` parameter;
-* common or typical answers by using the `scale` parameter;
-* preferences or tendencies using the `shape` parameter.
-
-For example:
-```R
-responses <- rLikert(size=100, items=10,
-                     location=0.3, scale=0.8, shape=-5)
+``` r
+df <- genLikert(size = 100, items = 10, correlation = 0.5)
+corrplot(corr=cor(df))
 ```
 
-```R
-par(mfrow=c(2, 5))
-for(i in 1:10) {
-    barplot(table(responses[, i]))
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+You can also provide a correlation matrix. For example, a 3 by 3
+correlation matrix:
+
+``` r
+R <- c(1.00, -0.63, -0.39, -0.63, 1.00, 0.41, -0.39, 0.41, 1.00)
+R <- matrix(R, nrow=3)
+R
+```
+
+    ##       [,1]  [,2]  [,3]
+    ## [1,]  1.00 -0.63 -0.39
+    ## [2,] -0.63  1.00  0.41
+    ## [3,] -0.39  0.41  1.00
+
+And use it for 3 Likert scale items:
+
+``` r
+set.seed(12345)
+df <- genLikert(size = 100, items = 3, correlation = R)
+corrplot(corr=cor(df), method = "number")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+## Levels
+
+By default, the `genLikert` function uses a 5-point Likert scale. To
+change the number of possible responses use the “levels” parameter. For
+example, for a 10-point Likert scale use:
+
+``` r
+df <- genLikert(size = 1000, items = 1, levels = 10)
+barplot(table(df))
+```
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+You can use a levels vector to generate responses for different point
+scales. For example, to generate responses to 3 Likert scale items with
+2, 4, and 10-point Likert scales, use:
+
+``` r
+df <- genLikert(size = 1000, items = 3, levels=c(2, 4, 10))
+par(mfrow=c(1, 3))
+for(i in 1:3) {
+  barplot(table(df[, i]))
 }
 ```
 
-<img src="figures/example-2.png" alt="Example 1." width="800">
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
+## Location, scale and shape parameters
 
-The sampling distribution converges to a skew-normal distribution. We can observe this by increasing the sample size and number of levels (the number of items = 1 by default):
+By default, the function `genLikert` uses a standard normal latent
+distribution and generates symmetrically distributed responses. This can
+be observed by increasing the sample size and number of levels:
 
-```R
-responses <- rLikert(size = 10^6, levels = 100,
-                     location=0.3, scale=0.8, shape=-5)
+``` r
+df <- genLikert(size = 10^6, levels = 100)
 par(mfrow=c(1, 1))
-barplot(table(responses)/10^6)
+barplot(table(df)/10^6)
 ```
 
-<img src="figures/convergence-2.png" alt="Convergence 1." width="500">
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
+Introducing asymmetries and changing the properties of hypothetical
+survey respondents can be achieved by utilizing parameters `location`,
+`scale`, and `shape`.
 
-## Simulate correlated Likert scale items
+You can use a location vector to generate responses from latent
+distributions with different means. As an example, let’s use the means
+-1, 0, and 1:
+
+``` r
+df <- genLikert(size = 1000, items = 3, location = c(-1, 0, 1))
+par(mfrow=c(1, 3))
+for(i in 1:3) {
+  barplot(table(df[, i]))
+}
+```
+
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+The scale vector is used to change the variances of latent
+distributions:
+
+``` r
+df <- genLikert(size = 1000, items = 3, scale = c(0.5, 1, 1.5))
+par(mfrow=c(1, 3))
+for(i in 1:3) {
+  barplot(table(df[, i]))
+}
+```
+
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+Finally, the shape parameter can be used to introduce response bias or
+skewness:
+
+``` r
+df <- genLikert(size = 1000, items = 3, shape = c(-5, 0, 5))
+par(mfrow=c(1, 3))
+for(i in 1:3) {
+  barplot(table(df[, i]))
+}
+```
+
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+When `shape != 0`, the function `genLikert` uses a skew-normal
+distribution. This can be observed by increasing the sample size and
+number of levels:
+
+``` r
+df <- genLikert(size = 10^6, levels = 100, shape = -5)
+par(mfrow=c(1, 1))
+barplot(table(df)/10^6)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+## Estimating the parameters of the latent population distribution
 
 This will be added shortly.
-

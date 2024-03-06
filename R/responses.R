@@ -1,35 +1,58 @@
-#' rLikert
+#' genLikert
 #'
 #' Generates a sample of simulated Likert scale item responses. It assumes the
 #' underlying latent variable is following a skew-normal distribution and
 #' performs optimal discretization using Lloyd-Max algorithm to generate
 #' probabilities of a discrete random variable from which it draws the sample.
 #'
-#' @param size (positive, int)    Size of a sample; e.g.: size=100
-#' @param items (positive, int)   Number of Likert items; e.g.: items=10
-#' @param levels (positive, int)  Number of possible responses; e.g.: levels=5
-#' @param location (real)         Determines the location or shift; e.g.: location=0
-#' @param scale (positive, real)  Determines the scale or dispersion; e.g.: scale=1
-#' @param shape (real)            Determines the skewness or asymmetry; e.g.: shape=0
-#' @return responses (data.frame) Simulated Likert scale item responses; e.g.:
-#'     > rLikert(size=6, items=8)
-#'       X1 X2 X3 X4 X5 X6 X7 X8
-#'     1  5  2  2  2  3  5  3  5
-#'     2  3  3  1  3  3  2  3  3
-#'     3  3  5  3  4  3  3  1  4
-#'     4  3  4  5  3  3  2  3  3
-#'     5  3  4  4  3  5  1  2  3
-#'     6  2  2  4  4  3  3  3  2
+#' @param size (positive, int)      Size of a sample
+#' @param items (positive, int)     Number of Likert items
+#' @param correlation (real)        Pairwise Pearson correlation
+#' @param levels (positive, int)    Number of possible responses
+#' @param location (real)           Determines the location or shift
+#' @param scale (positive, real)    Determines the scale or dispersion
+#' @param shape (real)              Determines the skewness or asymmetry
+#' @return responses (data.frame)   Simulated Likert scale item responses
 #' @examples
-#' rLikert(size=6, items=8)
-#' responses <- rLikert(size=6, items=8)
+#' responses <- generateData(size=100, items=10)
 #' @export
-rLikert <- function(size=1, items=1, levels=5, location=0, scale=1, shape=0) {
-  sim <- simulateLikert(levels, location, scale, shape)
-  x <- sample(x = 1:levels, size=size*items, replace = TRUE, prob = sim$pk)
-  responses <- matrix(x, nrow = size, ncol = items)
+genLikert <- function(size=1, items=1, correlation, 
+                    levels=5, location=0, scale=1, shape=0) {
   if (items == 1) {
+    sim <- simulateLikert(K=levels, xi=location, omega=scale, alpha=shape)
+    x <- sample(x = 1:levels, size=size*items, replace=TRUE, prob=sim$pk)
+    responses <- matrix(x, nrow=size, ncol=items)
     colnames(responses) <- 'X'
+  } else {
+    ## single numbers are used for all items
+    if (is.numeric(levels)) {
+      levels <- rep(levels, items)
+    }
+    if (is.numeric(location)) {
+      location <- rep(location, items)
+    }
+    if (is.numeric(scale)) {
+      scale <- rep(scale, items)
+    }
+    if (is.numeric(shape)) {
+      shape <- rep(shape, items)
+    }
+    inputs <- cbind(levels, location, scale, shape)
+    sims <- apply(inputs, 1, 
+                  function(xRow) simulateLikert(xRow[1], xRow[2], xRow[3], xRow[4]))
+    if (missing(correlation)) {
+      ## random correlation matrix is used
+      correlation <- randcorr(items)
+    } else if (!is.matrix(correlation)) { 
+      ## the same correlation is used between all pairs of items
+      r <- correlation
+      r <- sign(r)*min(abs(r), 1) # correlation must be between -1 and 1
+      correlation <- matrix(data=r, nrow=items, ncol=items)
+      diag(correlation) <- rep(1, items)
+    }
+    x <- mvtnorm::rmvnorm(n=size, mean=rep(0, items), sigma=correlation)
+    responses <- sapply(1:items,
+                        function(i) findInterval(x[,i], c(-Inf, sims[[i]]$xk, Inf)))
   }
   return(data.frame(responses))
 }
@@ -39,10 +62,10 @@ rLikert <- function(size=1, items=1, levels=5, location=0, scale=1, shape=0) {
 #' Simulates Likert scale responses using skew-normal distribution and optimal
 #' discretization.
 #'
-#' @param K (positive, int)      Number of possible responses; e.g.: K=5
-#' @param xi (real)              Determines the location or shift; e.g.: xi=0
-#' @param omega (positive, real) Determines the scale or dispersion; e.g.: omega=1
-#' @param alpha (real)           Determines the skewness or asymmetry; e.g.: alpha=0
+#' @param K (positive, int)      Number of possible responses i.e. levels
+#' @param xi (real)              Determines the location i.e. mean
+#' @param omega (positive, real) Determines the scale i.e. standard deviation
+#' @param alpha (real)           Determines the amount of skewness
 #' @return pk, rk, xk (list)     Manifest probabilities, representatives, cut points
 simulateLikert <- function(K, xi, omega, alpha) {
   fX <- function(x) { dSN(x + meanSN(alpha), 0, 1, alpha) }
@@ -50,7 +73,7 @@ simulateLikert <- function(K, xi, omega, alpha) {
   xkEst <- sol$xkEst
   pkEst <- sol$pkEst
 
-  ## simpler to apply location and scale to the cut points than to the PDF
+  ## shift by location and scale the cut points accordingly
   xk <- scaleShiftSN(xkEst, omega, xi, alpha)
   pk <- getPk(xk, fX)
   rk <- getNewRk(xk, fX)
@@ -62,8 +85,8 @@ simulateLikert <- function(K, xi, omega, alpha) {
 #' Implementation of Lloyd-Max algorithm for simulation of manifest variables
 #' from continuous latent variables.
 #'
-#' @param fX (function)     Probability density function of the latent variable
-#' @param K (positive, int) Possible number of responses
+#' @param fX (function)     robability density function of the latent variable
+#' @param K (positive, int) Possible number of responses, i.e. levels
 #' @return xkEst (list)     Estimated cut points
 #' @return pkEst (list)     Estimated probabilities
 #' @return rkEst (list)     Estimated representatives
@@ -71,19 +94,18 @@ simulateLikert <- function(K, xi, omega, alpha) {
 #' @return pkMSEs  (list)   Mean squared errors for convergence plots
 applyLloydMax <- function(fX, K) {
   rk <- seq(-5, 5, length.out = K) # start with K arbitrary representatives
-  nIter <- 10 # 10 iterations is fine, since the convergence is fast
+  nIter <- 10 # 10 iterations is enough for convergence
   pkMeans <- c()
   pkMSEs <- c()
   for (i in 1:nIter) {
-    xk <- getNewXk(rk) # calculate new cut points
-    rk <- getNewRk(xk, fX) # calculate new representatives
-    ## calculate pk's, mean and distortion measure for pk
+    xk <- getNewXk(rk) # calculate the new cut points
+    rk <- getNewRk(xk, fX) # calculate the new representatives
+    ## calculate estimated probabilities, means and distortion measure
     pk <- getPk(xk, fX)
     pkMeans <- c(pkMeans, getPkMean(pk))
     pkMSEs <- c(pkMSEs, getMSE(xk, rk, fX))
   }
-  return(list("xkEst"=xk, "pkEst"=pk, "rkEst"=rk, "pkMeans"=pkMeans,
-    "pkMSEs"=pkMSEs))
+  return(list("xkEst"=xk, "pkEst"=pk, "rkEst"=rk, "pkMeans"=pkMeans, "pkMSEs"=pkMSEs))
 }
 
 #' Calculates mean squared error.
@@ -207,3 +229,13 @@ varSN <- function(alpha) {
 scaleShiftSN <- function(x, omega, xi, alpha) {
   return((x - meanSN(alpha))/omega + meanSN(alpha) - xi/omega)
 }
+
+#' Generates a random p x p correlation matrix
+#' @param p (positive, int)      Denoting the size of the correlation matrix
+#' @return (matrix)              A random p x p correlation matrix
+randcorr <- function(p) {
+  R <- drop(rWishart(1, p, diag(p)))
+  R <- cov2cor(R)
+  return(R)
+}
+
