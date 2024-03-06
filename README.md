@@ -60,15 +60,14 @@ to observations and columns correspond to Likert scale items:
 
 ``` r
 head(df)
+#>   X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+#> 1  1  3  1  4  4  1  1  3  4   4
+#> 2  3  3  3  2  5  4  4  4  3   3
+#> 3  5  3  5  3  5  4  5  4  4   3
+#> 4  3  1  3  5  3  4  3  2  5   2
+#> 5  2  3  1  4  2  3  2  2  4   3
+#> 6  2  3  2  4  4  3  3  3  4   5
 ```
-
-    ##   X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
-    ## 1  3  3  4  5  2  3  2  4  3   3
-    ## 2  4  4  5  2  3  3  2  2  4   5
-    ## 3  5  3  4  2  3  1  1  3  3   4
-    ## 4  3  2  3  3  1  3  2  5  4   4
-    ## 5  3  4  2  3  3  3  4  2  3   4
-    ## 6  4  4  2  2  4  3  3  4  3   3
 
 ``` r
 par(mfrow=c(2, 5))
@@ -77,7 +76,7 @@ for(i in 1:10) {
 }
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ## Correlation
 
@@ -90,7 +89,7 @@ par(mfrow=c(1, 1))
 corrplot(corr=cor(df))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-7-1.png" width="50%" />
 
 In order to set a specific correlation between pairs of items, for
 example 0.5, use:
@@ -100,7 +99,7 @@ df <- genLikert(size = 100, items = 10, correlation = 0.5)
 corrplot(corr=cor(df))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-8-1.png" width="50%" />
 
 You can also provide a correlation matrix. For example, a 3 by 3
 correlation matrix:
@@ -109,12 +108,11 @@ correlation matrix:
 R <- c(1.00, -0.63, -0.39, -0.63, 1.00, 0.41, -0.39, 0.41, 1.00)
 R <- matrix(R, nrow=3)
 R
+#>       [,1]  [,2]  [,3]
+#> [1,]  1.00 -0.63 -0.39
+#> [2,] -0.63  1.00  0.41
+#> [3,] -0.39  0.41  1.00
 ```
-
-    ##       [,1]  [,2]  [,3]
-    ## [1,]  1.00 -0.63 -0.39
-    ## [2,] -0.63  1.00  0.41
-    ## [3,] -0.39  0.41  1.00
 
 And use it for 3 Likert scale items:
 
@@ -124,7 +122,7 @@ df <- genLikert(size = 100, items = 3, correlation = R)
 corrplot(corr=cor(df), method = "number")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-10-1.png" width="50%" />
 
 ## Levels
 
@@ -137,21 +135,21 @@ df <- genLikert(size = 1000, items = 1, levels = 10)
 barplot(table(df))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-11-1.png" width="65%" />
 
 You can use a levels vector to generate responses for different point
 scales. For example, to generate responses to 3 Likert scale items with
 2, 4, and 10-point Likert scales, use:
 
 ``` r
-df <- genLikert(size = 1000, items = 3, levels=c(2, 4, 10))
+df <- genLikert(size = 1000, items = 3, levels = c(2, 4, 10))
 par(mfrow=c(1, 3))
 for(i in 1:3) {
   barplot(table(df[, i]))
 }
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-12-1.png" width="65%" />
 
 ## Location, scale and shape parameters
 
@@ -165,7 +163,7 @@ par(mfrow=c(1, 1))
 barplot(table(df)/10^6)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-13-1.png" width="65%" />
 
 Introducing asymmetries and changing the properties of hypothetical
 survey respondents can be achieved by utilizing parameters `location`,
@@ -183,7 +181,7 @@ for(i in 1:3) {
 }
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-14-1.png" width="65%" />
 
 The scale vector is used to change the variances of latent
 distributions:
@@ -196,7 +194,7 @@ for(i in 1:3) {
 }
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-15-1.png" width="65%" />
 
 Finally, the shape parameter can be used to introduce response bias or
 skewness:
@@ -209,7 +207,7 @@ for(i in 1:3) {
 }
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-16-1.png" width="65%" />
 
 When `shape != 0`, the function `genLikert` uses a skew-normal
 distribution. This can be observed by increasing the sample size and
@@ -221,7 +219,7 @@ par(mfrow=c(1, 1))
 barplot(table(df)/10^6)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+<img src="./man/figures/README-unnamed-chunk-17-1.png" width="65%" />
 
 ## Estimating the parameters of the latent population distribution
 

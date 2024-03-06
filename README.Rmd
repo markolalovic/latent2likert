@@ -3,7 +3,12 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "./man/figures/README-",
+  out.width = "65%")
 ```
 
 # responsesR <img src='man/figures/logo.png' align="right" height="160" />
@@ -38,8 +43,8 @@ library(responsesR)
 ```
 
 ```{r, include = FALSE}
-setwd("/home/marko/Dropbox/responsesR-package/dev")
-set.seed(1234)
+setwd("/home/marko/repos/responsesR/R/")
+set.seed(12345)
 source("responses.R")
 library(corrplot)
 ```
@@ -54,7 +59,7 @@ The result is a data frame of simulated responses where rows correspond to obser
 head(df)
 ```
 
-```{r}
+```{r fig.width=15, out.width="100%", dpi=300}
 par(mfrow=c(2, 5))
 for(i in 1:10) {
   barplot(table(df[, i]))
@@ -63,13 +68,13 @@ for(i in 1:10) {
 
 ## Correlation
 By default, a correlation matrix is generated randomly, which means that the correlations between pairs of responses to individual items are random:
-```{r}
+```{r out.width="50%", dpi=300}
 par(mfrow=c(1, 1))
 corrplot(corr=cor(df))
 ```
 
 In order to set a specific correlation between pairs of items, for example 0.5, use:
-```{r}
+```{r out.width="50%", dpi=300}
 df <- genLikert(size = 100, items = 10, correlation = 0.5)
 corrplot(corr=cor(df))
 ```
@@ -81,7 +86,7 @@ R <- matrix(R, nrow=3)
 R
 ```
 And use it for 3 Likert scale items:
-```{r}
+```{r out.width="50%", dpi=300}
 set.seed(12345)
 df <- genLikert(size = 100, items = 3, correlation = R)
 corrplot(corr=cor(df), method = "number")
@@ -89,15 +94,15 @@ corrplot(corr=cor(df), method = "number")
 
 ## Levels
 By default, the `genLikert` function uses a 5-point Likert scale. To change the number of possible responses use the "levels" parameter. For example, for a 10-point Likert scale use:
-```{r}
+```{r fig.height=5, dpi=300}
 df <- genLikert(size = 1000, items = 1, levels = 10)
 barplot(table(df))
 ```
 
 
 You can use a levels vector to generate responses for different point scales. For example, to generate responses to 3 Likert scale items with 2, 4, and 10-point Likert scales, use:
-```{r}
-df <- genLikert(size = 1000, items = 3, levels=c(2, 4, 10))
+```{r fig.height=2.5, dpi=300}
+df <- genLikert(size = 1000, items = 3, levels = c(2, 4, 10))
 par(mfrow=c(1, 3))
 for(i in 1:3) {
   barplot(table(df[, i]))
@@ -106,7 +111,7 @@ for(i in 1:3) {
 
 ## Location, scale and shape parameters
 By default, the function `genLikert` uses a standard normal latent distribution and generates symmetrically distributed responses. This can be observed by increasing the sample size and number of levels:
-```{r}
+```{r, dpi=300}
 df <- genLikert(size = 10^6, levels = 100)
 par(mfrow=c(1, 1))
 barplot(table(df)/10^6)
@@ -115,7 +120,7 @@ barplot(table(df)/10^6)
 Introducing asymmetries and changing the properties of hypothetical survey respondents can be achieved by utilizing parameters `location`, `scale`, and `shape`.
 
 You can use a location vector to generate responses from latent distributions with different means. As an example, let's use the means -1, 0, and 1:
-```{r}
+```{r fig.height=2.5, dpi=300}
 df <- genLikert(size = 1000, items = 3, location = c(-1, 0, 1))
 par(mfrow=c(1, 3))
 for(i in 1:3) {
@@ -124,7 +129,7 @@ for(i in 1:3) {
 ```
 
 The scale vector is used to change the variances of latent distributions:
-```{r}
+```{r fig.height=2.5, dpi=300}
 df <- genLikert(size = 1000, items = 3, scale = c(0.5, 1, 1.5))
 par(mfrow=c(1, 3))
 for(i in 1:3) {
@@ -133,7 +138,7 @@ for(i in 1:3) {
 ```
 
 Finally, the shape parameter can be used to introduce response bias or skewness:
-```{r}
+```{r fig.height=2.5, dpi=300}
 df <- genLikert(size = 1000, items = 3, shape = c(-5, 0, 5))
 par(mfrow=c(1, 3))
 for(i in 1:3) {
@@ -142,7 +147,7 @@ for(i in 1:3) {
 ```
 
 When `shape != 0`, the function `genLikert` uses a skew-normal distribution. This can be observed by increasing the sample size and number of levels:
-```{r}
+```{r fig.height=5, dpi=300}
 df <- genLikert(size = 10^6, levels = 100, shape = -5)
 par(mfrow=c(1, 1))
 barplot(table(df)/10^6)
