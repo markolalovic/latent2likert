@@ -8,7 +8,7 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 <!-- badges: end -->
 
 The purpose of this package is to provide an easy way to simulate and
-analyse Likert-type responses.
+analyze Likert-type responses.
 
 - It allows users to generate symmetrically or asymmetrically
   distributed responses to Likert-scale items using optimal
