@@ -249,7 +249,7 @@ for(i in 1:3) {
 
 <img src="./man/figures/README-unnamed-chunk-17-1.png" width="100%" />
 
-## Estimating the parameters of the latent distribution
+## Estimating parameters of the latent distribution
 
 Given responses to the Likert-scale survey questions, it is possible to
 estimates the parameters using the function `estimateParameters`. The

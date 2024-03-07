@@ -172,7 +172,7 @@ for(i in 1:3) {
 }
 ```
 
-## Estimating the parameters of the latent distribution
+## Estimating parameters of the latent distribution
 Given responses to the Likert-scale survey questions, it is possible to estimates the parameters using the function `estimateParameters`. The function assumes that the underlying latent distribution is normal.
 
 As an example, let's generate 1000 responses where the underlying distribution is assumed to be normal with `mean = -0.5` and `variance = 0.5`:
