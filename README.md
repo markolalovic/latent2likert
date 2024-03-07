@@ -294,7 +294,7 @@ for(i in 1:3) {
 }
 ```
 
-<img src="./man/figures/README-unnamed-chunk-20-1.png" width="100%" />
+<img src="./man/figures/README-unnamed-chunk-20-1.png" width="65%" />
 
 The function `estimateParameters` returns a table with the estimates for
 each item:
@@ -325,7 +325,7 @@ for(i in 1:2) {
 }
 ```
 
-<img src="./man/figures/README-unnamed-chunk-22-1.png" width="100%" />
+<img src="./man/figures/README-unnamed-chunk-22-1.png" width="65%" />
 
 Even though the latent distribution is the same, the estimated values
 are different and are not in line with the actual latent parameters:

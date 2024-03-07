@@ -189,7 +189,7 @@ estimateParameters(df, levels = 5)
 ```
 
 It is also possible to provide responses to multiple items. For example, if we generate responses to three items with different values of latent parameters:
-```{r fig.width=10, out.width="100%", dpi=300}
+```{r fig.height=4, dpi=300}
 df <- genLikert(size = 1000, 
                 items = 3, 
                 levels = c(5, 6, 7), 
@@ -207,7 +207,7 @@ estimateParameters(df, levels = c(5, 6, 7))
 ```
 
 To ensure that the estimates are good, it's important to provide a large number of responses. The estimated values vary and can be far from the actual values if the number of responses is small. For example if we generate only 100 responses from the same underlying latent distribution:
-```{r fig.width=10, out.width="100%", dpi=300}
+```{r fig.height=4, dpi=300}
 df <- genLikert(size = 100, 
                 items = 2, 
                 levels = c(5, 5), 
