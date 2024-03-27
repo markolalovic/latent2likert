@@ -1,5 +1,5 @@
 
-# responsesR <img src='man/figures/logo.png' align="right" height="160" />
+## responsesR: simulate Likert item responses in R <img src='./figures/logo.png' align="right" height="160" />
 
 <!-- badges: start -->
 
@@ -7,333 +7,592 @@
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
-The purpose of this package is to provide an easy way to simulate and
-analyze Likert-type responses.
+This package aims to provide an easy way to:
 
-- It allows users to generate symmetrically or asymmetrically
-  distributed responses to Likert-scale items using optimal
-  discretization of a normal or skew-normal distribution.
-
-- The relationship between a continuous latent distribution and ordinal
-  Likert responses is maintained during this process. Staying within the
-  framework of the classical theory’s assumptions regarding the
-  treatment of Likert-type responses.
-
-- It implements the approach to convert the ordinal Likert responses to
-  possible latent values assuming that the latent distribution is normal
-  or skew-normal distribution.
-
-- Given actual responses to the Likert-scale survey questionnaire, this
-  can be utilized by the researcher not to estimate the hypothetical
-  parameters of a particular population, but to compare how they differ
-  among different populations.
-
-- The use of classical statistical methods is enabled without arbitrary
-  mapping responses to numbers.
+- Simulate Likert-scale data in R, enabling users to define
+  distributions, means, standard deviations, and correlations among
+  latent variables.
+- Generate Likert-type responses for single or multiple items.
+- Simulate Likert scales with associations between items to measure
+  underlying constructs.
+- Create artificial data to validate theoretical findings, when
+  employing statistical techniques such as Factor Analysis and
+  Structural Equation Modeling.
+- Estimate means and standard deviations of latent variables to recreate
+  existing rating-scale data.
 
 ## Installation
 
 You can install the latest version using `devtools`:
 
 ``` r
-install.packages("devtools")
-library(devtools)
+# install.packages("devtools")
+install_github("markolalovic/responsesR")
 ```
 
-Then install `responsesR` using:
+## Examples
+
+Below you’ll find two simple examples that illustrate how to create
+synthetic datasets with responsesR.
 
 ``` r
-install_github("markolalovic/responsesR")
 library(responsesR)
 ```
 
-# Quick Start
+### Simulating survey data
 
-To generate a sample of 100 observations for 10 Likert scale items, run
+The following sample code creates a simulated survey data. The
+hypothetical survey simulation is roughly based on the actual
+[comparative study](https://arxiv.org/abs/2201.12960) on teaching and
+learning R in a pair of introductory statistics labs.
+
+Imagine a situation in which 10 participants from course A and 20
+participants from course B have completed the survey. Suppose that the
+initial question was:
+
+> “How would you rate your experience with the course?”
+
+with four possible answers:
+
+> Poor, Fair, Good, and Excellent.
+
+Let’s assume that the participants in course A were neutral regarding
+the question and participants in Course B had a more positive experience
+on average.
+
+By choosing appropriate parameters for the latent distributions and
+setting number of categories `K = 4`, we can generate hypothetical
+responses (standard deviation `sd = 1` and skewness `gamma1 = 0`, by
+default):
 
 ``` r
-df <- genLikert(size = 100, items = 10)
+set.seed(12345) # to ensure reproducible results
+course_A <- get_responses(n = 10, mu = 0, K = 4)
+course_B <- get_responses(n = 20, mu = 1, K = 4)
 ```
 
-The result is a data frame of simulated responses where rows correspond
-to observations and columns correspond to Likert scale items:
+Below are the responses to the question, visualized using a grouped bar
+chart:
+<details>
+<summary>
+<b><a style="cursor: pointer;">Click here to expand </a></b>
+</summary>
 
 ``` r
-head(df)
-#>   X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
-#> 1  1  3  1  4  4  1  1  3  4   4
-#> 2  3  3  3  2  5  4  4  4  3   3
-#> 3  5  3  5  3  5  4  5  4  4   3
-#> 4  3  1  3  5  3  4  3  2  5   2
-#> 5  2  3  1  4  2  3  2  2  4   3
-#> 6  2  3  2  4  4  3  3  3  4   5
+# To summarize the results, create a data frame from all responses.
+K <- 4
+ngroups <- 2
+cats <- c("Poor", "Fair", "Good", "Excellent")
+data <- data.frame(
+  Course = rep(c("A", "B"), each=K),
+  Response = factor(rep(cats, ngroups), levels=cats),
+  Prop = c(get_prop_table(course_A, K), get_prop_table(course_B, K)))
+data <- data[data$Prop > 0, ]
+# > data
+#   Course  Response Prop
+# 1      A      Poor 0.30
+# 2      A      Fair 0.20
+# 3      A      Good 0.20
+# 4      A Excellent 0.30
+# 6      B      Fair 0.10
+# 7      B      Good 0.25
+# 8      B Excellent 0.65
+
+# The results can then be visualized using a grouped bar chart.
+xbreaks <- seq(from = 0, to = .8, length.out = 5)
+xlimits <- c(0, max(data$Prop) + 0.01)
+xlabs <- sapply(xbreaks, percentify)
+data$Course <- factor(data$Course, levels = c("B", "A"))
+p <- ggplot(data=data, aes(x=Prop, y=Response, fill=Course)) +
+  geom_col(position=position_dodge2(preserve = "single", padding = 0)) +  
+  scale_x_continuous(breaks = xbreaks, labels = xlabs, limits = xlimits) +  
+  scale_y_discrete(limits = rev(levels(data$Response))) +
+  scale_fill_manual("legend", 
+                    values = c("#64BAAA", "#154E56"), 
+                    labels = c("Course A", "Course B"),
+                    limits = c("A", "B")) + 
+  ggtitle("How would you rate your experience with the course?") +
+  theme(text = element_text(size=10),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        plot.title = element_text(size=11))
+p
 ```
 
+</details>
+<p>
+</p>
+
+<img src="./figures/articles_courses_grouped_bar_chart-1.png" width="80%" style="display: block; margin: auto;" />
+
+Suppose that the survey also asked the participants to rate their skills
+on a 5-point Likert scale, ranging from 1 (very poor) to 5 (very good)
+in:
+
+- programming,
+- searching online,
+- solving problems.
+
+The survey was completed by the participants both before and after
+taking the course for a pre and post-comparison. Suppose that
+participants’ assessments of:
+
+- programming skills on average increased,
+- searching online stayed about the same,
+- solving problems increased in course A, but decreased for participants
+  in course B.
+
+Let’s simulate the survey data for this scenario (number of categories
+is `K = 5` by default):
+
 ``` r
-par(mfrow=c(2, 5))
-for(i in 1:10) {
-  barplot(table(df[, i]))
+set.seed(12345) # to ensure reproducible results
+
+# Pre- and post assessments of skills: 1, 2, 3 for course A
+pre_A <- get_responses(n = 10, mu = c(-1, 0, 1))
+post_A <- get_responses(n = 10, mu = c(0, 0, 2))
+
+# Pre- and post assessments of skills: 1, 2, 3 for course B
+pre_B <- get_responses(n = 20, mu = c(-1, 0, 1))
+post_B <- get_responses(n = 20, mu = c(0, 0, 0)) # <-- decrease for skill 3
+```
+
+Pre- and post-survey responses to Likert-scale questions visualized
+using a grouped bar chart:
+<details>
+<summary>
+<b><a style="cursor: pointer;">Click here to expand </a></b>
+</summary>
+
+``` r
+# To summarize the results, create a data frame from all responses.
+data <- list(pre_A, post_A, pre_B, post_B)
+items <- 6 # for 3 questions before and after
+K <- 5 # for a 5-point Likert scale
+skills <- c("Programming", "Searching online", "Solving problems")
+questions <- rep(as.vector(sapply(skills, function(skill) rep(skill, K))), 4)
+questions <- factor(questions, levels = skills)
+data <- data.frame (
+  Course = c(rep("Course A", items * K), rep("Course B", items * K)),
+  Question = questions,
+  Time = as.factor(rep(c(rep("before", 3*K), rep("after", 3*K)), 2)),
+  resp = rep(rep(1:K, 3), length(data)),
+  prop = as.vector(sapply(data, function(d) as.vector(t(get_prop_table(d, K))))))
+# > head(data)
+#     Course         Question   Time resp prop
+# 1 Course A      Programming before    1  0.2
+# 2 Course A      Programming before    2  0.4
+# 3 Course A      Programming before    3  0.3
+# 4 Course A      Programming before    4  0.0
+# 5 Course A      Programming before    5  0.1
+# 6 Course A Searching online before    1  0.1
+
+# And visualize the results with a stacked bar chart:
+data_pos <- data[data$resp >= 4, ]
+data_neg <- data[data$resp <= 2, ]
+
+data_neu <- data[data$resp == 3, ]
+data_neu$prop <- data_neu$prop / 2
+
+data_pos <- rbind(data_pos, data_neu)
+data_pos$resp <- factor(data_pos$resp, levels = rev(1:5))
+
+data_neg <- rbind(data_neg, data_neu)
+data_neg$prop <- (-data_neg$prop)
+data_neg$resp <- factor(data_neg$resp, levels = 1:5)
+
+color_palette <- brewer.pal(n=5, name = "BrBG") 
+color_palette[3] <- "#bababaff"
+p <- ggplot(data = data_pos, aes(x = Time, y = prop, fill = resp)) +
+  geom_col() +
+  geom_col(data = data_neg) +
+  coord_flip() +
+  facet_nested(
+    rows = vars(Question, Course), switch = "y",
+    strip = strip_nested(size = "variable"),
+    labeller = labeller(Question = label_wrap_gen(width = 10))
+  ) +
+  theme_bw() +
+  theme(strip.placement = "outside") +
+  theme(
+    axis.ticks.x = element_blank(),
+    axis.ticks.y = element_blank(),
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    text = element_text(size = 10),
+    strip.text.y.left = element_text(angle = 0, size = 8),
+    panel.spacing.y = unit(c(2, 5, 2, 5, 2), "mm")
+  ) +
+  xlab("") +
+  ylab("Percentage") +
+  scale_y_continuous(limits = c(-1, 1), 
+                     breaks = seq(from = -1, to = 1, by = 0.5), 
+                     labels = c(100, 50, 0, 50, 100)) + 
+  scale_fill_manual("", breaks = 1:5, values = color_palette,
+                      labels = c("Very poor", "Poor", "Fair", "Good", "Very good"))
+p
+```
+
+</details>
+<p>
+</p>
+
+<img src="./figures/articles_courses_stacked_bar_chart-1.png" width="80%" style="display: block; margin: auto;" />
+
+### Replicating survey data
+
+The following sample code covers the topic of replicating survey data in
+order to create scale scores. For this, we will use part of [bfi
+dataset](https://search.r-project.org/CRAN/refmans/psych/html/bfi.html)
+from package psych. In particular, only the first 5 items A1-A5
+corresponding to agreeableness and attribute gender:
+
+``` r
+library(psych)
+avars <- c("A1", "A2", "A3", "A4", "A5")
+data <- bfi[, c(avars, "gender")]
+```
+
+Each item was answered on a six point scale ranging from 1 (very
+inaccurate), to 6 (very accurate) and the size of the female and male
+samples were 1881 and 919 respectively:
+<details>
+<summary>
+<b><a style="cursor: pointer;">Click here to expand </a></b>
+</summary>
+
+``` r
+# Males = 1, Females = 2.
+mapdf <- data.frame(old = 1:2, new = c("Male", "Female"))
+data$gender <- mapdf$new[match(data$gender, mapdf$old)]
+
+# Impute the missing values.
+for (avar in avars) {
+  data[, avar][is.na(data[, avar])] <- median(data[, avar], na.rm=TRUE)
 }
+knitr::kable(head(data), format="html")
+table(data$gender)
 ```
 
-<img src="./man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+</details>
+<p>
+</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+A1
+</th>
+<th style="text-align:right;">
+A2
+</th>
+<th style="text-align:right;">
+A3
+</th>
+<th style="text-align:right;">
+A4
+</th>
+<th style="text-align:right;">
+A5
+</th>
+<th style="text-align:left;">
+gender
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+61617
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Male
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+61618
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Female
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+61620
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Female
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+61621
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Female
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+61622
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Male
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+61623
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Female
+</td>
+</tr>
+</tbody>
+</table>
 
-## Correlation
+    #> 
+    #> Female   Male 
+    #>   1881    919
 
-By default, a correlation matrix is generated randomly, which means that
-the correlations between pairs of responses to individual items are
-random:
+Separate the items into two groups according to their gender.
 
 ``` r
-par(mfrow=c(1, 1))
-corrplot(corr=cor(df))
+items_M <- data[data$gender == "Male", avars]
+items_F <- data[data$gender == "Female", avars]
 ```
 
-<img src="./man/figures/README-unnamed-chunk-7-1.png" width="50%" />
-
-In order to set a specific correlation between pairs of items, for
-example 0.5, use:
+To reproduce the items, start by estimating the parameters of the latent
+variables, assuming they are normal (`gamma1 = 0` by default) and
+providing the number of possible response categories `K = 6`:
 
 ``` r
-df <- genLikert(size = 100, items = 10, correlation = 0.5)
-corrplot(corr=cor(df))
+params_M <- estimate_parameters(data = items_M, K = 6)
+params_F <- estimate_parameters(data = items_F, K = 6)
+params_M
+#>          items
+#> estimates         A1         A2         A3         A4         A5
+#>        mu -0.6618876  0.8649575  0.7645033  0.8412600  0.7734527
+#>        sd  1.0967866  0.7925097  0.8540241  1.1957912  0.8910793
+params_F
+#>          items
+#> estimates         A1         A2         A3         A4         A5
+#>        mu -1.1272393  1.1838317  1.0758738  1.3342088  0.9543986
+#>        sd  1.1582560  0.7762984  0.8187612  1.4088157  0.8493250
 ```
 
-<img src="./man/figures/README-unnamed-chunk-8-1.png" width="50%" />
-
-You can also provide a correlation matrix. For example, a 3 by 3
-correlation matrix:
+Then, generate new responses to the items using the estimated parameters
+and correlations:
 
 ``` r
-R <- c(1.00, -0.63, -0.39, -0.63, 1.00, 0.41, -0.39, 0.41, 1.00)
-R <- matrix(R, nrow=3)
-R
-#>       [,1]  [,2]  [,3]
-#> [1,]  1.00 -0.63 -0.39
-#> [2,] -0.63  1.00  0.41
-#> [3,] -0.39  0.41  1.00
+set.seed(12345) # to ensure reproducible results
+
+new_items_M <- get_responses(n = nrow(items_M), 
+                             mu = params_M["mu", ], 
+                             sd = params_M["sd", ],
+                             K = 6,
+                             R = cor(items_M))
+
+new_items_F <- get_responses(n = nrow(items_F), 
+                             mu = params_F["mu", ],
+                             sd = params_F["sd", ],
+                             K = 6,
+                             R = cor(items_F))
 ```
 
-And use it to generate responses to 3 items with latent correlation
-matrix R:
+To compare the results, we can plot the correlations matrix with bar
+charts on the diagonal:
+<img src="./figures/articles_agree_items_correlations_comparison-1.png" width="80%" style="display: block; margin: auto;" />
+
+The next step would be to create agreeableness scale scores for both
+groups of participants, by taking the average of these 5 items and
+visualize the results with a grouped boxplot:
+<details>
+<summary>
+<b><a style="cursor: pointer;">Click here to expand </a></b>
+</summary>
 
 ``` r
-set.seed(12345)
-df <- genLikert(size = 100, items = 3, correlation = R)
-corrplot(corr=cor(df), method = "number")
-```
+# Combine new items and gender in new_data data frame.
+new_data <- data.frame(rbind(new_items_M, new_items_F))
+new_data$gender <- c(rep("Male", nrow(items_M)), rep("Female", nrow(items_F)))
+head(new_data)
 
-<img src="./man/figures/README-unnamed-chunk-10-1.png" width="50%" />
+# We also need to reverse the first item because it has negative correlations
+data$A1 <- (min(data$A1) + max(data$A1)) - data$A1
+new_data$Y1 <- (min(new_data$Y1) + max(new_data$Y1)) - new_data$Y1
 
-## Levels
+# Create agreeableness scale scores
+data$agreeable <- rowMeans(data[, avars])
+new_data$agreeable <- rowMeans(new_data[, c("Y1", "Y2", "Y3", "Y4", "Y5")])
 
-By default, the `genLikert` function uses a 5-point Likert scale. To set
-the number of possible responses use the “levels” parameter. For
-example, for a 10-point Likert scale use:
-
-``` r
-df <- genLikert(size = 1000, items = 1, levels = 10)
-barplot(table(df))
-```
-
-<img src="./man/figures/README-unnamed-chunk-11-1.png" width="65%" />
-
-You can use a levels vector to generate responses for different point
-scales. For example, to generate responses to 3 items with point scales
-2, 4 and 10:
-
-``` r
-df <- genLikert(size = 1000, items = 3, levels = c(2, 4, 10))
-par(mfrow=c(1, 3))
-for(i in 1:3) {
-  barplot(table(df[, i]))
+# And visualize the results with a grouped boxplot.
+scale_boxplot <- function(data, title="") {
+  xbreaks <- seq(from = 2, to = 6, length.out = 3)
+  p <- ggplot(data, aes(x = agreeable, y = gender)) + 
+    geom_boxplot() +
+    scale_x_continuous(breaks = xbreaks) +
+    ggtitle(title) +
+    theme(text = element_text(size = 8),
+          plot.title = element_text(size=10),          
+          axis.title.y = element_blank())
+  return(p)
 }
+p1 <- scale_boxplot(data, "Agreeableness in men and women")
+p2 <- scale_boxplot(new_data, "Reproduced agreeableness in men and women")
+plot_grid(p1, p2,  nrow = 2)
 ```
 
-<img src="./man/figures/README-unnamed-chunk-12-1.png" width="65%" />
+</details>
+<p>
+</p>
 
-## Location, scale and shape parameters
+<img src="./figures/articles_agreeableness_grouped_boxplot-1.png" width="60%" style="display: block; margin: auto;" />
 
-By default, the function `genLikert` uses a standard normal latent
-distribution and generates symmetrically distributed responses.
+## Dependency statement
 
-Introducing asymmetries and changing the properties of hypothetical
-survey respondents can be achieved by setting parameters `location`,
-`scale`, and `shape` of the corresponding latent distribution.
+To maintain a lightweight package, responsesR only imports
+[mvtnorm](https://cran.r-project.org/web/packages/mvtnorm/index.html),
+along with the standard R packages stats and graphics, which are
+typically included in R releases. An additional suggested dependency is
+the package [sn](https://cran.r-project.org/web/packages/sn/index.html),
+necessary only for generating random responses from correlated Likert
+items with multivariate skew normal latent distribution. However, the
+package prompts the user to install this dependency during interactive
+sessions.
 
-### Location
+## Simulation design
 
-You can use a location vector to generate responses from latent
-distributions with different means. For example, to set the means of
-latent distributions to -1, 0, and 1, use:
+Simulating Likert item responses begins by selecting a continuous
+distribution, which is then transformed into a discrete probability
+distribution using a method called discretization. This process is
+illustrated in Figure 2.
 
-``` r
-df <- genLikert(size = 1000, items = 3, location = c(-1, 0, 1))
-```
+<div class="figure" style="text-align: center">
 
-The generated responses and corresponding latent distributions drawn
-below:
+<img src="./figures/simulation_process.png" alt="Figure 2: Flow diagram of the simulation process." width="70%" />
+<p class="caption">
+Figure 2: Flow diagram of the simulation process.
+</p>
 
-``` r
-par(mfrow=c(2, 3))
-for(i in 1:3) {
-  barplot(table(df[, i]))
-}
-x <- seq(-5, 5, length = 1000)
-y <- lapply(c(-1, 0, 1), function(mu) dnorm(x, mean = mu))
-for(i in 1:3) {
-  plot(x, y[[i]], type="l", lwd = 2, xlab = "", ylab = "")
-}
-```
+</div>
 
-<img src="./man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+The transformation is visually depicted in Figures 3 and 4. These
+figures show the densities of normally distributed X1 and X2 in Figure
+3A and skew normally distributed X1 and X2 with skewness `gamma1 = -0.6`
+in Figure 4A. Corresponding discrete probability distributions of Y1 and
+Y2 with `K = 5` categories are presented in Figures 3B and 4B.
 
-### Scale
+<div class="figure" style="text-align: center">
 
-The scale vector is used to set the variances of latent distributions.
-Using `scale= c(0.5, 1, 1.5)` generates the following responses with
-corresponding latent distributions drawn below:
+<img src="./figures/mapping_normal.png" alt="Figure 3: Relationship between normally distributed X and responses Y." width="80%" />
+<p class="caption">
+Figure 3: Relationship between normally distributed X and responses Y.
+</p>
 
-``` r
-df <- genLikert(size = 1000, items = 3, scale = c(0.5, 1, 1.5))
+</div>
 
-par(mfrow=c(2, 3))
-for(i in 1:3) {
-  barplot(table(df[, i]))
-}
-y <- lapply(c(0.5, 1, 1.5), function(s) dnorm(x, sd = s))
-for(i in 1:3) {
-  plot(x, y[[i]], type="l", lwd = 2, xlab = "", ylab = "")
-}
-```
+<div class="figure" style="text-align: center">
 
-<img src="./man/figures/README-unnamed-chunk-15-1.png" width="100%" />
+<img src="./figures/mapping_skew.png" alt="Figure 4: Relationship between skew normal X with gamma1 = -0.6, and responses Y." width="80%" />
+<p class="caption">
+Figure 4: Relationship between skew normal X with gamma1 = -0.6, and
+responses Y.
+</p>
 
-### Shape
-
-Skewness is introduced to the latent distribution through the shape
-parameter. The skewness increases as the absolute value of the shape
-parameter increases. The latent distribution is right-skewed if
-`shape > 0` and left-skewed if `shape < 0`. The value of the shape
-parameter should always be between -9 and 9. The skew normal
-distribution is used as the latent distribution by the `genLikert`
-function if `shape != 0`. This can be observed by increasing the sample
-size and the number of levels:
-
-``` r
-df <- genLikert(size = 10^6, levels = 100, shape = -5)
-par(mfrow=c(1, 1))
-barplot(table(df)/10^6)
-```
-
-<img src="./man/figures/README-unnamed-chunk-16-1.png" width="65%" />
-
-You can use a shape vector to generate responses from latent
-distributions with different skewness. For example,
-`shape = c(-2.5, 0, 2.5)` sets the skewness of latent distributions to
--2.5, 0 and 2.5. The generated responses with corresponding latent
-distributions are drawn below:
-
-``` r
-df <- genLikert(size = 1000, items = 3, shape = c(-2.5, 0, 2.5))
-
-par(mfrow=c(2, 3))
-for(i in 1:3) {
-  barplot(table(df[, i]))
-}
-y <- lapply(c(-2.5, 0, 2.5), function(a) dSN(x, alpha = a))
-for(i in 1:3) {
-  plot(x, y[[i]], type="l", lwd = 2, xlab = "", ylab = "")
-}
-```
-
-<img src="./man/figures/README-unnamed-chunk-17-1.png" width="100%" />
-
-## Estimating parameters of the latent distribution
-
-Given responses to the Likert-scale survey questions, it is possible to
-estimates the parameters using the function `estimateParameters`. The
-function assumes that the underlying latent distribution is normal.
-
-As an example, let’s generate 1000 responses where the underlying
-distribution is assumed to be normal with `mean = -0.5` and
-`variance = 0.5`:
-
-``` r
-set.seed(12345)
-df <- genLikert(size = 1000, location = -0.5, scale = 0.5)
-par(mfrow=c(1, 1))
-barplot(table(df))
-```
-
-<img src="./man/figures/README-unnamed-chunk-18-1.png" width="65%" />
-
-Besides the responses, the function `estimateParameters` requires
-specifying the number of possible levels in order to return the
-estimates:
-
-``` r
-estimateParameters(df, levels = 5)
-#>       mean   variance 
-#> -0.4685787  0.5019484
-```
-
-It is also possible to provide responses to multiple items. For example,
-if we generate responses to three items with different values of latent
-parameters:
-
-``` r
-df <- genLikert(size = 1000, 
-                items = 3, 
-                levels = c(5, 6, 7), 
-                location = c(1,   2,  3), 
-                scale    = c(0.5, 1,  1.5))
-par(mfrow=c(1, 3))
-for(i in 1:3) {
-  barplot(table(df[, i]))
-}
-```
-
-<img src="./man/figures/README-unnamed-chunk-20-1.png" width="65%" />
-
-The function `estimateParameters` returns a table with the estimates for
-each item:
-
-``` r
-estimateParameters(df, levels = c(5, 6, 7))
-#>           items
-#> estimates         X1        X2        X3
-#>   mean     0.9933573 2.0090236 3.0461336
-#>   variance 0.4741466 0.9887716 1.4972725
-```
-
-To ensure that the estimates are good, it’s important to provide a large
-number of responses. The estimated values vary and can be far from the
-actual values if the number of responses is small. For example if we
-generate only 100 responses from the same underlying latent
-distribution:
-
-``` r
-df <- genLikert(size = 100, 
-                items = 2, 
-                levels = c(5, 5), 
-                location = c(-0.5, -0.5), 
-                scale    = c(0.5, 0.5))
-par(mfrow=c(1, 2))
-for(i in 1:2) {
-  barplot(table(df[, i]))
-}
-```
-
-<img src="./man/figures/README-unnamed-chunk-22-1.png" width="65%" />
-
-Even though the latent distribution is the same, the estimated values
-are different and are not in line with the actual latent parameters:
-
-``` r
-estimateParameters(df, levels = c(5, 6, 7))
-#>           items
-#> estimates          X1         X2
-#>   mean     -0.4157670 -0.7906553
-#>   variance  0.4905879  0.4647513
-```
+</div>

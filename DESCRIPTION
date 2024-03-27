@@ -1,18 +1,29 @@
 Package: responsesR
-Title: Simulate Likert scale item responses
-Version: 0.1
+Title: Simulation of Likert Item Responses
+Version: 1.2.0
+Date: 2024-03-26
 Authors@R: 
     person(given = "Marko",
            family = "Lalovic",
            role = c("aut", "cre"),
-           email = "marko@markolalovic.com",
+           email = "marko.lalovic@yahoo.com",
            comment = c(ORCID = "0000-0002-1305-0192"))
-Description: Using optimal discretization and skew-normal distribution we can simulate asymmetrically distributed Likert scale item responses while maintaining the relationship between variables with nice mathematical properties.
-License: MIT + file LICENSE
+Description: Simulates data sets that mimic the kind of survey data 
+    commonly analyzed in applied social research known as Likert items. The user
+    can leverage continuous variables with known means and covariance structure, 
+    which undergo discretization into discrete variables. The discrete variables 
+    mirror the original continuous data through Lloyd’s algorithm, a technique 
+    commonly utilized in signal processing and closely linked to k-means clustering. 
+    Furthermore, asymmetry can be introduced by incorporating skew normal distribution. 
+    Additionally, the package enables the reconstruction of continuous variables from 
+    probability distributions of discrete variables, thereby enabling users to replicate
+    existing survey data more accurately.
 URL: https://github.com/markolalovic/responsesR
 BugReports: https://github.com/markolalovic/responsesR/issues
+License: MIT + file LICENSE
 Encoding: UTF-8
-Language: en-US
 LazyData: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+Depends: R (>= 3.3.0)
+Imports: mvtnorm, stats, graphics
+Suggests: sn
+RoxygenNote: 7.3.1

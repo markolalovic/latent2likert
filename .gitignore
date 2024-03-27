@@ -22,6 +22,7 @@
 
 # RStudio files
 .Rproj.user/
+*.Rproj
 
 # produced vignettes
 vignettes/*.html
@@ -49,3 +50,5 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+docs
+.Rproj.user
