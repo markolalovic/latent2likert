@@ -13,3 +13,4 @@
 ^articles$
 ^data$
 ^tests$
+^\.github$

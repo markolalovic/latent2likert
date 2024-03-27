@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![R-CMD-check](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 This package aims to provide an easy way to:
