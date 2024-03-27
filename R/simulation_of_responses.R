@@ -255,6 +255,7 @@ get_MSE <- function(xk, rk, fX) {
 
 #' Probability density function of a skew normal distribution
 #'
+#' @export
 #' @param x variable
 #' @param xi determines the location
 #' @param omega determines the scale
