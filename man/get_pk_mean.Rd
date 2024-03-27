@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{get_pk_mean}
 \alias{get_pk_mean}
-\title{Calculate the mean of `pk`.}
+\title{Calculate the mean of `pk`}
 \usage{
 get_pk_mean(pk)
 }
@@ -13,5 +13,5 @@ get_pk_mean(pk)
 mean of `pk`
 }
 \description{
-Calculate the mean of `pk`.
+Calculate the mean of `pk`
 }

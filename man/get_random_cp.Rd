@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{get_random_cp}
 \alias{get_random_cp}
-\title{Get random centered parameters `c(mu, sd, gamma1)` for testing.}
+\title{Get random centered parameters `c(mu, sd, gamma1)` for testing}
 \usage{
 get_random_cp()
 }
@@ -10,5 +10,5 @@ get_random_cp()
 random centered parameters
 }
 \description{
-Get random centered parameters `c(mu, sd, gamma1)` for testing.
+Get random centered parameters `c(mu, sd, gamma1)` for testing
 }

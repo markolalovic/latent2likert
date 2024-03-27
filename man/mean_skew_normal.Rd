@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{mean_skew_normal}
 \alias{mean_skew_normal}
-\title{The mean of skew normal distribution.}
+\title{The mean of skew normal distribution}
 \usage{
 mean_skew_normal(alpha)
 }
@@ -13,5 +13,5 @@ mean_skew_normal(alpha)
 mean of a skew-normal distribution
 }
 \description{
-The mean of skew normal distribution.
+The mean of skew normal distribution
 }

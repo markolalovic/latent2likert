@@ -1,4 +1,4 @@
-#' Calculate variance of probabilities `pk`.
+#' Calculate variance of probabilities `pk`
 #'
 #' @param pk vector of probabilities
 #' @return variance of `pk`
@@ -8,7 +8,7 @@ get_pk_var <- function(pk) {
   return(sum(pk * (domain - m)^2))
 }
 
-#' Variance of a skew normal distribution.
+#' Variance of a skew normal distribution
 #'
 #' @param alpha determines the shape
 #' @return variance of a skew-normal distribution
@@ -16,7 +16,7 @@ var_skew_normal <- function(alpha) {
   return(1 - 2*(delta_skew_normal(alpha)^2)/pi)
 }
 
-#' Pad missing levels with zeros.
+#' Pad missing levels with zeros
 #'
 #' @param pk proportions or probabilities across possible responses
 #' @param K number of response categories
@@ -28,7 +28,7 @@ pad_levels <- function(pk, K) {
   return(pk)
 }
 
-#' Get a table of proportions across each possible response.
+#' Get a table of proportions across each possible response
 #'
 #' @param data a vector or array of responses
 #' @param K number of response categories
@@ -45,7 +45,7 @@ get_prop_table <- function(data, K) {
   return(tab)
 }
 
-#' Get random centered parameters `c(mu, sd, gamma1)` for testing.
+#' Get random centered parameters `c(mu, sd, gamma1)` for testing
 #'
 #' @return random centered parameters
 get_random_cp <- function() {
@@ -56,7 +56,7 @@ get_random_cp <- function() {
   return(cp)
 }
 
-#' Return percentage for a given number.
+#' Return percentage for a given number
 #'
 #' @param x number
 #' @param digits number of digits

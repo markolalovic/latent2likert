@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{pad_levels}
 \alias{pad_levels}
-\title{Pad missing levels with zeros.}
+\title{Pad missing levels with zeros}
 \usage{
 pad_levels(pk, K)
 }
@@ -15,5 +15,5 @@ pad_levels(pk, K)
 table of proportions across all possible responses
 }
 \description{
-Pad missing levels with zeros.
+Pad missing levels with zeros
 }

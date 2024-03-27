@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{get_pk_var}
 \alias{get_pk_var}
-\title{Calculate variance of probabilities `pk`.}
+\title{Calculate variance of probabilities `pk`}
 \usage{
 get_pk_var(pk)
 }
@@ -13,5 +13,5 @@ get_pk_var(pk)
 variance of `pk`
 }
 \description{
-Calculate variance of probabilities `pk`.
+Calculate variance of probabilities `pk`
 }

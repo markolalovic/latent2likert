@@ -1,0 +1,59 @@
+Downloading GitHub repo markolalovic/responsesR@HEAD
+Installing 1 packages: mvtnorm
+Installing package into ‘/home/marko/R/x86_64-pc-linux-gnu-library/4.2’
+(as ‘lib’ is unspecified)
+trying URL 'https://cloud.r-project.org/src/contrib/mvtnorm_1.2-4.tar.gz'
+Content type 'application/x-gzip' length 663517 bytes (647 KB)
+==================================================
+downloaded 647 KB
+
+* installing *source* package ‘mvtnorm’ ...
+** package ‘mvtnorm’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+gcc -I"/usr/share/R/include" -DNDEBUG     -fvisibility=hidden -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-a3XuZ5/r-base-4.2.2.20221110=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c C_FORTRAN_interface.c -o C_FORTRAN_interface.o
+gcc -I"/usr/share/R/include" -DNDEBUG     -fvisibility=hidden -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-a3XuZ5/r-base-4.2.2.20221110=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c lpmvnorm.c -o lpmvnorm.o
+gcc -I"/usr/share/R/include" -DNDEBUG     -fvisibility=hidden -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-a3XuZ5/r-base-4.2.2.20221110=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c ltMatrices.c -o ltMatrices.o
+gcc -I"/usr/share/R/include" -DNDEBUG     -fvisibility=hidden -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-a3XuZ5/r-base-4.2.2.20221110=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c miwa.c -o miwa.o
+gfortran -fno-optimize-sibling-calls  -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-a3XuZ5/r-base-4.2.2.20221110=. -fstack-protector-strong  -c mvt.f -o mvt.o
+gcc -I"/usr/share/R/include" -DNDEBUG     -fvisibility=hidden -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-a3XuZ5/r-base-4.2.2.20221110=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c mvtnorm-init.c -o mvtnorm-init.o
+gfortran -fno-optimize-sibling-calls  -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-a3XuZ5/r-base-4.2.2.20221110=. -fstack-protector-strong  -c tvpack.f -o tvpack.o
+gcc -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -Wl,-z,relro -o mvtnorm.so C_FORTRAN_interface.o lpmvnorm.o ltMatrices.o miwa.o mvt.o mvtnorm-init.o tvpack.o -llapack -lblas -lgfortran -lm -lquadmath -lgfortran -lm -lquadmath -L/usr/lib/R/lib -lR
+installing to /home/marko/R/x86_64-pc-linux-gnu-library/4.2/00LOCK-mvtnorm/00new/mvtnorm/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (mvtnorm)
+
+The downloaded source packages are in
+	‘/tmp/RtmpccsO25/downloaded_packages’
+── R CMD build ───────────────────────────────────────────────────────────────────────────
+✔  checking for file ‘/tmp/RtmpccsO25/remotes3760ae2d9ec/markolalovic-responsesR-577ebea/DESCRIPTION’ ...
+─  preparing ‘responsesR’:
+✔  checking DESCRIPTION meta-information
+─  checking for LF line-endings in source and make files and shell scripts
+─  checking for empty or unneeded directories
+   Omitted ‘LazyData’ from DESCRIPTION
+─  building ‘responsesR_1.2.0.tar.gz’
+   
+Installing package into ‘/home/marko/R/x86_64-pc-linux-gnu-library/4.2’
+(as ‘lib’ is unspecified)
+* installing *source* package ‘responsesR’ ...
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (responsesR)

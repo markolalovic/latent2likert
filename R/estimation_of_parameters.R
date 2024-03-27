@@ -1,4 +1,4 @@
-#' Estimate parameters.
+#' Estimate parameters
 #'
 #' Given survey responses, this function estimates the parameters of the latent
 #' variables assuming that the latent variables are normally distributed.
@@ -37,7 +37,7 @@ estimate_parameters <- function(data, K, gamma1=0) {
   return(tab)
 }
 
-#' Estimate mean and standard deviation.
+#' Estimate mean and standard deviation
 #'
 #' Given proportions pk of responses over categories 1, ..., K:
 #'   pk = (number of responses with value k) / (the number of all responses)
@@ -113,17 +113,14 @@ estimate_mu_sd <- function(pk, K, gamma1=0, trace=FALSE) {
       )
     }
   }
-
   f <- function(x) { # function to find roots
     matrix(sapply(1:K, function(k) hk(x, k)))
   }
-
   Df <- function(x) { # Jacobian column wise
     matrix(c(sapply(1:K, function(k) dhk_u(x, k)),
              sapply(1:K, function(k) dhk_v(x, k))),
            ncol=2)
   }
-
   x_trace <- c(x[1])
   y_trace <- c(x[2])
   for (i in 1:niters) {
@@ -155,8 +152,7 @@ estimate_mu_sd <- function(pk, K, gamma1=0, trace=FALSE) {
   return(c(mu, sd))
 }
 
-
-#' Draw a contour of f given trace.
+#' Draw a contour of f given trace
 #'
 #' @param f function to find roots
 #' @param x_trace x coordinates

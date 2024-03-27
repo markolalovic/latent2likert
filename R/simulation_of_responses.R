@@ -1,4 +1,4 @@
-#' Get responses.
+#' Get responses
 #'
 #' Generates a sample of random responses based on parameters of latent variables.
 #'
@@ -91,7 +91,7 @@ get_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5, R=0) {
   return(data)
 }
 
-#' Get univariate responses.
+#' Get univariate responses
 #'
 #' Generates a sample of random univariate responses.
 #'
@@ -109,7 +109,7 @@ get_univariate_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5) {
   return(data)
 }
 
-#' Simulate responses.
+#' Simulate responses
 #'
 #' Returns a description of a discrete random variable with `K` possible
 #' outcomes that best approximates the latent distribution in the mean-square
@@ -139,7 +139,7 @@ simulate_responses <- function(K, params) {
   return(list("pk"=pk_X1, "xk"=xk_X0))
 }
 
-#' Implementation of Lloyd's algorithm.
+#' Implementation of Lloyd's algorithm
 #'
 #' Given a probability density function `fX` of a continuous random variable `X`,
 #' the function returns a discrete random variable with `K` possible outcomes
@@ -172,7 +172,7 @@ run_Lloyd <- function(fX, K) {
               "pk_MS_errors"=pk_MS_errors))
 }
 
-#' Calculate new cut points `xk` from representatives `rk`.
+#' Calculate new cut points `xk` from representatives `rk`
 #'
 #' @param rk vector of representatives
 #' @return vector `xk` of cut points
@@ -185,7 +185,7 @@ get_new_xk <- function(rk) {
   return(xk)
 }
 
-#' Calculate new representatives `rk` from cut points `xk`.
+#' Calculate new representatives `rk` from cut points `xk`
 #'
 #' @param xk cut points
 #' @param fX probability density function of the latent variable
@@ -208,7 +208,7 @@ get_new_rk <- function(xk, fX) {
   return(rk)
 }
 
-#' Calculate probabilities `pk` from cut points `xk`.
+#' Calculate probabilities `pk` from cut points `xk`
 #'
 #' @param xk cut points
 #' @param fX probability density function of the latent variable
@@ -225,7 +225,7 @@ get_pk <- function(xk, fX) {
   return(pk)
 }
 
-#' Calculate the mean of `pk`.
+#' Calculate the mean of `pk`
 #'
 #' @param pk vector of probabilities `pk`
 #' @return mean of `pk`
@@ -234,7 +234,7 @@ get_pk_mean <- function(pk) {
   return(sum(pk * domain))
 }
 
-#' Calculate the mean squared error.
+#' Calculate the mean squared error
 #'
 #' @param xk vector of cut points
 #' @param rk vector of representatives
@@ -253,7 +253,7 @@ get_MSE <- function(xk, rk, fX) {
   return(mse)
 }
 
-#' Probability density function of a skew normal distribution.
+#' Probability density function of a skew normal distribution
 #'
 #' @param x variable
 #' @param xi determines the location
@@ -265,7 +265,7 @@ d_skew_normal <- function(x, xi=0, omega=1, alpha=0) {
   return(2/omega*stats::dnorm((x - xi)/omega)*stats::pnorm(alpha*(x - xi)/omega))
 }
 
-#' The mean of skew normal distribution.
+#' The mean of skew normal distribution
 #'
 #' @param alpha determines the shape
 #' @return mean of a skew-normal distribution
@@ -273,7 +273,7 @@ mean_skew_normal <- function(alpha) {
   return(delta_skew_normal(alpha) * sqrt(2/pi))
 }
 
-#' Delta parameter of a skew normal distribution.
+#' Delta parameter of a skew normal distribution
 #'
 #' @param alpha determines the shape
 #' @return delta of a skew-normal distribution
@@ -281,7 +281,7 @@ delta_skew_normal <- function(alpha) {
   return(alpha / (sqrt(1 + alpha^2)))
 }
 
-#' Convert parameters.
+#' Convert parameters
 #'
 #' Converts from centered parameters to direct parameters appearing in
 #' the skew-normal density.
@@ -309,7 +309,7 @@ convert_params <- function(cp) {
   return(dp)
 }
 
-#' Scales and shift cut points.
+#' Scale and shift cut points
 #'
 #' @param x variable
 #' @param dp direct parameters `xi`, `omega`, `alpha`
@@ -322,7 +322,7 @@ scale_and_shift <- function(x, dp) {
   return((x - mean_sn)/omega + mean_sn - xi/omega)
 }
 
-#' Generate a random `p x p` correlation matrix.
+#' Generate a random `p x p` correlation matrix
 #'
 #' @param p the size of the correlation matrix
 #' @return a random `p x p` correlation matrix
@@ -332,7 +332,7 @@ get_rand_corr_matrix <- function(p) {
   return(R)
 }
 
-#' Get covariance matrix from a correlation matrix.
+#' Get covariance matrix from a correlation matrix
 #'
 #' @param R correlation matrix
 #' @param s standard deviation vector

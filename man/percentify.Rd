@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{percentify}
 \alias{percentify}
-\title{Return percentage for a given number.}
+\title{Return percentage for a given number}
 \usage{
 percentify(x, digits = 0)
 }
@@ -12,5 +12,5 @@ percentify(x, digits = 0)
 \item{digits}{number of digits}
 }
 \description{
-Return percentage for a given number.
+Return percentage for a given number
 }

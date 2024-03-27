@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{d_skew_normal}
 \alias{d_skew_normal}
-\title{Probability density function of a skew normal distribution.}
+\title{Probability density function of a skew normal distribution}
 \usage{
 d_skew_normal(x, xi = 0, omega = 1, alpha = 0)
 }
@@ -19,7 +19,7 @@ d_skew_normal(x, xi = 0, omega = 1, alpha = 0)
 density at `x`
 }
 \description{
-Probability density function of a skew normal distribution.
+Probability density function of a skew normal distribution
 }
 \seealso{
 [sn::dsn()]

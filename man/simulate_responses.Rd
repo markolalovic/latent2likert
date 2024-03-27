@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{simulate_responses}
 \alias{simulate_responses}
-\title{Simulate responses.}
+\title{Simulate responses}
 \usage{
 simulate_responses(K, params)
 }

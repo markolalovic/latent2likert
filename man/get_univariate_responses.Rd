@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{get_univariate_responses}
 \alias{get_univariate_responses}
-\title{Get univariate responses.}
+\title{Get univariate responses}
 \usage{
 get_univariate_responses(n = 10, mu = 0, sd = 1, gamma1 = 0, K = 5)
 }

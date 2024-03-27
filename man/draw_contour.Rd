@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimation_of_parameters.R
 \name{draw_contour}
 \alias{draw_contour}
-\title{Draw a contour of f given trace.}
+\title{Draw a contour of f given trace}
 \usage{
 draw_contour(f, x_trace, y_trace)
 }
@@ -14,5 +14,5 @@ draw_contour(f, x_trace, y_trace)
 \item{y_trace}{y coordinates}
 }
 \description{
-Draw a contour of f given trace.
+Draw a contour of f given trace
 }

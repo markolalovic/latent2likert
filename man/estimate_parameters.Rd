@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimation_of_parameters.R
 \name{estimate_parameters}
 \alias{estimate_parameters}
-\title{Estimate parameters.}
+\title{Estimate parameters}
 \usage{
 estimate_parameters(data, K, gamma1 = 0)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimation_of_parameters.R
 \name{estimate_mu_sd}
 \alias{estimate_mu_sd}
-\title{Estimate mean and standard deviation.}
+\title{Estimate mean and standard deviation}
 \usage{
 estimate_mu_sd(pk, K, gamma1 = 0, trace = FALSE)
 }

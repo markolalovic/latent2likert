@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{run_Lloyd}
 \alias{run_Lloyd}
-\title{Implementation of Lloyd's algorithm.}
+\title{Implementation of Lloyd's algorithm}
 \usage{
 run_Lloyd(fX, K)
 }

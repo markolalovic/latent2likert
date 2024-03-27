@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{delta_skew_normal}
 \alias{delta_skew_normal}
-\title{Delta parameter of a skew normal distribution.}
+\title{Delta parameter of a skew normal distribution}
 \usage{
 delta_skew_normal(alpha)
 }
@@ -13,5 +13,5 @@ delta_skew_normal(alpha)
 delta of a skew-normal distribution
 }
 \description{
-Delta parameter of a skew normal distribution.
+Delta parameter of a skew normal distribution
 }

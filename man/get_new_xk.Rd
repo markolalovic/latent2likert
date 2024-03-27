@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{get_new_xk}
 \alias{get_new_xk}
-\title{Calculate new cut points `xk` from representatives `rk`.}
+\title{Calculate new cut points `xk` from representatives `rk`}
 \usage{
 get_new_xk(rk)
 }
@@ -13,5 +13,5 @@ get_new_xk(rk)
 vector `xk` of cut points
 }
 \description{
-Calculate new cut points `xk` from representatives `rk`.
+Calculate new cut points `xk` from representatives `rk`
 }

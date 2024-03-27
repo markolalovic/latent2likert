@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{get_pk}
 \alias{get_pk}
-\title{Calculate probabilities `pk` from cut points `xk`.}
+\title{Calculate probabilities `pk` from cut points `xk`}
 \usage{
 get_pk(xk, fX)
 }
@@ -15,5 +15,5 @@ get_pk(xk, fX)
 vector of probabilities `pk`
 }
 \description{
-Calculate probabilities `pk` from cut points `xk`.
+Calculate probabilities `pk` from cut points `xk`
 }

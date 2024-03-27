@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{var_skew_normal}
 \alias{var_skew_normal}
-\title{Variance of a skew normal distribution.}
+\title{Variance of a skew normal distribution}
 \usage{
 var_skew_normal(alpha)
 }
@@ -13,5 +13,5 @@ var_skew_normal(alpha)
 variance of a skew-normal distribution
 }
 \description{
-Variance of a skew normal distribution.
+Variance of a skew normal distribution
 }

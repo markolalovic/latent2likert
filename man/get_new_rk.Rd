@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{get_new_rk}
 \alias{get_new_rk}
-\title{Calculate new representatives `rk` from cut points `xk`.}
+\title{Calculate new representatives `rk` from cut points `xk`}
 \usage{
 get_new_rk(xk, fX)
 }
@@ -15,5 +15,5 @@ get_new_rk(xk, fX)
 vector `rk` of representatives
 }
 \description{
-Calculate new representatives `rk` from cut points `xk`.
+Calculate new representatives `rk` from cut points `xk`
 }

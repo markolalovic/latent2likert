@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{scale_and_shift}
 \alias{scale_and_shift}
-\title{Scales and shift cut points.}
+\title{Scale and shift cut points}
 \usage{
 scale_and_shift(x, dp)
 }
@@ -15,5 +15,5 @@ scale_and_shift(x, dp)
 shifted and scaled `x`
 }
 \description{
-Scales and shift cut points.
+Scale and shift cut points
 }

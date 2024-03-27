@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{get_prop_table}
 \alias{get_prop_table}
-\title{Get a table of proportions across each possible response.}
+\title{Get a table of proportions across each possible response}
 \usage{
 get_prop_table(data, K)
 }
@@ -15,5 +15,5 @@ get_prop_table(data, K)
 table of proportions
 }
 \description{
-Get a table of proportions across each possible response.
+Get a table of proportions across each possible response
 }

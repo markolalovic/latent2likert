@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{get_responses}
 \alias{get_responses}
-\title{Get responses.}
+\title{Get responses}
 \usage{
 get_responses(n = 10, mu = 0, sd = 1, gamma1 = 0, K = 5, R = 0)
 }

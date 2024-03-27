@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{get_rand_corr_matrix}
 \alias{get_rand_corr_matrix}
-\title{Generate a random `p x p` correlation matrix.}
+\title{Generate a random `p x p` correlation matrix}
 \usage{
 get_rand_corr_matrix(p)
 }
@@ -13,5 +13,5 @@ get_rand_corr_matrix(p)
 a random `p x p` correlation matrix
 }
 \description{
-Generate a random `p x p` correlation matrix.
+Generate a random `p x p` correlation matrix
 }

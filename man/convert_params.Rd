@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{convert_params}
 \alias{convert_params}
-\title{Convert parameters.}
+\title{Convert parameters}
 \usage{
 convert_params(cp)
 }

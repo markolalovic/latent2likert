@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{cor2cov}
 \alias{cor2cov}
-\title{Get covariance matrix from a correlation matrix.}
+\title{Get covariance matrix from a correlation matrix}
 \usage{
 cor2cov(R, s)
 }
@@ -15,5 +15,5 @@ cor2cov(R, s)
 covariance matrix
 }
 \description{
-Get covariance matrix from a correlation matrix.
+Get covariance matrix from a correlation matrix
 }

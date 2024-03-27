@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulation_of_responses.R
 \name{get_MSE}
 \alias{get_MSE}
-\title{Calculate the mean squared error.}
+\title{Calculate the mean squared error}
 \usage{
 get_MSE(xk, rk, fX)
 }
@@ -17,5 +17,5 @@ get_MSE(xk, rk, fX)
 mean squared error
 }
 \description{
-Calculate the mean squared error.
+Calculate the mean squared error
 }
