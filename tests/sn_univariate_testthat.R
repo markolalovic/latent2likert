@@ -1,7 +1,6 @@
-library(testthat)
+library("testthat")
+library("responsesR")
 context("Testing univariate skew-normal functions")
-source("helper_functions.R")
-source("simulation_of_responses.R")
 
 # parameter conversion test
 test_that("convert_params gives the same results as sn::cp2dp", {

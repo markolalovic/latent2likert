@@ -286,6 +286,7 @@ delta_skew_normal <- function(alpha) {
 #' Converts from centered parameters to direct parameters appearing in
 #' the skew-normal density.
 #'
+#' @export
 #' @param cp centered parameters c(mu, sd, gamma1)
 #' @return direct parameters c(xi, omega, alpha)
 #' @seealso [sn::cp2dp]

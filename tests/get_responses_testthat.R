@@ -1,4 +1,5 @@
-library(testthat)
+library("testthat")
+library("responsesR")
 context("Testing get responses")
 
 set.seed(12345)

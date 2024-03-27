@@ -18,6 +18,7 @@ var_skew_normal <- function(alpha) {
 
 #' Pad missing levels with zeros
 #'
+#' @export
 #' @param pk proportions or probabilities across possible responses
 #' @param K number of response categories
 #' @return table of proportions across all possible responses
@@ -30,6 +31,7 @@ pad_levels <- function(pk, K) {
 
 #' Get a table of proportions across each possible response
 #'
+#' @export
 #' @param data a vector or array of responses
 #' @param K number of response categories
 #' @return table of proportions
@@ -47,6 +49,7 @@ get_prop_table <- function(data, K) {
 
 #' Get random centered parameters `c(mu, sd, gamma1)` for testing
 #'
+#' @export
 #' @return random centered parameters
 get_random_cp <- function() {
   mu <- stats::rnorm(1, 0, 1)
@@ -58,6 +61,7 @@ get_random_cp <- function() {
 
 #' Return percentage for a given number
 #'
+#' @export
 #' @param x number
 #' @param digits number of digits
 percentify <- function(x, digits=0) {
