@@ -24,7 +24,7 @@ This package aims to provide an easy way to:
 - Generate Likert-type responses for single or multiple items.
 - Simulate Likert scales with associations between items to measure underlying constructs.
 - Create artificial data to validate theoretical findings, when employing statistical techniques such as Factor Analysis and Structural Equation Modeling.
-- Estimate means and standard deviations of latent variables to recreate existing rating-scale data.
+- Estimate means and standard deviations of latent variables and recreate existing rating-scale data.
 
 ## Installation
 You can install the latest version using `devtools`:
@@ -291,7 +291,7 @@ new_items_F <- get_responses(n = nrow(items_F),
                              R = cor(items_F))
 ```
 
-To compare the results, we can plot the correlations matrix with bar charts on the diagonal:
+To compare the results, we can plot the correlation matrix with bar charts on the diagonal:
 ```{r agree_items_correlations_comparison, fig.align = 'center', out.width = "80%", echo = FALSE}
 knitr::include_graphics("./figures/articles_agree_items_correlations_comparison-1.png")
 ```
