@@ -27,6 +27,7 @@ You can install the latest version using `devtools`:
 
 ``` r
 # install.packages("devtools")
+library(devtools)
 install_github("markolalovic/responsesR")
 ```
 

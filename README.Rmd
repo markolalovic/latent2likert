@@ -28,23 +28,14 @@ This package aims to provide an easy way to:
 You can install the latest version using `devtools`:
 ```{r eval=FALSE}
 # install.packages("devtools")
+library(devtools)
 install_github("markolalovic/responsesR")
-```
-
-```{r, include = FALSE}
-# TODO: testing
-source("./R/simulation_of_responses.R")
-source("./R/estimation_of_parameters.R")
-source("./R/helper_functions.R")
-library(psych)
-library(sn)
-library(ggh4x)
 ```
 
 ## Examples
 Below you'll find two simple examples that illustrate how to create synthetic datasets with responsesR.
 
-```{r eval=FALSE}
+```{r}
 library(responsesR)
 ```
 

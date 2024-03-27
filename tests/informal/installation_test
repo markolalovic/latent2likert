@@ -1,3 +1,6 @@
+
+> devtools::install_github("markolalovic/responsesR")
+
 Downloading GitHub repo markolalovic/responsesR@HEAD
 Installing 1 packages: mvtnorm
 Installing package into ‘/home/marko/R/x86_64-pc-linux-gnu-library/4.2’
@@ -34,9 +37,9 @@ installing to /home/marko/R/x86_64-pc-linux-gnu-library/4.2/00LOCK-mvtnorm/00new
 * DONE (mvtnorm)
 
 The downloaded source packages are in
-	‘/tmp/RtmpccsO25/downloaded_packages’
-── R CMD build ───────────────────────────────────────────────────────────────────────────
-✔  checking for file ‘/tmp/RtmpccsO25/remotes3760ae2d9ec/markolalovic-responsesR-577ebea/DESCRIPTION’ ...
+	‘/tmp/Rtmpvl2b2M/downloaded_packages’
+── R CMD build ────────────────────────────────────────────────────────────────────────────
+✔  checking for file ‘/tmp/Rtmpvl2b2M/remotes411258ffb96d/markolalovic-responsesR-21dd02f/DESCRIPTION’ ...
 ─  preparing ‘responsesR’:
 ✔  checking DESCRIPTION meta-information
 ─  checking for LF line-endings in source and make files and shell scripts
@@ -57,3 +60,4 @@ Installing package into ‘/home/marko/R/x86_64-pc-linux-gnu-library/4.2’
 ** testing if installed package can be loaded from final location
 ** testing if installed package keeps a record of temporary installation path
 * DONE (responsesR)
+
