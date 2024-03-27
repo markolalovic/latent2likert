@@ -162,7 +162,7 @@ post_B <- get_responses(n = 20, mu = c(0, 0, 0)) # <-- decrease for skill 3
 ```
 
 The grouped bar chart below displays the responses to Likert-scale
-questions before and after the survey:
+questions before and after taking the course:
 <details>
 <summary>
 <b><a style="cursor: pointer;">Click here to expand </a></b>
