@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://codecov.io/gh/markolalovic/responsesR/graph/badge.svg?token=HZTG6RUB2J)](https://codecov.io/gh/markolalovic/responsesR)
 [![R-CMD-check](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
