@@ -20,8 +20,8 @@ This package aims to provide an easy way to:
 - Create artificial data to validate theoretical findings, when
   employing statistical techniques such as Factor Analysis and
   Structural Equation Modeling.
-- Estimate means and standard deviations of latent variables to recreate
-  existing rating-scale data.
+- Estimate means and standard deviations of latent variables and
+  recreate existing rating-scale data.
 
 ## Installation
 
@@ -498,7 +498,7 @@ new_items_F <- get_responses(n = nrow(items_F),
                              R = cor(items_F))
 ```
 
-To compare the results, we can plot the correlations matrix with bar
+To compare the results, we can plot the correlation matrix with bar
 charts on the diagonal:
 <img src="./figures/articles_agree_items_correlations_comparison-1.png" width="80%" style="display: block; margin: auto;" />
 
