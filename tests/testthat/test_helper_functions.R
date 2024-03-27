@@ -1,5 +1,3 @@
-library("testthat")
-library("responsesR")
 context("Testing helper functions")
 
 test_that("prop_table gives the correct result", {
@@ -26,21 +24,3 @@ test_that("percentify gives the correct result", {
   correct_xlabs <- c("0%", "20%", "40%", "60%", "80%", "100%")
   expect_that( identical(xlabs, correct_xlabs), equals(TRUE) )
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

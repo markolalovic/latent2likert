@@ -1,5 +1,3 @@
-library("testthat")
-library("responsesR")
 context("Testing univariate skew-normal functions")
 
 # parameter conversion test
@@ -21,4 +19,3 @@ test_that("d_skew_normal gives the same results as sn::dsn", {
 
   expect_that(y1, equals(y2))
 })
-

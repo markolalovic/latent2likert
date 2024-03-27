@@ -1,5 +1,3 @@
-library("testthat")
-library("responsesR")
 context("Testing estimation of parameters")
 
 set.seed(12345)

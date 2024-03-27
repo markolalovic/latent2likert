@@ -23,7 +23,7 @@ BugReports: https://github.com/markolalovic/responsesR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.3.0)
+Depends: R (>= 3.3)
 Imports: mvtnorm, stats, graphics
-Suggests: sn
+Suggests: sn, testthat (>= 2.0.0)
 RoxygenNote: 7.3.1

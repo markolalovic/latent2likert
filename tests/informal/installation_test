@@ -1,6 +1,4 @@
-
 > devtools::install_github("markolalovic/responsesR")
-
 Downloading GitHub repo markolalovic/responsesR@HEAD
 Installing 1 packages: mvtnorm
 Installing package into ‘/home/marko/R/x86_64-pc-linux-gnu-library/4.2’

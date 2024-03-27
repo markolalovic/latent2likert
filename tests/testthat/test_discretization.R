@@ -1,5 +1,3 @@
-library("testthat")
-library("responsesR")
 context("Testing optimal discretization")
 
 test_that("discretization of N(0,1) with 5 categories gives expected result", {

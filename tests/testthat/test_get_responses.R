@@ -1,9 +1,6 @@
-library("testthat")
-library("responsesR")
 context("Testing get responses")
 
 set.seed(12345)
-
 test_that("props of random responses match actual props", {
   n <- 10^6
   mu <- c(0, -1, -1)
