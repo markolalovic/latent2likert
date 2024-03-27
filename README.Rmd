@@ -43,7 +43,7 @@ library(responsesR)
 ### Simulating survey data
 The following sample code creates a simulated survey data. The hypothetical survey simulation is roughly based on the actual [comparative study](https://arxiv.org/abs/2201.12960) on teaching and learning R in a pair of introductory statistics labs.
 
-Imagine a situation in which 10 participants from course A and 20 participants from course B have completed the survey. Suppose that the initial question was: 
+Consider a scenario where 10 participants who completed Course A and 20 participants who completed Course B have taken the survey. Let's assume the initial question was:
 
 > "How would you rate your experience with the course?" 
 
@@ -51,7 +51,7 @@ with four possible answers:
 
 > Poor, Fair, Good, and Excellent. 
 
-Let's assume that the participants in course A were neutral regarding the question and participants in Course B had a more positive experience on average.
+Let's suppose that participants in Course A had a neutral opinion regarding the question, while those in Course B, on average, had a more positive experience.
 
 By choosing appropriate parameters for the latent distributions and setting number of categories `K = 4`, we can generate hypothetical responses (standard deviation `sd = 1` and skewness `gamma1 = 0`, by default):
 ```{r}
@@ -116,15 +116,15 @@ knitr::include_graphics("./figures/articles_courses_grouped_bar_chart-1.png")
 
 Suppose that the survey also asked the participants to rate their skills on a 5-point Likert scale, ranging from 1 (very poor) to 5 (very good) in:
 
-* programming, 
-* searching online, 
-* solving problems. 
+* Programming, 
+* Searching Online, 
+* Solving Problems. 
 
 The survey was completed by the participants both before and after taking the course for a pre and post-comparison. Suppose that participants' assessments of:
 
-* programming skills on average increased, 
-* searching online stayed about the same,
-* solving problems increased in course A, but decreased for participants in course B.
+* Programming skills on average increased, 
+* Searching Online stayed about the same,
+* Solving Problems increased in Course A, but decreased for participants in Course B.
 
 Let's simulate the survey data for this scenario (number of categories is `K = 5` by default):
 ```{r}
@@ -139,7 +139,7 @@ pre_B <- get_responses(n = 20, mu = c(-1, 0, 1))
 post_B <- get_responses(n = 20, mu = c(0, 0, 0)) # <-- decrease for skill 3
 ```
 
-Pre- and post-survey responses to Likert-scale questions visualized using a grouped bar chart:
+The grouped bar chart below displays the responses to Likert-scale questions before and after the survey:
 <details>
   <summary><b><a style="cursor: pointer;">Click here to expand </a></b> </summary>
 
