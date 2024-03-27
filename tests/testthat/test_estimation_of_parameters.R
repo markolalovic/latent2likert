@@ -49,3 +49,21 @@ test_that("parameters `mu` and `sd` are well estimated given data for multivaria
   dimnames(actual) <- dimnames(estimates)
   expect_equal(estimates, actual, tolerance=0.05)
 })
+
+set.seed(12345)
+test_that("parameters `mu` and `sd` are well estimated in hard random case", {
+  cp <- get_random_cp()
+  K <- sample(2:15, 1)
+
+  sim <- simulate_responses(K, cp)
+  pk <- round(sim$pk, 3)
+  names(pk) <- 1:K
+
+  estimates <- estimate_mu_sd(pk, K, cp[["gamma1"]], TRUE)
+  actual <- c(cp[["mu"]], cp[["sd"]])
+  expect_equal(estimates, actual, tolerance=0.05)
+})
+
+
+
+

@@ -1,11 +1,36 @@
 context("Testing get responses")
 
 set.seed(12345)
+test_that("props of random responses match actual props for a random corr matrix", {
+  n <- 10^6
+  nitems <- 3
+  mu <- c(0, -1, -1)
+  sd <- c(1, 1, 0.5)
+  gamma1 <- c(0, 0, 0) # admissible CP is tough to achieve with random R
+  K <- c(5, 5, 5)
+  R <- "random"
+
+  d <- get_responses(n, mu, sd, gamma1, K, R)
+  data_props <- t(apply(d, 2, function(q) prop.table(table(q))))
+
+  # actual discrete probability distributions come from discretization,
+  # e.g. P(Y3 = k):
+  #   sim1 <- simulate_responses(5, params = c("mu"=-1, "sd"=1, "gamma1"=0))
+  #   round(sim1$pk, 3)
+  props <- t(sapply(1:nitems, function(i) {
+    sim <- simulate_responses(5, params = c("mu"=mu[i], "sd"=sd[i], "gamma1"=gamma1[i]))
+    return(round(sim$pk, 3))
+  }))
+  dimnames(props) <- dimnames(data_props)
+
+  expect_equal(data_props, props, tolerance=0.01)
+})
+
 test_that("props of random responses match actual props", {
   n <- 10^6
   mu <- c(0, -1, -1)
   sd <- c(1, 1, 0.5)
-  gamma1 <- c(0.5, 0.5, 0.5)
+  gamma1 <- c(0.5, 0.5, 0.5) # admissible CP
   K <- c(5, 5, 5)
   R <- 0.5
 

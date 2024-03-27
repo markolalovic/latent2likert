@@ -1,11 +1,22 @@
 context("Testing helper functions")
 
-test_that("prop_table gives the correct result", {
+test_that("prop_table gives the correct result, univariate case", {
   data <- rep(c(1,2,3,4), each=2)
-  prob_tab <- get_prop_table(data, K=4)
-  correct_prob_tab <- rep(0.25, 4)
-  names(correct_prob_tab) <- 1:4
-  expect_that( identical(prob_tab, correct_prob_tab), equals(TRUE) )
+  tab <- get_prop_table(data, K=4)
+  correct_tab <- rep(0.25, 4)
+  names(correct_tab) <- 1:4
+  expect_that( identical(tab, correct_tab), equals(TRUE) )
+})
+
+test_that("prop_table gives the correct result, multivariate case", {
+  y <- rep(c(1,2,3,4), each=2)
+  data <- cbind(y, y)
+  tab <- get_prop_table(data, K=4)
+
+  correct_tab <- rbind(rep(0.25, 4), rep(0.25, 4))
+  dimnames(correct_tab) <- dimnames(tab)
+
+  expect_that( identical(tab, correct_tab), equals(TRUE) )
 })
 
 test_that("pad_levels gives the correct result", {
