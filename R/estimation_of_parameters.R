@@ -145,19 +145,19 @@ estimate_mu_sd <- function(pk, K, gamma1=0, trace=FALSE) {
     }
   }
   if (trace) {
-    draw_contour(f, x_trace, y_trace)
+    plot_contour(f, x_trace, y_trace)
   }
   mu <- x[1]
   sd <- 1/x[2]
   return(c(mu, sd))
 }
 
-#' Draw a contour of f given trace
+#' Plot the contour of function `f` along with provided trace
 #'
 #' @param f function to find roots
-#' @param x_trace x coordinates
-#' @param y_trace y coordinates
-draw_contour <- function(f, x_trace, y_trace) {
+#' @param x_trace x coordinates of the trace
+#' @param y_trace y coordinates of the trace
+plot_contour <- function(f, x_trace, y_trace) {
   xlen <- 50
   ylen <- 50
   xgrid <- seq(-3, 3, length.out = xlen) # -5, 5

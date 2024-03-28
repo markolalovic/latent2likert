@@ -9,7 +9,7 @@
 ^responsesR\.Rproj$
 ^README.Rmd
 ^README.md
-^figures$
-^articles$
-^data$
 ^\.github$
+^vignettes/articles$
+^data$
+^man/figures/*\.png$

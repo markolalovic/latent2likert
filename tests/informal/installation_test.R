@@ -1,6 +1,7 @@
 # testing clean install
 remove.packages("mvtnorm")
 remove.packages("responsesR")
+
 rm(list = ls())
 .rs.restartR()
 

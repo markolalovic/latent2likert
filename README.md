@@ -1,5 +1,5 @@
 
-## responsesR: simulate Likert item responses in R <img src='./figures/logo.png' align="right" height="160" />
+## responsesR: simulate Likert item responses in R <img src="./man/figures/logo.png" align="right" height="160" style="float:right; height:160px;"/>
 
 <!-- badges: start -->
 
@@ -128,7 +128,7 @@ p
 <p>
 </p>
 
-<img src="./figures/articles_courses_grouped_bar_chart-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="./man/figures/courses_grouped_bar_chart-1.png" width="80%" style="display: block; margin: auto;" />
 
 Suppose that the survey also asked the participants to rate their skills
 on a 5-point Likert scale, ranging from 1 (very poor) to 5 (very good)
@@ -242,7 +242,7 @@ p
 <p>
 </p>
 
-<img src="./figures/articles_courses_stacked_bar_chart-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="./man/figures/courses_stacked_bar_chart-1.png" width="80%" style="display: block; margin: auto;" />
 
 ### Replicating survey data
 
@@ -500,7 +500,7 @@ new_items_F <- get_responses(n = nrow(items_F),
 
 To compare the results, we can plot the correlation matrix with bar
 charts on the diagonal:
-<img src="./figures/articles_agree_items_correlations_comparison-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="./man/figures/agree_items_correlations_comparison-1.png" width="80%" style="display: block; margin: auto;" />
 
 The next step would be to create agreeableness scale scores for both
 groups of participants, by taking the average of these 5 items and
@@ -545,7 +545,7 @@ plot_grid(p1, p2,  nrow = 2)
 <p>
 </p>
 
-<img src="./figures/articles_agreeableness_grouped_boxplot-1.png" width="60%" style="display: block; margin: auto;" />
+<img src="./man/figures/agreeableness_grouped_boxplot-1.png" width="60%" style="display: block; margin: auto;" />
 
 ## Dependency statement
 
@@ -568,7 +568,7 @@ illustrated in Figure 2.
 
 <div class="figure" style="text-align: center">
 
-<img src="./figures/simulation_process.png" alt="Figure 2: Flow diagram of the simulation process." width="70%" />
+<img src="./man/figures/simulation_process.png" alt="Figure 2: Flow diagram of the simulation process." width="70%" />
 <p class="caption">
 Figure 2: Flow diagram of the simulation process.
 </p>
@@ -583,7 +583,7 @@ Y2 with `K = 5` categories are presented in Figures 3B and 4B.
 
 <div class="figure" style="text-align: center">
 
-<img src="./figures/mapping_normal.png" alt="Figure 3: Relationship between normally distributed X and responses Y." width="80%" />
+<img src="./man/figures/mapping_normal.png" alt="Figure 3: Relationship between normally distributed X and responses Y." width="80%" />
 <p class="caption">
 Figure 3: Relationship between normally distributed X and responses Y.
 </p>
@@ -592,7 +592,7 @@ Figure 3: Relationship between normally distributed X and responses Y.
 
 <div class="figure" style="text-align: center">
 
-<img src="./figures/mapping_skew.png" alt="Figure 4: Relationship between skew normal X with gamma1 = -0.6, and responses Y." width="80%" />
+<img src="./man/figures/mapping_skew.png" alt="Figure 4: Relationship between skew normal X with gamma1 = -0.6, and responses Y." width="80%" />
 <p class="caption">
 Figure 4: Relationship between skew normal X with gamma1 = -0.6, and
 responses Y.

@@ -6,11 +6,10 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "./figures/README_",
   dpi=450)
 ```
 
-## responsesR: simulate Likert item responses in R <img src='./figures/logo.png' align="right" height="160" />
+## responsesR: simulate Likert item responses in R <img src="./man/figures/logo.png" align="right" height="160" style="float:right; height:160px;"/>
 
 <!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -112,7 +111,7 @@ p
 <p> </p>
 
 ```{r courses_grouped_bar_chart, fig.align = 'center', out.width = "80%", echo = FALSE}
-knitr::include_graphics("./figures/articles_courses_grouped_bar_chart-1.png")
+knitr::include_graphics("./man/figures/courses_grouped_bar_chart-1.png")
 ```
 
 Suppose that the survey also asked the participants to rate their skills on a 5-point Likert scale, ranging from 1 (very poor) to 5 (very good) in:
@@ -216,7 +215,7 @@ p
 </details>
 <p> </p>
 ```{r courses_stacked_bar_chart, fig.align = 'center', out.width = "80%", echo = FALSE}
-knitr::include_graphics("./figures/articles_courses_stacked_bar_chart-1.png")
+knitr::include_graphics("./man/figures/courses_stacked_bar_chart-1.png")
 ```
 
 ### Replicating survey data
@@ -293,7 +292,7 @@ new_items_F <- get_responses(n = nrow(items_F),
 
 To compare the results, we can plot the correlation matrix with bar charts on the diagonal:
 ```{r agree_items_correlations_comparison, fig.align = 'center', out.width = "80%", echo = FALSE}
-knitr::include_graphics("./figures/articles_agree_items_correlations_comparison-1.png")
+knitr::include_graphics("./man/figures/agree_items_correlations_comparison-1.png")
 ```
 
 The next step would be to create agreeableness scale scores for both groups of participants, by taking the average of these 5 items and visualize the results with a grouped boxplot:
@@ -335,7 +334,7 @@ plot_grid(p1, p2,  nrow = 2)
 <p> </p>
 
 ```{r agreeableness_grouped_boxplot, fig.align = 'center', out.width = "60%", echo = FALSE}
-knitr::include_graphics("./figures/articles_agreeableness_grouped_boxplot-1.png")
+knitr::include_graphics("./man/figures/agreeableness_grouped_boxplot-1.png")
 ```
 
 ## Dependency statement
@@ -345,17 +344,17 @@ To maintain a lightweight package, responsesR only imports [mvtnorm](https://cra
 Simulating Likert item responses begins by selecting a continuous distribution, which is then transformed into a discrete probability distribution using a method called discretization. This process is illustrated in Figure 2.
 
 ```{r simulation_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 2: Flow diagram of the simulation process.", echo = FALSE}
-knitr::include_graphics("./figures/simulation_process.png")
+knitr::include_graphics("./man/figures/simulation_process.png")
 ```
 
 The transformation is visually depicted in Figures 3 and 4. These figures show the densities of normally distributed X1 and X2 in Figure 3A and skew normally distributed X1 and X2 with skewness `gamma1 = -0.6` in Figure 4A. Corresponding discrete probability distributions of Y1 and Y2 with `K = 5` categories are presented in Figures 3B and 4B. 
 
 ```{r mapping_normal_r, fig.align = 'center', out.width = "80%", fig.cap = "Figure 3: Relationship between normally distributed X and responses Y.", echo = FALSE}
-knitr::include_graphics("./figures/mapping_normal.png")
+knitr::include_graphics("./man/figures/mapping_normal.png")
 ```
 
 ```{r mapping_skew_r, fig.align = 'center', out.width = "80%", fig.cap = "Figure 4: Relationship between skew normal X with gamma1 = -0.6, and responses Y.", echo = FALSE}
-knitr::include_graphics("./figures/mapping_skew.png")
+knitr::include_graphics("./man/figures/mapping_skew.png")
 ```
 
 
