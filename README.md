@@ -36,7 +36,9 @@ install_github("markolalovic/responsesR")
 ## Examples
 
 Below you’ll find two simple examples that illustrate how to create
-synthetic datasets with responsesR.
+synthetic datasets with responsesR. For further information, refer to
+the articles on the [package
+website](https://markolalovic.github.io/responsesR/).
 
 ``` r
 library(responsesR)
@@ -599,3 +601,12 @@ responses Y.
 </p>
 
 </div>
+
+## Further Reading
+
+- [Quick
+  Overview](https://markolalovic.github.io/responsesR/articles/responsesR.html)
+- [Function
+  Documentation](https://markolalovic.github.io/responsesR/reference/index.html)
+- [Introduction to responsesR
+  package](https://markolalovic.github.io/responsesR/articles/introduction_to_responsesR.html)
