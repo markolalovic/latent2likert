@@ -104,21 +104,6 @@ Lalovic</h4>
 
 
 
-<!-- path to figures: "../../man/figures/" or in: "../"
-docs :
-"../references/figures/"
-
-  fig.path = "../../man/figures/",
-
-man/figures/
-
-./man/figures/
-
-
-here::here()), and then include_graphics(file, rel_path = FALSE)
-
-here::here()
--->
 <!-- avoid border around the images -->
 <style>
     img {
@@ -128,25 +113,25 @@ here::here()
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>This article introduces responsesR, an R package designed to create
-synthetic datasets that mimic the kind of survey data commonly analyzed
-in applied social research, particularly ordered categorical items, also
-known as Likert items. Likert items represent responses to survey
-questions or ratings, typically organized on a psychometric scale
-defined by verbal labels with roughly equidistant categories
-symmetrically centered around a neutral midpoint. The most common form
-has five categories: Strongly disagree, Disagree, Neutral, Agree, and
-Strongly agree.</p>
-<p>The package simplifies the conversion of continuous random variables
-into simulated Likert items. Users can leverage continuous variables
-with known means and covariance structure, which undergo discretization
-into discrete variables. The discrete variables mirror the original
-continuous data through Lloyd’s algorithm, a technique commonly utilized
-in signal processing and closely linked to k-means clustering.
-Furthermore, asymmetry can be introduced by incorporating skew normal
-distribution. Additionally, the package enables the reconstruction of
-latent parameters from discrete probability distributions, thereby
-enabling users to replicate existing survey data more accurately.</p>
+<p>The responsesR package helps users to create synthetic datasets
+resembling survey data frequently analyzed in applied social research,
+particularly ordered categorical items, also known as Likert items.
+Likert items represent responses to survey questions or ratings,
+typically arranged on a psychometric scale defined by verbal labels with
+roughly equidistant categories symmetrically centered around a neutral
+midpoint. The most common form has five categories: Strongly disagree,
+Disagree, Neutral, Agree, and Strongly agree.</p>
+<p>This package simplifies the process of converting continuous random
+variables into simulated Likert items. Users can leverage continuous
+variables with known means and covariance structure, which undergo
+discretization into discrete variables. These discrete variables mirror
+the original continuous variables using Lloyd’s algorithm, a technique
+commonly employed in signal processing and closely related to k-means
+clustering. Additionally, asymmetry can be introduced by incorporating
+skew normal distribution. Moreover, the package enables the
+reconstruction of latent parameters from discrete probability
+distributions, thereby allowing users to replicate existing survey data
+more accurately.</p>
 </div>
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>

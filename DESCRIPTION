@@ -18,7 +18,7 @@ Description: Simulates data sets that mimic the kind of survey data
     Additionally, the package enables the reconstruction of continuous variables from 
     probability distributions of discrete variables, thereby enabling users to replicate
     existing survey data more accurately.
-URL: https://github.com/markolalovic/responsesR
+URL: https://markolalovic.github.io/responsesR, https://github.com/markolalovic/responsesR
 BugReports: https://github.com/markolalovic/responsesR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8

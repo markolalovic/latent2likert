@@ -10,11 +10,11 @@ vignette: >
 bibliography: references.bib
 link-citations: true
 resource_files:
-  - '../man/figures/survey_process.png'
-  - '../man/figures/simulation_process.png'
-  - '../man/figures/mapping_normal.png'
-  - '../man/figures/mapping_skew.png'
-  - '../man/figures/multivatiate_case.png'
+  - '../../man/figures/survey_process.png'
+  - '../../man/figures/simulation_process.png'
+  - '../../man/figures/mapping_normal.png'
+  - '../../man/figures/mapping_skew.png'
+  - '../../man/figures/multivatiate_case.png'
 ---
 
 ```{r setup, include=FALSE}
@@ -34,16 +34,16 @@ knitr::opts_chunk$set(
 
 ## Summary
 
-This article introduces responsesR, an R package designed to create synthetic datasets that mimic the kind of survey data commonly analyzed in applied social research, particularly ordered categorical items, also known as Likert items. Likert items represent responses to survey questions or ratings, typically organized on a psychometric scale defined by verbal labels with roughly equidistant categories symmetrically centered around a neutral midpoint. The most common form has five categories: Strongly disagree, Disagree, Neutral, Agree, and Strongly agree.
+The responsesR package helps users to create synthetic datasets resembling survey data frequently analyzed in applied social research, particularly ordered categorical items, also known as Likert items. Likert items represent responses to survey questions or ratings, typically arranged on a psychometric scale defined by verbal labels with roughly equidistant categories symmetrically centered around a neutral midpoint. The most common form has five categories: Strongly disagree, Disagree, Neutral, Agree, and Strongly agree.
 
-The package simplifies the conversion of continuous random variables into simulated Likert items. Users can leverage continuous variables with known means and covariance structure, which undergo discretization into discrete variables. The discrete variables mirror the original continuous data through Lloyd's algorithm, a technique commonly utilized in signal processing and closely linked to k-means clustering. Furthermore, asymmetry can be introduced by incorporating skew normal distribution. Additionally, the package enables the reconstruction of latent parameters from discrete probability distributions, thereby enabling users to replicate existing survey data more accurately.
+This package simplifies the process of converting continuous random variables into simulated Likert items. Users can leverage continuous variables with known means and covariance structure, which undergo discretization into discrete variables. These discrete variables mirror the original continuous variables using Lloyd's algorithm, a technique commonly employed in signal processing and closely related to k-means clustering. Additionally, asymmetry can be introduced by incorporating skew normal distribution. Moreover, the package enables the reconstruction of latent parameters from discrete probability distributions, thereby allowing users to replicate existing survey data more accurately.
 
 ## Purpose
 
 In social sciences, variables of interest are often conceptualized as hidden continuous variables, known as latent variables. These latent variables are not observed directly but are instead measured through Likert scale questions. This process is illustrated in Figure 1.
 
 ```{r survey_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 1: Flow diagram of the survey process.", echo = FALSE}
-knitr::include_graphics("../man/figures/survey_process.png")
+knitr::include_graphics("../../man/figures/survey_process.png")
 ```
 
 Researchers frequently aim to uncover the connections between these latent variables using diverse statistical techniques. For comparative analysis through simulation, having access to an effective algorithm to generate Likert items from hypothetical latent variables is essential. Furthermore, statistical techniques like Factor Analysis and Structural Equation Models assume metric data. However, survey data in the form of Likert items is ordinal, violating this assumption. Nevertheless, the use of these statistical techniques for probing such survey data is widespread. Realistic simulation of Likert items provides a way to assess the potential for inaccurate, biased, or misleading results when utilizing these techniques.
@@ -51,7 +51,7 @@ Researchers frequently aim to uncover the connections between these latent varia
 Simulating Likert item responses often begins by selecting a continuous distribution, which is then transformed into a discrete probability distribution using a method called discretization. This process is illustrated in Figure 2.
 
 ```{r simulation_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 2: Flow diagram of the simulation process.", echo = FALSE}
-knitr::include_graphics("../man/figures/simulation_process.png")
+knitr::include_graphics("../../man/figures/simulation_process.png")
 ```
 
 Typically, an unsupervised discretization approach is employed [@wu2017], where the continuous range is subdivided into smaller intervals. Adjusting these intervals allows for simulating responses with different distributions. While this unsupervised approach is popular for its simplicity, it may yield less than optimal results, particularly if the continuous distribution is non-uniform [@catlett1991]. Furthermore, in many simulation studies, e.g.: [@velicer2000], [@cho2009], the latent distribution is often assumed to follow a normal distribution. However, this assumption is primarily for statistical convenience. 
@@ -99,11 +99,11 @@ Next, let $X_{2}$ be a random variable following the same distribution as $X_{1}
 This simulation process is visually depicted in Figures 3 and 4. These figures show the densities of normally distributed $X_{1}$ and $X_{2}$ in Figure 3A and skew normally distributed $X_{1}$ and $X_{2}$ with skewness $\gamma_{1} = - 0.6$ in Figure 4A. Corresponding discrete probability distributions of $Y_{1}$ and $Y_{2}$ with $K=5$ categories are presented in Figures 3B and 4B. 
 
 ```{r mapping_normal_r, fig.align = 'center', out.width = "90%", fig.cap = "Figure 3: Relationship between normally distributed $X$", echo = FALSE}
-knitr::include_graphics("../man/figures/mapping_normal.png")
+knitr::include_graphics("../../man/figures/mapping_normal.png")
 ```
 
 ```{r mapping_skew_r, fig.align = 'center', out.width = "90%", fig.cap = "Figure 4: Relationship between skew normal $X$ with $\\gamma_{1} = -0.6$, and responses $Y$.", echo = FALSE}
-knitr::include_graphics("../man/figures/mapping_skew.png")
+knitr::include_graphics("../../man/figures/mapping_skew.png")
 ```
 
 The relationship between continuous variable $X$ and discrete probability distribution $p_k$ can also be described by a system of non-linear equations
@@ -117,7 +117,7 @@ where $F_{X}$ denotes the cumulative distribution function of continuous variabl
 To generate random responses from correlated Likert items, we first select the location vector, marginal skewness, and correlations between the latent variables. Then, draw a random sample from the multivariate normal or skew normal distribution with the appropriate location vector and covariance matrix. Lastly, discretize the sample using optimal thresholds $\tau_{k}$. Figure 5 illustrates this process for the case of 2 Likert items with 5 response categories, normal latent variables with means 0 and standard deviations 1, and a correlation of 0.7 between the variables.
 
 ```{r multivatiate_case_r, fig.align = 'center', out.width = "50%", fig.cap = "Figure 5: Normal bivariate and marginal latent distributions with a correlation of $0.7$ and optimal thresholds $\\tau_1, \\dots, \\tau_{4}$.", echo = FALSE}
-knitr::include_graphics("../man/figures/multivatiate_case.png")
+knitr::include_graphics("../../man/figures/multivatiate_case.png")
 ```
 
 ## References

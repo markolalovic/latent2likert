@@ -7,6 +7,7 @@
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/markolalovic/responsesR/graph/badge.svg?token=HZTG6RUB2J)](https://codecov.io/gh/markolalovic/responsesR)
 [![R-CMD-check](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10889981.svg)](https://doi.org/10.5281/zenodo.10889981)
 <!-- badges: end -->
 
 This package aims to provide an easy way to:
