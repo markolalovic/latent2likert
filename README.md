@@ -611,3 +611,13 @@ responses Y.
   Documentation](https://markolalovic.github.io/responsesR/reference/index.html)
 - [Introduction to responsesR
   package](https://markolalovic.github.io/responsesR/articles/introduction_to_responsesR.html)
+
+## Contributions
+
+Feel free to create issues for bugs or suggestions on the [issues
+page](https://github.com/markolalovic/responsesR/issues).
+
+You can also fork the responsesR repository, make your changes, and
+submit a pull request. Contributions may include bug fixes, new
+features, documentation improvements, or any other features you think
+will be useful.

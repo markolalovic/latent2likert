@@ -13,3 +13,4 @@
 ^vignettes/articles$
 ^data$
 ^man/figures/*\.png$
+^CODE_OF_CONDUCT.md
