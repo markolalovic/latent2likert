@@ -1,6 +1,6 @@
 url: https://markolalovic.github.io/responsesR/
 template:
-  bootstrap: 3
+  bootstrap: 5
 authors:
   Marko Lalovic:
     href: "https://lalovic.io/"
