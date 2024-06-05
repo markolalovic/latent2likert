@@ -10,75 +10,54 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10889981.svg)](https://doi.org/10.5281/zenodo.10889981)
 <!-- badges: end -->
 
-This package aims to provide an easy way to:
-
-- Simulate Likert-scale data in R, enabling users to define
-  distributions, means, standard deviations, and correlations among
-  latent variables.
-- Generate Likert-type responses for single or multiple items.
-- Simulate Likert scales with associations between items to measure
-  underlying constructs.
-- Create artificial data to validate theoretical findings, when
-  employing statistical techniques such as Factor Analysis and
-  Structural Equation Modeling.
-- Estimate means and standard deviations of latent variables and
-  recreate existing rating-scale data.
+This package provides an easy framework to simulate survey data commonly
+analyzed in applied social research, specifically Likert items. Users
+can specify latent variables by providing means, standard deviations,
+and optionally, skewness and correlations. The generated data sets
+represents responses to Likert scale questions, which can be used for
+various purposes, such as validating theoretical findings obtained
+through factor analysis and structural equation modeling. The package
+also allows for the estimation of parameters from existing survey data
+to replicate it more accurately.
 
 ## Installation
 
-You can install the latest version using `devtools`:
+You can install the latest version using devtools:
 
 ``` r
-# install.packages("devtools")
-library(devtools)
-install_github("markolalovic/responsesR")
+install.packages("devtools")
+devtools::install_github("markolalovic/responsesR")
 ```
 
-## Examples
+## Code examples
 
-Below you’ll find two simple examples that illustrate how to create
-synthetic datasets with responsesR. For further information, refer to
-the articles on the [package
-website](https://markolalovic.github.io/responsesR/).
-
-``` r
-library(responsesR)
-```
+Below are two simple examples. For more details, refer to the articles
+on the [package website](https://lalovic.io/responsesR/).
 
 ### Simulating survey data
 
-The following sample code creates a simulated survey data. The
-hypothetical survey simulation is roughly based on the actual
-[comparative study](https://arxiv.org/abs/2201.12960) on teaching and
-learning R in a pair of introductory statistics labs.
-
-Consider a scenario where 10 participants who completed Course A and 20
-participants who completed Course B have taken the survey. Let’s assume
-the initial question was:
+Here’s how to generate a simulated survey data. Consider a scenario
+where 10 participants who completed Course A and 20 participants who
+completed Course B have answered the question:
 
 > “How would you rate your experience with the course?”
 
-with four possible answers:
-
-> Poor, Fair, Good, and Excellent.
-
-Let’s suppose that participants in Course A had a neutral opinion
-regarding the question, while those in Course B, on average, had a more
-positive experience.
-
-By choosing appropriate parameters for the latent distributions and
-setting number of categories `K = 4`, we can generate hypothetical
-responses (standard deviation `sd = 1` and skewness `gamma1 = 0`, by
-default):
+Suppose that on average participants in Course A had a neutral
+experience, while those in Course B had a more positive experience. By
+choosing appropriate parameters for the latent variables and setting the
+number of categories (to K = 4 in this example), we can generate
+hypothetical responses (standard deviation sd = 1 and skewness gamma1 =
+0, by default):
 
 ``` r
+library(responsesR) # load the package
 set.seed(12345) # to ensure reproducible results
+
 course_A <- get_responses(n = 10, mu = 0, K = 4)
 course_B <- get_responses(n = 20, mu = 1, K = 4)
 ```
 
-Below are the responses to the question, visualized using a grouped bar
-chart:
+Below are the generated responses visualized using a grouped bar chart:
 <details>
 <summary>
 <b><a style="cursor: pointer;">Click here to expand </a></b>
@@ -131,31 +110,21 @@ p
 <p>
 </p>
 
-<img src="./man/figures/courses_grouped_bar_chart-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="./man/figures/articles/courses_grouped_bar_chart.svg" width="100%" />
 
-Suppose that the survey also asked the participants to rate their skills
-on a 5-point Likert scale, ranging from 1 (very poor) to 5 (very good)
-in:
+For a pre- and post comparison, suppose that the participants completed
+the survey both before and after taking the course. And suppose that
+participants’ assessments of their skills in:
 
-- Programming,
-- Searching Online,
-- Solving Problems.
+1.  Programming on average increased,
+2.  Searching online stayed about the same,
+3.  Solving problems increased in Course A, but decreased for
+    participants in Course B.
 
-The survey was completed by the participants both before and after
-taking the course for a pre and post-comparison. Suppose that
-participants’ assessments of:
-
-- Programming skills on average increased,
-- Searching Online stayed about the same,
-- Solving Problems increased in Course A, but decreased for participants
-  in Course B.
-
-Let’s simulate the survey data for this scenario (number of categories
-is `K = 5` by default):
+Let’s simulate the survey data for this scenario using a 5-point Likert
+scale (K = 5, by default):
 
 ``` r
-set.seed(12345) # to ensure reproducible results
-
 # Pre- and post assessments of skills: 1, 2, 3 for course A
 pre_A <- get_responses(n = 10, mu = c(-1, 0, 1))
 post_A <- get_responses(n = 10, mu = c(0, 0, 2))
@@ -165,8 +134,7 @@ pre_B <- get_responses(n = 20, mu = c(-1, 0, 1))
 post_B <- get_responses(n = 20, mu = c(0, 0, 0)) # <-- decrease for skill 3
 ```
 
-The grouped bar chart below displays the responses to Likert-scale
-questions before and after taking the course:
+Below is the grouped bar chart of the generated responses:
 <details>
 <summary>
 <b><a style="cursor: pointer;">Click here to expand </a></b>
@@ -245,20 +213,20 @@ p
 <p>
 </p>
 
-<img src="./man/figures/courses_stacked_bar_chart-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="./man/figures/articles/courses_stacked_bar_chart.svg" width="100%" />
 
 ### Replicating survey data
 
 The following sample code covers the topic of replicating survey data in
 order to create scale scores. For this, we will use part of [bfi
 dataset](https://search.r-project.org/CRAN/refmans/psych/html/bfi.html)
-from package psych. In particular, only the first 5 items A1-A5
-corresponding to agreeableness and attribute gender:
+from package psych. In particular, the first 5 items A1-A5 corresponding
+to agreeableness and attribute gender:
 
 ``` r
 library(psych)
-avars <- c("A1", "A2", "A3", "A4", "A5")
-data <- bfi[, c(avars, "gender")]
+vars <- c("A1", "A2", "A3", "A4", "A5")
+data <- bfi[, c(vars, "gender")]
 ```
 
 Each item was answered on a six point scale ranging from 1 (very
@@ -275,8 +243,8 @@ mapdf <- data.frame(old = 1:2, new = c("Male", "Female"))
 data$gender <- mapdf$new[match(data$gender, mapdf$old)]
 
 # Impute the missing values.
-for (avar in avars) {
-  data[, avar][is.na(data[, avar])] <- median(data[, avar], na.rm=TRUE)
+for (var in vars) {
+  data[, var][is.na(data[, var])] <- median(data[, var], na.rm=TRUE)
 }
 knitr::kable(head(data), format="html")
 table(data$gender)
@@ -459,8 +427,8 @@ Female
 Separate the items into two groups according to their gender.
 
 ``` r
-items_M <- data[data$gender == "Male", avars]
-items_F <- data[data$gender == "Female", avars]
+items_M <- data[data$gender == "Male", vars]
+items_F <- data[data$gender == "Female", vars]
 ```
 
 To reproduce the items, start by estimating the parameters of the latent
@@ -475,6 +443,9 @@ params_M
 #> estimates         A1         A2         A3         A4         A5
 #>        mu -0.6618876  0.8649575  0.7645033  0.8412600  0.7734527
 #>        sd  1.0967866  0.7925097  0.8540241  1.1957912  0.8910793
+```
+
+``` r
 params_F
 #>          items
 #> estimates         A1         A2         A3         A4         A5
@@ -503,7 +474,8 @@ new_items_F <- get_responses(n = nrow(items_F),
 
 To compare the results, we can plot the correlation matrix with bar
 charts on the diagonal:
-<img src="./man/figures/agree_items_correlations_comparison-1.png" width="80%" style="display: block; margin: auto;" />
+
+<img src="./man/figures/articles/agree_items_correlations_comparison.svg" width="100%" />
 
 The next step would be to create agreeableness scale scores for both
 groups of participants, by taking the average of these 5 items and
@@ -524,7 +496,7 @@ data$A1 <- (min(data$A1) + max(data$A1)) - data$A1
 new_data$Y1 <- (min(new_data$Y1) + max(new_data$Y1)) - new_data$Y1
 
 # Create agreeableness scale scores
-data$agreeable <- rowMeans(data[, avars])
+data$agreeable <- rowMeans(data[, vars])
 new_data$agreeable <- rowMeans(new_data[, c("Y1", "Y2", "Y3", "Y4", "Y5")])
 
 # And visualize the results with a grouped boxplot.
@@ -548,7 +520,7 @@ plot_grid(p1, p2,  nrow = 2)
 <p>
 </p>
 
-<img src="./man/figures/agreeableness_grouped_boxplot-1.png" width="60%" style="display: block; margin: auto;" />
+<img src="./man/figures/articles/agreeableness_grouped_boxplot.svg" width="100%" />
 
 ## Dependency statement
 
@@ -562,53 +534,12 @@ items with multivariate skew normal latent distribution. However, the
 package prompts the user to install this dependency during interactive
 sessions.
 
-## Simulation design
+## Further reading
 
-Simulating Likert item responses begins by selecting a continuous
-distribution, which is then transformed into a discrete probability
-distribution using a method called discretization. This process is
-illustrated in Figure 2.
-
-<div class="figure" style="text-align: center">
-
-<img src="./man/figures/simulation_process.png" alt="Figure 2: Flow diagram of the simulation process." width="70%" />
-<p class="caption">
-Figure 2: Flow diagram of the simulation process.
-</p>
-
-</div>
-
-The transformation is visually depicted in Figures 3 and 4. These
-figures show the densities of normally distributed X1 and X2 in Figure
-3A and skew normally distributed X1 and X2 with skewness `gamma1 = -0.6`
-in Figure 4A. Corresponding discrete probability distributions of Y1 and
-Y2 with `K = 5` categories are presented in Figures 3B and 4B.
-
-<div class="figure" style="text-align: center">
-
-<img src="./man/figures/mapping_normal.png" alt="Figure 3: Relationship between normally distributed X and responses Y." width="80%" />
-<p class="caption">
-Figure 3: Relationship between normally distributed X and responses Y.
-</p>
-
-</div>
-
-<div class="figure" style="text-align: center">
-
-<img src="./man/figures/mapping_skew.png" alt="Figure 4: Relationship between skew normal X with gamma1 = -0.6, and responses Y." width="80%" />
-<p class="caption">
-Figure 4: Relationship between skew normal X with gamma1 = -0.6, and
-responses Y.
-</p>
-
-</div>
-
-## Further Reading
-
-- [Quick
-  Overview](https://markolalovic.github.io/responsesR/articles/responsesR.html)
-- [Function
-  Documentation](https://markolalovic.github.io/responsesR/reference/index.html)
+- [Get
+  started](https://markolalovic.github.io/responsesR/articles/responsesR.html)
+- [Functions reference
+  documentation](https://markolalovic.github.io/responsesR/reference/index.html)
 - [Introduction to responsesR
   package](https://markolalovic.github.io/responsesR/articles/introduction_to_responsesR.html)
 
@@ -617,7 +548,5 @@ responses Y.
 Feel free to create issues for bugs or suggestions on the [issues
 page](https://github.com/markolalovic/responsesR/issues).
 
-You can also fork the responsesR repository, make your changes, and
-submit a pull request. Contributions may include bug fixes, new
-features, documentation improvements, or any other features you think
-will be useful.
+You can also make changes and submit a pull request. Contributions may
+include bug fixes, new features or documentation improvements.

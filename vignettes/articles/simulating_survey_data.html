@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Marko Lalovic" />
+
+
+<title>Simulating survey data</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Simulating survey data</h1>
+<h4 class="author">Marko Lalovic</h4>
+<h4 class="date">Last Updated: 2024-06-05</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#comparison-of-introductory-statistics-courses" id="toc-comparison-of-introductory-statistics-courses">Comparison of
+introductory statistics courses</a></li>
+<li><a href="#pre-and-post-comparison" id="toc-pre-and-post-comparison">Pre and post comparison</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</div>
+
+<!-- ../../man/figures/   or      man/figures/ -->
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># load responsesR</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(responsesR)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># optionally, to recreate the plots:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(ggh4x)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; Loading required package: ggplot2</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;ggh4x&#39;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:ggplot2&#39;:</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt;     guide_axis_logticks</span></span></code></pre></div>
+<!--
+   TODO: change <img src="../../reference/ ... /> to <img src="../reference/ ... /> 
+-->
+<p>This article covers the topic of simulating hypothetical survey data.
+The hypothetical survey simulation is roughly based on the actual
+comparative study on teaching and learning R in a pair of introductory
+statistics labs <span class="citation">(<a href="#ref-mcnamara2024teaching">McNamara 2024</a>)</span>.</p>
+<div id="comparison-of-introductory-statistics-courses" class="section level2">
+<h2>Comparison of introductory statistics courses</h2>
+<p>Imagine a situation in which 10 participants from Course A and 20
+participants from Course B have completed the survey. Suppose that the
+initial question was:</p>
+<blockquote>
+<p>“How would you rate your experience with the course?”</p>
+</blockquote>
+<p>with four possible answers:</p>
+<blockquote>
+<p>Poor, Fair, Good, and Excellent.</p>
+</blockquote>
+<p>Let’s assume that the participants in Course A were neutral regarding
+the question and participants in Course B had a more positive experience
+on average.</p>
+<p>By choosing appropriate parameters for the latent distributions and
+setting number of categories <code>K = 4</code>, we can generate
+hypothetical responses (standard deviation <code>sd = 1</code> and
+skewness <code>gamma1 = 0</code>, by default):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>) <span class="co"># to ensure reproducible results</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>course_A <span class="ot">&lt;-</span> <span class="fu">get_responses</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">K =</span> <span class="dv">4</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>course_B <span class="ot">&lt;-</span> <span class="fu">get_responses</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">mu =</span> <span class="dv">1</span>, <span class="at">K =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p>To summarize the results, create a data frame from all responses.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>ngroups <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>cats <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Poor&quot;</span>, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">Course =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="at">each=</span>K),</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="at">Response =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(cats, ngroups), <span class="at">levels=</span>cats),</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="at">Prop =</span> <span class="fu">c</span>(<span class="fu">get_prop_table</span>(course_A, K), <span class="fu">get_prop_table</span>(course_B, K)))</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>data <span class="ot">&lt;-</span> data[data<span class="sc">$</span>Prop <span class="sc">&gt;</span> <span class="dv">0</span>, ]</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(data, <span class="at">format=</span><span class="st">&quot;html&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Course
+</th>
+<th style="text-align:left;">
+Response
+</th>
+<th style="text-align:right;">
+Prop
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+Poor
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+Fair
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+Good
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+Excellent
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+Fair
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+Good
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+Excellent
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+</tr>
+</tbody>
+</table>
+<p>The results can then be visualized using a grouped bar chart.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>xbreaks <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> .<span class="dv">8</span>, <span class="at">length.out =</span> <span class="dv">5</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>xlimits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(data<span class="sc">$</span>Prop) <span class="sc">+</span> <span class="fl">0.01</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>xlabs <span class="ot">&lt;-</span> <span class="fu">sapply</span>(xbreaks, percentify)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>data<span class="sc">$</span>Course <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>Course, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;B&quot;</span>, <span class="st">&quot;A&quot;</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>data, <span class="fu">aes</span>(<span class="at">x=</span>Prop, <span class="at">y=</span>Response, <span class="at">fill=</span>Course)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="fu">position_dodge2</span>(<span class="at">preserve =</span> <span class="st">&quot;single&quot;</span>, <span class="at">padding =</span> <span class="dv">0</span>)) <span class="sc">+</span>  </span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> xbreaks, <span class="at">labels =</span> xlabs, <span class="at">limits =</span> xlimits) <span class="sc">+</span>  </span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">limits =</span> <span class="fu">rev</span>(<span class="fu">levels</span>(data<span class="sc">$</span>Response))) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;legend&quot;</span>, </span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#64BAAA&quot;</span>, <span class="st">&quot;#154E56&quot;</span>), </span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Course A&quot;</span>, <span class="st">&quot;Course B&quot;</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>                    <span class="at">limits =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;How would you rate your experience with the course?&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>))</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file=</span><span class="st">&quot;./man/figures/articles/courses_grouped_bar_chart.svg&quot;</span>, <span class="at">plot=</span>p, <span class="at">width=</span><span class="dv">10</span>, <span class="at">height=</span><span class="fl">3.3</span>)</span></code></pre></div>
+<p><svg id="svg_e3bcbc17f62024ef8fa4" width="100%" class="svglite" height="237.60pt" viewBox="0 0 720.00 237.60">
+<defs>
+  <style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style>
+</defs>
+<rect width="100%" height="100%" style="stroke: none; fill: #FFFFFF;" />
+<defs>
+  <clipPath id="svg_e3bcbc17f62024ef8fa4_cpMC4wMHw3MjAuMDB8MC4wMHwyMzcuNjA=">
+    <rect x="0.00" y="0.00" width="720.00" height="237.60" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHwyMzcuNjA=)">
+<rect x="0.00" y="0.00" width="720.00" height="237.60" style="stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;" />
+</g>
+<defs>
+  <clipPath id="svg_e3bcbc17f62024ef8fa4_cpNTUuODB8NjIzLjIyfDI1Ljk3fDIxNi42OA==">
+    <rect x="55.80" y="25.97" width="567.42" height="190.71" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpNTUuODB8NjIzLjIyfDI1Ljk3fDIxNi42OA==)">
+<rect x="55.80" y="25.97" width="567.42" height="190.71" style="stroke-width: 1.07; stroke: none; fill: #EBEBEB;" />
+<polyline points="159.75,216.68 159.75,25.97 " style="stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="316.06,216.68 316.06,25.97 " style="stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="472.37,216.68 472.37,25.97 " style="stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="55.80,189.44 623.22,189.44 " style="stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="55.80,144.03 623.22,144.03 " style="stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="55.80,98.62 623.22,98.62 " style="stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="55.80,53.22 623.22,53.22 " style="stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="81.59,216.68 81.59,25.97 " style="stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="237.90,216.68 237.90,25.97 " style="stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="394.22,216.68 394.22,25.97 " style="stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<polyline points="550.53,216.68 550.53,25.97 " style="stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;"></polyline>
+<rect x="81.59" y="189.44" width="508.02" height="20.43" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #154E56;" />
+<rect x="81.59" y="169.01" width="234.47" height="20.43" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #64BAAA;" />
+<rect x="81.59" y="144.03" width="195.39" height="20.43" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #154E56;" />
+<rect x="81.59" y="123.60" width="156.31" height="20.43" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #64BAAA;" />
+<rect x="81.59" y="98.62" width="78.16" height="20.43" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #154E56;" />
+<rect x="81.59" y="78.19" width="156.31" height="20.43" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #64BAAA;" />
+<rect x="81.59" y="43.00" width="234.47" height="20.43" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #64BAAA;" />
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHwyMzcuNjA=)">
+<text x="50.87" y="193.45" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="45.39px" lengthAdjust="spacingAndGlyphs">Excellent</text>
+<text x="50.87" y="148.05" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="27.37px" lengthAdjust="spacingAndGlyphs">Good</text>
+<text x="50.87" y="102.64" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="19.26px" lengthAdjust="spacingAndGlyphs">Fair</text>
+<text x="50.87" y="57.23" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="23.62px" lengthAdjust="spacingAndGlyphs">Poor</text>
+<polyline points="53.06,189.44 55.80,189.44 " style="stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;"></polyline>
+<polyline points="53.06,144.03 55.80,144.03 " style="stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;"></polyline>
+<polyline points="53.06,98.62 55.80,98.62 " style="stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;"></polyline>
+<polyline points="53.06,53.22 55.80,53.22 " style="stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;"></polyline>
+<polyline points="81.59,219.42 81.59,216.68 " style="stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;"></polyline>
+<polyline points="237.90,219.42 237.90,216.68 " style="stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;"></polyline>
+<polyline points="394.22,219.42 394.22,216.68 " style="stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;"></polyline>
+<polyline points="550.53,219.42 550.53,216.68 " style="stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;"></polyline>
+<text x="81.59" y="229.64" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="16.17px" lengthAdjust="spacingAndGlyphs">0%</text>
+<text x="237.90" y="229.64" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.39px" lengthAdjust="spacingAndGlyphs">20%</text>
+<text x="394.22" y="229.64" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.39px" lengthAdjust="spacingAndGlyphs">40%</text>
+<text x="550.53" y="229.64" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.39px" lengthAdjust="spacingAndGlyphs">60%</text>
+<rect x="634.17" y="98.57" width="80.35" height="45.52" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<rect x="639.65" y="104.05" width="17.28" height="17.28" style="stroke-width: 1.07; stroke: none; fill: #EBEBEB;" />
+<rect x="640.36" y="104.76" width="15.86" height="15.86" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #64BAAA;" />
+<rect x="639.65" y="121.33" width="17.28" height="17.28" style="stroke-width: 1.07; stroke: none; fill: #EBEBEB;" />
+<rect x="640.36" y="122.04" width="15.86" height="15.86" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #154E56;" />
+<text x="662.41" y="116.70" style="font-size: 11.20px; font-family: &quot;Arial&quot;;" textLength="46.63px" lengthAdjust="spacingAndGlyphs">Course A</text>
+<text x="662.41" y="133.98" style="font-size: 11.20px; font-family: &quot;Arial&quot;;" textLength="46.63px" lengthAdjust="spacingAndGlyphs">Course B</text>
+<text x="55.80" y="16.96" style="font-size: 16.00px; font-family: &quot;Arial&quot;;" textLength="379.75px" lengthAdjust="spacingAndGlyphs">How would you rate your experience with the course?</text>
+</g>
+</svg></p>
+</div>
+<div id="pre-and-post-comparison" class="section level2">
+<h2>Pre and post comparison</h2>
+<p>Now suppose that the survey also asked the participants to rate their
+skills on a 5-point Likert scale, ranging from 1 (very poor) to 5 (very
+good) in:</p>
+<ul>
+<li>Programming,</li>
+<li>Searching Online,</li>
+<li>Solving Problems.</li>
+</ul>
+<p>The survey was completed by the participants both before and after
+taking the course for a pre and post-comparison. Suppose that
+participants’ assessments of:</p>
+<ul>
+<li>Programming skills on average increased,</li>
+<li>Searching Online stayed about the same,</li>
+<li>Solving Problems increased in Course A, but decreased for
+participants in Course B.</li>
+</ul>
+<p>Let’s simulate the survey data for this scenario (number of
+categories is <code>K = 5</code> by default):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Pre- and post assessments of skills: 1, 2, 3 for course A</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>pre_A <span class="ot">&lt;-</span> <span class="fu">get_responses</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mu =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>post_A <span class="ot">&lt;-</span> <span class="fu">get_responses</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># Pre- and post assessments of skills: 1, 2, 3 for course B</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>pre_B <span class="ot">&lt;-</span> <span class="fu">get_responses</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">mu =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>post_B <span class="ot">&lt;-</span> <span class="fu">get_responses</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)) <span class="co"># &lt;-- decrease for skill 3</span></span></code></pre></div>
+<p>Create a data frame from all responses to summarize the results:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">list</span>(pre_A, post_A, pre_B, post_B)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>items <span class="ot">&lt;-</span> <span class="dv">6</span> <span class="co"># for 3 questions before and after</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># for a 5-point Likert scale</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>skills <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Programming&quot;</span>, <span class="st">&quot;Searching online&quot;</span>, <span class="st">&quot;Solving problems&quot;</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>questions <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">as.vector</span>(<span class="fu">sapply</span>(skills, <span class="cf">function</span>(skill) <span class="fu">rep</span>(skill, K))), <span class="dv">4</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>questions <span class="ot">&lt;-</span> <span class="fu">factor</span>(questions, <span class="at">levels =</span> skills)</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span> (</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="at">Course =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;Course A&quot;</span>, items <span class="sc">*</span> K), <span class="fu">rep</span>(<span class="st">&quot;Course B&quot;</span>, items <span class="sc">*</span> K)),</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>  <span class="at">Question =</span> questions,</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  <span class="at">Time =</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;before&quot;</span>, <span class="dv">3</span><span class="sc">*</span>K), <span class="fu">rep</span>(<span class="st">&quot;after&quot;</span>, <span class="dv">3</span><span class="sc">*</span>K)), <span class="dv">2</span>)),</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  <span class="at">resp =</span> <span class="fu">rep</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="dv">3</span>), <span class="fu">length</span>(data)),</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="at">prop =</span> <span class="fu">as.vector</span>(<span class="fu">sapply</span>(data, <span class="cf">function</span>(d) <span class="fu">as.vector</span>(<span class="fu">t</span>(<span class="fu">get_prop_table</span>(d, K))))))</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="fu">head</span>(data)</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;     Course         Question   Time resp prop</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; 1 Course A      Programming before    1  0.5</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; 2 Course A      Programming before    2  0.2</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; 3 Course A      Programming before    3  0.3</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; 4 Course A      Programming before    4  0.0</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; 5 Course A      Programming before    5  0.0</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; 6 Course A Searching online before    1  0.1</span></span></code></pre></div>
+<p>And visualize the results with a stacked bar chart:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>data_pos <span class="ot">&lt;-</span> data[data<span class="sc">$</span>resp <span class="sc">&gt;=</span> <span class="dv">4</span>, ]</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>data_neg <span class="ot">&lt;-</span> data[data<span class="sc">$</span>resp <span class="sc">&lt;=</span> <span class="dv">2</span>, ]</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>data_neu <span class="ot">&lt;-</span> data[data<span class="sc">$</span>resp <span class="sc">==</span> <span class="dv">3</span>, ]</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>data_neu<span class="sc">$</span>prop <span class="ot">&lt;-</span> data_neu<span class="sc">$</span>prop <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>data_pos <span class="ot">&lt;-</span> <span class="fu">rbind</span>(data_pos, data_neu)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>data_pos<span class="sc">$</span>resp <span class="ot">&lt;-</span> <span class="fu">factor</span>(data_pos<span class="sc">$</span>resp, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>))</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>data_neg <span class="ot">&lt;-</span> <span class="fu">rbind</span>(data_neg, data_neu)</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>data_neg<span class="sc">$</span>prop <span class="ot">&lt;-</span> (<span class="sc">-</span>data_neg<span class="sc">$</span>prop)</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>data_neg<span class="sc">$</span>resp <span class="ot">&lt;-</span> <span class="fu">factor</span>(data_neg<span class="sc">$</span>resp, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>color_palette <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">name =</span> <span class="st">&quot;BrBG&quot;</span>) </span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>color_palette[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;#bababaff&quot;</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> data_pos, <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> prop, <span class="at">fill =</span> resp)) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">data =</span> data_neg) <span class="sc">+</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>  <span class="fu">facet_nested</span>(</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">vars</span>(Question, Course), <span class="at">switch =</span> <span class="st">&quot;y&quot;</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>    <span class="at">strip =</span> <span class="fu">strip_nested</span>(<span class="at">size =</span> <span class="st">&quot;variable&quot;</span>),</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>    <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">Question =</span> <span class="fu">label_wrap_gen</span>(<span class="at">width =</span> <span class="dv">10</span>))</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;On a scale of 1 = Very poor to 5 = Very good, how would you rate your skills?&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.placement =</span> <span class="st">&quot;outside&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>    <span class="at">strip.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a>    <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="st">&quot;mm&quot;</span>),</span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Percentage&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.5</span>), </span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">100</span>)) <span class="sc">+</span> </span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">values =</span> color_palette,</span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Very poor&quot;</span>, <span class="st">&quot;Poor&quot;</span>, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very good&quot;</span>))</span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file=</span><span class="st">&quot;./man/figures/articles/courses_stacked_bar_chart.svg&quot;</span>, <span class="at">plot=</span>p, <span class="at">width=</span><span class="dv">10</span>, <span class="at">height=</span><span class="fl">5.6</span>)</span></code></pre></div>
+<p><svg id="svg_4228058f8f04d536c2a1" width="100%" class="svglite" height="403.20pt" viewBox="0 0 720.00 403.20">
+<defs>
+  <style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style>
+</defs>
+<rect width="100%" height="100%" style="stroke: none; fill: #FFFFFF;" />
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=">
+    <rect x="0.00" y="0.00" width="720.00" height="403.20" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+<rect x="-0.000000000000064" y="0.00" width="720.00" height="403.20" style="stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;" />
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMTU5LjY2fDcxNC41MnwyNS45N3w2OC42Mg==">
+    <rect x="159.66" y="25.97" width="554.87" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMTU5LjY2fDcxNC41MnwyNS45N3w2OC42Mg==)">
+<rect x="159.66" y="25.97" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<polyline points="247.93,68.62 247.93,25.97 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="374.03,68.62 374.03,25.97 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="500.14,68.62 500.14,25.97 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="626.25,68.62 626.25,25.97 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,56.99 714.52,56.99 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,37.60 714.52,37.60 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="184.88,68.62 184.88,25.97 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="310.98,68.62 310.98,25.97 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="437.09,68.62 437.09,25.97 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="563.19,68.62 563.19,25.97 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="689.30,68.62 689.30,25.97 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<rect x="474.92" y="28.88" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="474.92" y="28.88" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="474.92" y="48.26" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="525.36" y="48.26" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="437.09" y="28.88" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="437.09" y="48.26" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="222.71" y="28.88" width="126.11" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="348.81" y="28.88" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="298.37" y="48.26" width="100.88" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="437.09" y="48.26" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="399.26" y="28.88" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="399.26" y="48.26" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="159.66" y="25.97" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: #333333;" />
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMTU5LjY2fDcxNC41Mnw3NC4yOXwxMTYuOTM=">
+    <rect x="159.66" y="74.29" width="554.87" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMTU5LjY2fDcxNC41Mnw3NC4yOXwxMTYuOTM=)">
+<rect x="159.66" y="74.29" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<polyline points="247.93,116.93 247.93,74.29 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="374.03,116.93 374.03,74.29 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="500.14,116.93 500.14,74.29 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="626.25,116.93 626.25,74.29 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,105.30 714.52,105.30 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,85.92 714.52,85.92 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="184.88,116.93 184.88,74.29 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="310.98,116.93 310.98,74.29 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="437.09,116.93 437.09,74.29 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="563.19,116.93 563.19,74.29 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="689.30,116.93 689.30,74.29 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<rect x="462.31" y="77.19" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="487.53" y="77.19" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="449.70" y="96.58" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="525.36" y="96.58" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="437.09" y="77.19" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="437.09" y="96.58" width="12.61" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="235.32" y="77.19" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="310.98" y="77.19" width="100.88" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="348.81" y="96.58" width="12.61" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="361.42" y="96.58" width="63.05" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="411.87" y="77.19" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="424.48" y="96.58" width="12.61" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="159.66" y="74.29" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: #333333;" />
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMTU5LjY2fDcxNC41MnwxMzEuMTF8MTczLjc1">
+    <rect x="159.66" y="131.11" width="554.87" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMTU5LjY2fDcxNC41MnwxMzEuMTF8MTczLjc1)">
+<rect x="159.66" y="131.11" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<polyline points="247.93,173.75 247.93,131.11 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="374.03,173.75 374.03,131.11 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="500.14,173.75 500.14,131.11 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="626.25,173.75 626.25,131.11 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,162.12 714.52,162.12 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,142.74 714.52,142.74 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="184.88,173.75 184.88,131.11 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="310.98,173.75 310.98,131.11 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="437.09,173.75 437.09,131.11 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="563.19,173.75 563.19,131.11 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="689.30,173.75 689.30,131.11 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<rect x="487.53" y="134.01" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="563.19" y="134.01" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="462.31" y="153.40" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="537.97" y="153.40" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="437.09" y="134.01" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="437.09" y="153.40" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="310.98" y="134.01" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="336.20" y="134.01" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="285.76" y="153.40" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="310.98" y="153.40" width="100.88" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="386.65" y="134.01" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="411.87" y="153.40" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="159.66" y="131.11" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: #333333;" />
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMTU5LjY2fDcxNC41MnwxNzkuNDJ8MjIyLjA3">
+    <rect x="159.66" y="179.42" width="554.87" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMTU5LjY2fDcxNC41MnwxNzkuNDJ8MjIyLjA3)">
+<rect x="159.66" y="179.42" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<polyline points="247.93,222.07 247.93,179.42 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="374.03,222.07 374.03,179.42 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="500.14,222.07 500.14,179.42 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="626.25,222.07 626.25,179.42 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,210.44 714.52,210.44 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,191.05 714.52,191.05 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="184.88,222.07 184.88,179.42 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="310.98,222.07 310.98,179.42 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="437.09,222.07 437.09,179.42 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="563.19,222.07 563.19,179.42 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="689.30,222.07 689.30,179.42 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<rect x="462.31" y="182.33" width="88.27" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="550.58" y="182.33" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="474.92" y="201.72" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="512.75" y="201.72" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="437.09" y="182.33" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="437.09" y="201.72" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="323.59" y="182.33" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="361.42" y="182.33" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="298.37" y="201.72" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="348.81" y="201.72" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="411.87" y="182.33" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="399.26" y="201.72" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="159.66" y="179.42" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: #333333;" />
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMTU5LjY2fDcxNC41MnwyMzYuMjR8Mjc4Ljg5">
+    <rect x="159.66" y="236.24" width="554.87" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMTU5LjY2fDcxNC41MnwyMzYuMjR8Mjc4Ljg5)">
+<rect x="159.66" y="236.24" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<polyline points="247.93,278.89 247.93,236.24 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="374.03,278.89 374.03,236.24 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="500.14,278.89 500.14,236.24 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="626.25,278.89 626.25,236.24 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,267.26 714.52,267.26 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,247.87 714.52,247.87 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="184.88,278.89 184.88,236.24 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="310.98,278.89 310.98,236.24 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="437.09,278.89 437.09,236.24 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="563.19,278.89 563.19,236.24 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="689.30,278.89 689.30,236.24 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<rect x="462.31" y="239.15" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="537.97" y="239.15" width="100.88" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="437.09" y="258.54" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="512.75" y="258.54" width="176.55" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="437.09" y="239.15" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="437.09" y="258.54" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="437.09" y="239.15" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="386.65" y="239.15" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="437.09" y="258.54" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="437.09" y="258.54" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="411.87" y="239.15" width="25.22" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="437.09" y="258.54" width="0.00" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="159.66" y="236.24" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: #333333;" />
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMTU5LjY2fDcxNC41MnwyODQuNTZ8MzI3LjIx">
+    <rect x="159.66" y="284.56" width="554.87" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMTU5LjY2fDcxNC41MnwyODQuNTZ8MzI3LjIx)">
+<rect x="159.66" y="284.56" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<polyline points="247.93,327.21 247.93,284.56 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="374.03,327.21 374.03,284.56 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="500.14,327.21 500.14,284.56 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="626.25,327.21 626.25,284.56 " style="stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,315.58 714.52,315.58 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="159.66,296.19 714.52,296.19 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="184.88,327.21 184.88,284.56 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="310.98,327.21 310.98,284.56 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="437.09,327.21 437.09,284.56 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="563.19,327.21 563.19,284.56 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<polyline points="689.30,327.21 689.30,284.56 " style="stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;"></polyline>
+<rect x="456.00" y="287.47" width="88.27" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="544.28" y="287.47" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="474.92" y="306.85" width="75.66" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="550.58" y="306.85" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<rect x="437.09" y="287.47" width="18.92" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="437.09" y="306.85" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="367.73" y="287.47" width="12.61" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="380.34" y="287.47" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="336.20" y="306.85" width="12.61" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="348.81" y="306.85" width="50.44" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="418.17" y="287.47" width="18.92" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="399.26" y="306.85" width="37.83" height="17.45" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="159.66" y="284.56" width="554.87" height="42.65" style="stroke-width: 1.07; stroke: #333333;" />
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDI1Ljk3fDExNi45Mw==">
+    <rect x="21.36" y="25.97" width="98.91" height="90.96" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDI1Ljk3fDExNi45Mw==)">
+<rect x="21.36" y="25.97" width="56.79" height="90.96" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="49.75" y="74.32" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="48.02px" lengthAdjust="spacingAndGlyphs">Programming</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDEzMS4xMXwyMjIuMDc=">
+    <rect x="21.36" y="131.11" width="98.91" height="90.96" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDEzMS4xMXwyMjIuMDc=)">
+<rect x="21.36" y="131.11" width="56.79" height="90.96" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="49.75" y="175.14" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="36.03px" lengthAdjust="spacingAndGlyphs">Searching</text>
+<text x="49.75" y="183.78" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="21.36px" lengthAdjust="spacingAndGlyphs">online</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDIzNi4yNHwzMjcuMjE=">
+    <rect x="21.36" y="236.24" width="98.91" height="90.96" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDIzNi4yNHwzMjcuMjE=)">
+<rect x="21.36" y="236.24" width="56.79" height="90.96" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="49.75" y="280.27" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="26.24px" lengthAdjust="spacingAndGlyphs">Solving</text>
+<text x="49.75" y="288.91" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="32.91px" lengthAdjust="spacingAndGlyphs">problems</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDI1Ljk3fDY4LjYy">
+    <rect x="21.36" y="25.97" width="98.91" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDI1Ljk3fDY4LjYy)">
+<rect x="78.15" y="25.97" width="42.12" height="42.65" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="99.21" y="50.16" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="33.35px" lengthAdjust="spacingAndGlyphs">Course A</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDc0LjI5fDExNi45Mw==">
+    <rect x="21.36" y="74.29" width="98.91" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDc0LjI5fDExNi45Mw==)">
+<rect x="78.15" y="74.29" width="42.12" height="42.65" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="99.21" y="98.48" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="33.35px" lengthAdjust="spacingAndGlyphs">Course B</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDEzMS4xMXwxNzMuNzU=">
+    <rect x="21.36" y="131.11" width="98.91" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDEzMS4xMXwxNzMuNzU=)">
+<rect x="78.15" y="131.11" width="42.12" height="42.65" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="99.21" y="155.30" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="33.35px" lengthAdjust="spacingAndGlyphs">Course A</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDE3OS40MnwyMjIuMDc=">
+    <rect x="21.36" y="179.42" width="98.91" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDE3OS40MnwyMjIuMDc=)">
+<rect x="78.15" y="179.42" width="42.12" height="42.65" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="99.21" y="203.62" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="33.35px" lengthAdjust="spacingAndGlyphs">Course B</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDIzNi4yNHwyNzguODk=">
+    <rect x="21.36" y="236.24" width="98.91" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDIzNi4yNHwyNzguODk=)">
+<rect x="78.15" y="236.24" width="42.12" height="42.65" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="99.21" y="260.44" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="33.35px" lengthAdjust="spacingAndGlyphs">Course A</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+</g>
+<defs>
+  <clipPath id="svg_4228058f8f04d536c2a1_cpMjEuMzZ8MTIwLjI3fDI4NC41NnwzMjcuMjE=">
+    <rect x="21.36" y="284.56" width="98.91" height="42.65" />
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMjEuMzZ8MTIwLjI3fDI4NC41NnwzMjcuMjE=)">
+<rect x="78.15" y="284.56" width="42.12" height="42.65" style="stroke-width: 1.07; stroke: #333333; fill: #D9D9D9;" />
+<text x="99.21" y="308.75" text-anchor="middle" style="font-size: 8.00px;fill: #1A1A1A; font-family: &quot;Arial&quot;;" textLength="33.35px" lengthAdjust="spacingAndGlyphs">Course B</text>
+</g>
+<g clip-path="url(#cpMC4wMHw3MjAuMDB8MC4wMHw0MDMuMjA=)">
+<text x="184.88" y="340.17" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="18.66px" lengthAdjust="spacingAndGlyphs">100</text>
+<text x="310.98" y="340.17" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="12.44px" lengthAdjust="spacingAndGlyphs">50</text>
+<text x="437.09" y="340.17" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="6.22px" lengthAdjust="spacingAndGlyphs">0</text>
+<text x="563.19" y="340.17" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="12.44px" lengthAdjust="spacingAndGlyphs">50</text>
+<text x="689.30" y="340.17" text-anchor="middle" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="18.66px" lengthAdjust="spacingAndGlyphs">100</text>
+<text x="154.72" y="61.00" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.38px" lengthAdjust="spacingAndGlyphs">after</text>
+<text x="154.72" y="41.62" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="31.72px" lengthAdjust="spacingAndGlyphs">before</text>
+<text x="154.72" y="109.32" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.38px" lengthAdjust="spacingAndGlyphs">after</text>
+<text x="154.72" y="89.93" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="31.72px" lengthAdjust="spacingAndGlyphs">before</text>
+<text x="154.72" y="166.14" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.38px" lengthAdjust="spacingAndGlyphs">after</text>
+<text x="154.72" y="146.75" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="31.72px" lengthAdjust="spacingAndGlyphs">before</text>
+<text x="154.72" y="214.45" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.38px" lengthAdjust="spacingAndGlyphs">after</text>
+<text x="154.72" y="195.07" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="31.72px" lengthAdjust="spacingAndGlyphs">before</text>
+<text x="154.72" y="271.27" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.38px" lengthAdjust="spacingAndGlyphs">after</text>
+<text x="154.72" y="251.89" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="31.72px" lengthAdjust="spacingAndGlyphs">before</text>
+<text x="154.72" y="319.59" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="22.38px" lengthAdjust="spacingAndGlyphs">after</text>
+<text x="154.72" y="300.20" text-anchor="end" style="font-size: 11.20px;fill: #4D4D4D; font-family: &quot;Arial&quot;;" textLength="31.72px" lengthAdjust="spacingAndGlyphs">before</text>
+<text x="437.09" y="355.43" text-anchor="middle" style="font-size: 14.00px; font-family: &quot;Arial&quot;;" textLength="71.59px" lengthAdjust="spacingAndGlyphs">Percentage</text>
+<rect x="278.88" y="369.48" width="316.41" height="28.24" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<rect x="284.36" y="374.96" width="17.28" height="17.28" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<rect x="285.07" y="375.67" width="15.86" height="15.86" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #A6611A;" />
+<rect x="361.09" y="374.96" width="17.28" height="17.28" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<rect x="361.80" y="375.67" width="15.86" height="15.86" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DFC27D;" />
+<rect x="412.96" y="374.96" width="17.28" height="17.28" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<rect x="413.67" y="375.67" width="15.86" height="15.86" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="413.67" y="375.67" width="15.86" height="15.86" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #BABABA;" />
+<rect x="460.46" y="374.96" width="17.28" height="17.28" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<rect x="461.16" y="375.67" width="15.86" height="15.86" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #80CDC1;" />
+<rect x="516.06" y="374.96" width="17.28" height="17.28" style="stroke-width: 1.07; stroke: none; fill: #FFFFFF;" />
+<rect x="516.77" y="375.67" width="15.86" height="15.86" style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #018571;" />
+<text x="307.12" y="387.62" style="font-size: 11.20px; font-family: &quot;Arial&quot;;" textLength="48.49px" lengthAdjust="spacingAndGlyphs">Very poor</text>
+<text x="383.85" y="387.62" style="font-size: 11.20px; font-family: &quot;Arial&quot;;" textLength="23.62px" lengthAdjust="spacingAndGlyphs">Poor</text>
+<text x="435.72" y="387.62" style="font-size: 11.20px; font-family: &quot;Arial&quot;;" textLength="19.26px" lengthAdjust="spacingAndGlyphs">Fair</text>
+<text x="483.22" y="387.62" style="font-size: 11.20px; font-family: &quot;Arial&quot;;" textLength="27.37px" lengthAdjust="spacingAndGlyphs">Good</text>
+<text x="538.82" y="387.62" style="font-size: 11.20px; font-family: &quot;Arial&quot;;" textLength="50.99px" lengthAdjust="spacingAndGlyphs">Very good</text>
+<text x="159.66" y="16.96" style="font-size: 16.00px; font-family: &quot;Arial&quot;;" textLength="547.82px" lengthAdjust="spacingAndGlyphs">On a scale of 1 = Very poor to 5 = Very good, how would you rate your skills?</text>
+</g>
+</svg></p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-mcnamara2024teaching" class="csl-entry">
+McNamara, Amelia. 2024. <span>“Teaching Modeling in Introductory
+Statistics: A Comparison of Formula and Tidyverse Syntaxes.”</span> <a href="https://arxiv.org/abs/2201.12960">https://arxiv.org/abs/2201.12960</a>.
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

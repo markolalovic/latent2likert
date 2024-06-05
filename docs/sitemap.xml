@@ -1,108 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://markolalovic.github.io/responsesR/404.html</loc>
+    <loc>/404.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/LICENSE-text.html</loc>
+    <loc>/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/articles/index.html</loc>
+    <loc>/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/articles/introduction_to_responsesR.html</loc>
+    <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/articles/replicating_survey_data.html</loc>
+    <loc>/articles/introduction_to_responsesR.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/articles/responsesR.html</loc>
+    <loc>/articles/replicating_survey_data.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/articles/simulating_survey_data.html</loc>
+    <loc>/articles/responsesR.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/authors.html</loc>
+    <loc>/articles/simulating_survey_data.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/index.html</loc>
+    <loc>/authors.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/convert_params.html</loc>
+    <loc>/index.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/cor2cov.html</loc>
+    <loc>/reference/convert_params.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/d_skew_normal.html</loc>
+    <loc>/reference/cor2cov.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/delta_skew_normal.html</loc>
+    <loc>/reference/d_skew_normal.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/estimate_mu_sd.html</loc>
+    <loc>/reference/delta_skew_normal.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/estimate_parameters.html</loc>
+    <loc>/reference/estimate_mu_sd.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_MSE.html</loc>
+    <loc>/reference/estimate_parameters.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_new_rk.html</loc>
+    <loc>/reference/get_MSE.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_new_xk.html</loc>
+    <loc>/reference/get_new_rk.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_pk.html</loc>
+    <loc>/reference/get_new_xk.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_pk_mean.html</loc>
+    <loc>/reference/get_pk.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_pk_var.html</loc>
+    <loc>/reference/get_pk_mean.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_prop_table.html</loc>
+    <loc>/reference/get_pk_var.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_rand_corr_matrix.html</loc>
+    <loc>/reference/get_prop_table.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_random_cp.html</loc>
+    <loc>/reference/get_rand_corr_matrix.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_responses.html</loc>
+    <loc>/reference/get_random_cp.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_univariate_responses.html</loc>
+    <loc>/reference/get_responses.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/index.html</loc>
+    <loc>/reference/get_univariate_responses.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/mean_skew_normal.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/pad_levels.html</loc>
+    <loc>/reference/mean_skew_normal.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/percentify.html</loc>
+    <loc>/reference/pad_levels.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/plot_contour.html</loc>
+    <loc>/reference/percentify.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/run_Lloyd.html</loc>
+    <loc>/reference/plot_contour.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/scale_and_shift.html</loc>
+    <loc>/reference/run_Lloyd.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/simulate_responses.html</loc>
+    <loc>/reference/scale_and_shift.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/var_skew_normal.html</loc>
+    <loc>/reference/simulate_responses.html</loc>
+  </url>
+  <url>
+    <loc>/reference/var_skew_normal.html</loc>
   </url>
 </urlset>

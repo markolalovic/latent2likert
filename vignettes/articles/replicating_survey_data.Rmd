@@ -10,16 +10,17 @@ vignette: >
 bibliography: references.bib
 link-citations: true
 ---
+<!--
+   TODO: change <img src="../../reference/ ... /> to <img src="../reference/ ... /> 
+-->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
   collapse = TRUE,
   comment = "#>",
-  fig.path = "../man/figures/",
-  dpi=450,
-  fig.width=7,
-  out.width = "98%")
+  fig.path = "../man/figures/articles/",
+  dev = "svg")
 ```
 
 ```{r}
@@ -47,8 +48,8 @@ The personality items are split into 5 categories: agreeableness A1-5, conscient
 
 Let's focus only on the first 5 items corresponding to agreeableness. To investigate the differences in agreeableness between men and women we will also use the gender attribute.
 ```{r}
-avars <- c("A1", "A2", "A3", "A4", "A5")
-data <- bfi[, c(avars, "gender")]
+vars <- c("A1", "A2", "A3", "A4", "A5")
+data <- bfi[, c(vars, "gender")]
 mapdf <- data.frame(old = 1:2, new = c("Male", "Female")) # Males = 1, Females =2
 data$gender <- mapdf$new[match(data$gender, mapdf$old)]
 head(data)
@@ -61,8 +62,8 @@ apply(data, 2, function(x) sum(is.na(x))/length(x))
 
 Impute the missing values.
 ```{r}
-for (avar in avars) {
-  data[, avar][is.na(data[, avar])] <- median(data[, avar], na.rm=TRUE)
+for (var in vars) {
+  data[, var][is.na(data[, var])] <- median(data[, var], na.rm=TRUE)
 }
 ```
 
@@ -79,10 +80,8 @@ table(data$gender)
 
 Separate the items into two groups according to their gender.
 ```{r}
-avars <- c("A1", "A2", "A3", "A4", "A5")
-
-items_M <- data[data$gender == "Male", avars]
-items_F <- data[data$gender == "Female", avars]
+items_M <- data[data$gender == "Male", vars]
+items_F <- data[data$gender == "Female", vars]
 ```
 
 To reproduce the items, start by estimating the parameters of the latent variables, assuming they are normal and providing the number of possible response categories 'K = 6':
@@ -114,7 +113,7 @@ Let's compare the results, by plotting the correlations matrix with bar charts o
 ```{r}
 corr_plot <- function(df, title="") {
   pairs <- ggpairs(df, 
-                   upper = list(continuous = wrap(ggally_cor, stars=F, size=2)),
+                   upper = list(continuous = wrap(ggally_cor, stars=F, size=5)),
                    diag = "blank", lower = "blank")
   
   dff <- data.frame(df)
@@ -123,8 +122,8 @@ corr_plot <- function(df, title="") {
   }
   pairsf <- ggpairs(dff, upper="blank", lower="blank", title=title) + 
     theme(axis.line=element_blank(),
-          text = element_text(size = 8),
-          plot.title = element_text(size=10),
+          text = element_text(size = 14),
+          plot.title = element_text(size = 16),
           axis.text=element_blank(), 
           axis.ticks=element_blank())
   for(i in 1:ncol(df)) {
@@ -138,16 +137,18 @@ corr_plot <- function(df, title="") {
 }
 ```
 
-```{r agree_items_correlations_comparison, fig.height=6.8}
+```{r}
 p1 <- corr_plot(items_M, "Agreeableness items for man")
 p2 <- corr_plot(new_items_M, "Reproduced agreeableness items for man")
 
 p3 <- corr_plot(items_F, "Agreeableness items for women")
 p4 <- corr_plot(new_items_F, "Reproduced agreeableness items for women")
-plot_grid(ggmatrix_gtable(p1), ggmatrix_gtable(p2),
-          ggmatrix_gtable(p3), ggmatrix_gtable(p4),  ncol = 2)
+p <- plot_grid(ggmatrix_gtable(p1), ggmatrix_gtable(p2), ggmatrix_gtable(p3), ggmatrix_gtable(p4),  ncol = 2)
+ggsave(file="./man/figures/articles/agree_items_correlations_comparison.svg", plot=p, width=10, height=10)
 ```
-
+```{r agree_items_correlations_comparison, fig.height=10, out.width = "100%", echo = FALSE}
+knitr::include_graphics("./man/figures/articles/agree_items_correlations_comparison.svg")
+```
 
 ## Recreating scale scores
 The next step would be to create agreeableness scale scores for both groups of participants, by taking the average of these 5 items.
@@ -162,7 +163,7 @@ data$A1 <- (min(data$A1) + max(data$A1)) - data$A1
 new_data$Y1 <- (min(new_data$Y1) + max(new_data$Y1)) - new_data$Y1
 
 # Create agreeableness scale scores
-data$agreeable <- rowMeans(data[, avars])
+data$agreeable <- rowMeans(data[, vars])
 new_data$agreeable <- rowMeans(new_data[, c("Y1", "Y2", "Y3", "Y4", "Y5")])
 ```
 
@@ -174,17 +175,22 @@ scale_boxplot <- function(data, title="") {
     geom_boxplot() +
     scale_x_continuous(breaks = xbreaks) +
     ggtitle(title) +
-    theme(text = element_text(size = 8),
-          plot.title = element_text(size=10),          
+    theme(text = element_text(size = 14),
+          plot.title = element_text(size = 16),          
           axis.title.y = element_blank())
   return(p)
 }
 ```
 
-```{r agreeableness_grouped_boxplot, fig.height=4.8}
+```{r}
 p1 <- scale_boxplot(data, "Agreeableness in men and women")
 p2 <- scale_boxplot(new_data, "Reproduced agreeableness in men and women")
-plot_grid(p1, p2,  nrow = 2)
+p <- plot_grid(p1, p2,  nrow = 2)
+ggsave(file="./man/figures/articles/agreeableness_grouped_boxplot.svg", plot=p, width=10, height=4.8)
+```
+
+```{r agreeableness_grouped_boxplot, fig.height=4.8, out.width = "100%", echo = FALSE}
+knitr::include_graphics("./man/figures/articles/agreeableness_grouped_boxplot.svg")
 ```
 
 Finally, let's also run Welch's t-test to test if men and women differ on agreeableness using both data sets:

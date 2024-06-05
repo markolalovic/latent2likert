@@ -1,13 +1,10 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   introduction_to_responsesR: introduction_to_responsesR.html
   replicating_survey_data: replicating_survey_data.html
-  simulating_survey_data: simulating_survey_data.html
   responsesR: responsesR.html
-last_built: 2024-03-28T11:07Z
-urls:
-  reference: https://markolalovic.github.io/responsesR/reference
-  article: https://markolalovic.github.io/responsesR/articles
+  simulating_survey_data: simulating_survey_data.html
+last_built: 2024-06-05T21:31Z
 

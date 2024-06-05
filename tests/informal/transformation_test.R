@@ -37,7 +37,7 @@ density_plot <- function(params1,
       scale_linetype_manual(values = c("solid", "32"), labels = density_labels) +
       theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(), axis.line = element_line(colour = "black"),
-            legend.position.inside = c(0.22, 0.9),
+            legend.position = c(0.22, 0.9),
             legend.title=element_blank(),
             text = element_text(size = element_text_size),
             legend.text=element_text(size=legend_text_size))

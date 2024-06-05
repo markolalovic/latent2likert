@@ -15,50 +15,52 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "../man/figures/get_started/",
-  dpi=250,
-  fig.width=7,
-  out.width = "98%")
+  dev = "svg")
 ```
 
-This introduction provides a quick overview of the responsesR package:
+This is a quick overview of the responsesR package:
 
-* [1 Generating random item responses](#generating-random-responses)
+* [Generating random item responses](#generating-random-responses)
 
-* [2 Adjusting correlations between latent variables](#adjusting-correlations)
+* [Correlations between latent variables](#adjusting-correlations)
 
-* [3 Adjusting parameters of the latent distribution](#adjusting-parameters)
+* [Parameters of the latent distribution](#adjusting-parameters)
 
-    - [3.1 Adjusting the mean](#adjusting-the-mean)
+    - [Mean](#adjusting-the-mean)
     
-    - [3.2 Standard deviation](#adjusting-sd)
+    - [Standard deviation](#adjusting-sd)
     
-    - [3.3 Skewness](#adjusting-skewness)
+    - [Skewness](#adjusting-skewness)
     
-* [4 Estimation of latent parameters](#estimation-of-parameters)
+* [Estimation of latent parameters](#estimation-of-parameters)
 
-* [5 Reconstruction of latent parameters](#resonstruction-of-parameters)
+* [Reconstruction of latent parameters](#resonstruction-of-parameters)
 
 
-## 1 Generating random item responses {#generating-random-responses}
+## Generating random item responses {#generating-random-responses}
+First, load the package responsesR, and set seed for reproducibility:
+```{r}
+library(responsesR) 
+set.seed(12345)
+```
+
 To generate `n = 10` responses with `K = 5` response categories (on a 5-point Likert scale), use:
 ```{r}
-library(responsesR) # Load responsesR
-set.seed(12345) # For reproducibility
 get_responses(n = 10, K = 5)
 ```
 
-For generating responses to multiple items on different scales, e.g. with 4, 5, and 6 categories, use:
+To generate `n = 100` responses to multiple Likert items on different scales (for example K = 4, 5, 6), use:
 ```{r}
 data <- get_responses(n = 100, K = c(4, 5, 6))
 ```
 
-The result is an array of simulated responses, where columns correspond to the Likert items:
+The result is an array of simulated responses, where columns represent responses to Likert items:
 ```{r}
 head(data)
 ```
 
 The corresponding bar plots are shown below:
-```{r random_responses_barplots, fig.height=3}
+```{r random_responses_barplots, fig.height=3, fig.width=10, fig.ext="svg"}
 par(mfrow=c(1, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -66,7 +68,7 @@ for(i in 1:3) {
 }
 ```
 
-## 2 Adjusting correlations between latent variables {#adjusting-correlations}
+## Correlations between latent variables {#adjusting-correlations}
 To set a specific correlation between latent variables, such as 0.5, set `R = 0.5`:
 ```{r}
 data <- get_responses(n = 1000, K = c(4, 5, 6), R = 0.5)
@@ -86,25 +88,23 @@ data <- get_responses(n = 1000, K = c(4, 5, 6), R = R)
 cor(data)
 ```
 
-To employ a random correlation matrix, set `R = "random"`:
+To use a random correlation matrix, set `R = "random"`:
 ```{r}
 data <- get_responses(n = 1000, K = c(4, 5, 6), R = "random")
 cor(data)
 ```
 
-## 3 Adjusting parameters of the latent distribution {#adjusting-parameters}
-By default, the function `get_responses` utilizes a standard normal latent distribution and generates symmetrically distributed responses.
+## Parameters of the latent distribution {#adjusting-parameters}
+By default, the function `get_responses` generates symmetrically distributed responses. To introduce asymmetry and alter the properties of hypothetical survey respondents, adjust the mean `mu`, standard deviation `sd`, and skewness `gamma1` of the latent distribution.
 
-To introduce asymmetries and alter the properties of hypothetical survey respondents, adjust parameters `mu`, `sd`, and `gamma1` of the corresponding latent distribution.
-
-### 3.1 Adjusting the mean {#adjusting-the-mean}
+### Mean {#adjusting-the-mean}
 To generate responses from latent distributions with different means, you can set the means using the `mu` parameter. For example, to set the means of latent distributions to -1, 0, and 1, execute:
 ```{r}
 data <- get_responses(n = 1000, mu = c(-1, 0, 1))
 ```
 
 The generated responses and the corresponding densities of latent distributions are displayed below.
-```{r adjusting_the_mean, fig.height=6, fig.width=10}
+```{r adjusting_the_mean, fig.height=6, fig.width=10, fig.ext="svg"}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -118,14 +118,14 @@ for(i in 1:3) {
 }
 ```
 
-### 3.2 Standard deviation {#adjusting-sd}
+### Standard deviation {#adjusting-sd}
 You can adjust the standard deviations of latent distributions using the `sd` parameter. For instance, specifying `sd = c(0.5, 1, 1.5)`:
 ```{r}
 data <- get_responses(n = 1000, sd = c(0.5, 1, 1.5))
 ```
 
 This generates the following responses with corresponding densities of latent distributions depicted below:
-```{r adjusting_the_sd, fig.height=6, fig.width=10}
+```{r adjusting_the_sd, fig.height=6, fig.width=10, fig.ext="svg"}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -138,14 +138,14 @@ for(i in 1:3) {
 }
 ```
 
-### 3.3 Skewness {#adjusting-skewness}
+### Skewness {#adjusting-skewness}
 You can adjust the skewness of latent distributions using the `gamma1` parameter. For instance, specifying `gamma1 = c(-0.5, 0, 0.5)` sets the skewness of latent distributions to -0.5, 0, and 0.5:
 ```{r}
 data <- get_responses(n = 10^6, gamma1 = c(-0.5, 0, 0.5))
 ```
 
 The resulting responses with corresponding densities of latent distributions are displayed below:
-```{r adjusting_the_skewness, fig.height=6, fig.width=10}
+```{r adjusting_the_skewness, fig.height=6, fig.width=10, fig.ext="svg"}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -168,20 +168,13 @@ $$
 -0.95 \leq \text{gamma1} \leq 0.95
 $$
 
-A positive value makes the distribution right-skewed, while a negative value makes it left-skewed. 
+A positive value makes the distribution right-skewed, while a negative value makes it left-skewed.
 
-The [skew normal distribution](https://en.wikipedia.org/wiki/Skew_normal_distribution) is utilized as the latent distribution if `gamma1 != 0`. This can be observed by increasing the sample size and the number of response categories:
-```{r manifest_skew_normal_distribution, fig.height=4}
-data <- get_responses(n = 10^6, K = 100, gamma1 = -0.7)
-par(mfrow=c(1, 1))
-barplot(table(data)/10^6)
-```
-
-## 4 Estimation of latent parameters {#estimation-of-parameters}
+## Estimation of latent parameters {#estimation-of-parameters}
 In order to replicate existing survey data, you can estimate the parameters of latent distributions using the function `estimate_parameters`.
 
 As an illustration, let's generate 1000 responses with an underlying normal distribution having `mu = -0.5` and `sd = 0.5`, and assuming there are `K = 5` response categories. Note that not all possible categories may have responses. In this example, `n`, `mu`, and `sd` are chosen such that no responses have a value of 5:
-```{r estimation_of_parameters_example, fig.height=4}
+```{r estimation_of_parameters_example, fig.height=4, fig.width=4, fig.ext="svg"}
 set.seed(12345)
 data <- get_responses(n = 1000, mu = -0.5, sd = 0.5, K = 5)
 par(mfrow=c(1, 1))
@@ -194,7 +187,7 @@ estimate_parameters(data, K = 5)
 ```
 
 You can also provide responses to multiple items. For instance, if we generate responses to three items with different latent parameter values:
-```{r estimation_of_parameters_for_multiple_items, fig.height=4, fig.width=10}
+```{r estimation_of_parameters_for_multiple_items, fig.height=4, fig.width=10, fig.ext="svg"}
 data <- get_responses(n = 1000,
                       mu = c(1, 2, 3),
                       sd = c(0.5, 1, 1.5),
@@ -212,7 +205,7 @@ estimate_parameters(data, K = c(5, 6, 7))
 ```
 
 To ensure good results, it is crucial to provide a large enough sample of responses, say `n > 200`. Otherwise, the estimated values may vary and deviate significantly from actual values. For instance, if we generate 100 observations from the same underlying latent distribution:
-```{r estimation_of_parameters_small_sample, fig.height=4, fig.width=10}
+```{r estimation_of_parameters_small_sample, fig.height=4, fig.width=10, fig.ext="svg"}
 data <- get_responses(n = 100,
                       mu = c(1, 2, 3),
                       sd = c(0.5, 1, 1.5),
@@ -228,7 +221,7 @@ Then, although the latent distributions are the same as before, the estimated va
 estimate_parameters(data, K = c(5, 6, 7))
 ```
 
-## 5 Reconstruction of latent parameters {#resonstruction-of-parameters}
+## Reconstruction of latent parameters {#resonstruction-of-parameters}
 You can also reconstruct the parameter values of the latent distribution based on the discrete probability distribution over possible response categories 1 through K. For instance, assuming the latent variable follows a normal distribution with 5 response categories, the function `estimate_mu_sd` can accurately recover the parameters `mu` and `sd`:
 ```{r}
 pk <- list("1" = 0.313, "2" = 0.579, "3" = 0.105, "4" = 0.003)

@@ -2,7 +2,7 @@
 title: "Simulating survey data"
 author: "Marko Lalovic"
 date: "Last Updated: `r Sys.Date()`"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
@@ -12,17 +12,14 @@ vignette: >
 bibliography: references.bib
 link-citations: true
 ---
-<!-- ../../man/figures/
-man/figures/-->
+<!-- ../../man/figures/   or      man/figures/ -->
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
   collapse = TRUE,
   comment = "#>",
-  fig.path = "../man/figures/",
-  dpi=450,
-  fig.width=7,
-  out.width = "98%")
+  fig.path = "./man/figures/articles/",
+  dev = "svg")
 ```
 
 ```{r}
@@ -33,6 +30,9 @@ library(responsesR)
 library(RColorBrewer)
 library(ggh4x)
 ```
+<!--
+   TODO: change <img src="../../reference/ ... /> to <img src="../reference/ ... /> 
+-->
 
 This article covers the topic of simulating hypothetical survey data. The hypothetical survey simulation is roughly based on the actual comparative study on teaching and learning R in a pair of introductory statistics labs [@mcnamara2024teaching].
 
@@ -68,7 +68,7 @@ knitr::kable(data, format="html", row.names = FALSE)
 ```
 
 The results can then be visualized using a grouped bar chart.
-```{r courses_grouped_bar_chart, fig.height=3.3}
+```{r}
 xbreaks <- seq(from = 0, to = .8, length.out = 5)
 xlimits <- c(0, max(data$Prop) + 0.01)
 xlabs <- sapply(xbreaks, percentify)
@@ -82,16 +82,21 @@ p <- ggplot(data=data, aes(x=Prop, y=Response, fill=Course)) +
                     labels = c("Course A", "Course B"),
                     limits = c("A", "B")) + 
   ggtitle("How would you rate your experience with the course?") +
-  theme(text = element_text(size=10),
+  theme(text = element_text(size=14),
         axis.title.y = element_blank(),
         axis.title.x = element_blank(),
-        legend.position = "bottom",
+        legend.position = "right",
         legend.title = element_blank(),
-        plot.title = element_text(size=11))
-p
+        plot.title = element_text(size=16))
+
+ggsave(file="./man/figures/articles/courses_grouped_bar_chart.svg", plot=p, width=10, height=3.3)
 ```
 
-## Pre- and post comparison
+```{r courses_grouped_bar_chart, fig.height=3.3, out.width = "100%", echo = FALSE}
+knitr::include_graphics("./man/figures/articles/courses_grouped_bar_chart.svg")
+```
+
+## Pre and post comparison
 Now suppose that the survey also asked the participants to rate their skills on a 5-point Likert scale, ranging from 1 (very poor) to 5 (very good) in:
 
 * Programming, 
@@ -106,7 +111,6 @@ The survey was completed by the participants both before and after taking the co
 
 Let's simulate the survey data for this scenario (number of categories is `K = 5` by default):
 ```{r}
-set.seed(12345) # to ensure reproducible results
 # Pre- and post assessments of skills: 1, 2, 3 for course A
 pre_A <- get_responses(n = 10, mu = c(-1, 0, 1))
 post_A <- get_responses(n = 10, mu = c(0, 0, 2))
@@ -134,7 +138,7 @@ head(data)
 ```
 
 And visualize the results with a stacked bar chart:
-```{r courses_stacked_bar_chart, fig.height=4.6}
+```{r}
 data_pos <- data[data$resp >= 4, ]
 data_neg <- data[data$resp <= 2, ]
 
@@ -159,6 +163,7 @@ p <- ggplot(data = data_pos, aes(x = Time, y = prop, fill = resp)) +
     strip = strip_nested(size = "variable"),
     labeller = labeller(Question = label_wrap_gen(width = 10))
   ) +
+  ggtitle("On a scale of 1 = Very poor to 5 = Very good, how would you rate your skills?") +  
   theme_bw() +
   theme(strip.placement = "outside") +
   theme(
@@ -166,9 +171,10 @@ p <- ggplot(data = data_pos, aes(x = Time, y = prop, fill = resp)) +
     axis.ticks.y = element_blank(),
     legend.position = "bottom",
     legend.title = element_blank(),
-    text = element_text(size = 10),
+    text = element_text(size = 14),
     strip.text.y.left = element_text(angle = 0, size = 8),
-    panel.spacing.y = unit(c(2, 5, 2, 5, 2), "mm")
+    panel.spacing.y = unit(c(2, 5, 2, 5, 2), "mm"),
+    plot.title = element_text(size=16)
   ) +
   xlab("") +
   ylab("Percentage") +
@@ -177,8 +183,14 @@ p <- ggplot(data = data_pos, aes(x = Time, y = prop, fill = resp)) +
                      labels = c(100, 50, 0, 50, 100)) + 
   scale_fill_manual("", breaks = 1:5, values = color_palette,
                       labels = c("Very poor", "Poor", "Fair", "Good", "Very good"))
-p
+
+ggsave(file="./man/figures/articles/courses_stacked_bar_chart.svg", plot=p, width=10, height=5.6)
 ```
+
+```{r courses_stacked_bar_chart, fig.height=5.6, out.width = "100%", echo = FALSE}
+knitr::include_graphics("./man/figures/articles/courses_stacked_bar_chart.svg")
+```
+
 
 
 ## References
