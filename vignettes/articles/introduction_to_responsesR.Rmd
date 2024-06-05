@@ -2,7 +2,9 @@
 title: "Introduction to responsesR package"
 author: "Marko Lalovic"
 date: "Last Updated: `r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    toc: false
 vignette: >
   %\VignetteIndexEntry{Introduction to responsesR package}
   %\VignetteEngine{knitr::rmarkdown}

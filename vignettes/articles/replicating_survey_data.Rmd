@@ -2,7 +2,9 @@
 title: "Replicating survey data"
 author: "Marko Lalovic"
 date: "Last Updated: `r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    toc: false
 vignette: >
   %\VignetteIndexEntry{Replicating survey data}
   %\VignetteEngine{knitr::rmarkdown}

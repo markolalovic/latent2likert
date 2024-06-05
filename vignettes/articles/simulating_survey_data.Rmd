@@ -4,7 +4,7 @@ author: "Marko Lalovic"
 date: "Last Updated: `r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
-    toc: true
+    toc: false
 vignette: >
   %\VignetteIndexEntry{Simulating survey data}
   %\VignetteEngine{knitr::rmarkdown}
