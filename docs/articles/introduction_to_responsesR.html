@@ -4,8 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="responsesR">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introduction to responsesR package • responsesR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -13,85 +12,101 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to responsesR package">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to responsesR package">
 <meta property="og:description" content="responsesR">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://markolalovic.github.io/responsesR/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
-    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+<body data-spy="scroll" data-target="#toc">
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
-    <a class="navbar-brand me-2" href="../index.html">responsesR</a>
+    <div class="container template-article">
+      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">responsesR</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
+      </span>
+    </div>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1</small>
-
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../articles/responsesR.html">Get started</a>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+<li>
+  <a href="../articles/responsesR.html">Get started</a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
-<li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/introduction_to_responsesR.html">Introduction to responsesR package</a>
-    <a class="dropdown-item" href="../articles/replicating_survey_data.html">Replicating survey data</a>
-    <a class="dropdown-item" href="../articles/simulating_survey_data.html">Simulating survey data</a>
-  </div>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/introduction_to_responsesR.html">Introduction to responsesR package</a>
+    </li>
+    <li>
+      <a href="../articles/replicating_survey_data.html">Replicating survey data</a>
+    </li>
+    <li>
+      <a href="../articles/simulating_survey_data.html">Simulating survey data</a>
+    </li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/markolalovic/responsesR/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/markolalovic/responsesR/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
 </div>
-
-    
+<!--/.nav-collapse -->
   </div>
-</nav><div class="container template-article">
+<!--/.container -->
+</div>
+<!--/.navbar -->
 
+      
 
-
-
-<div class="row">
-  <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Introduction to responsesR package</h1>
+      </header><div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header toc-ignore">
+      <h1 data-toc-skip>Introduction to responsesR package</h1>
                         <h4 data-toc-skip class="author">Marko
 Lalovic</h4>
             
             <h4 data-toc-skip class="date">Last Updated: 2024-06-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/markolalovic/responsesR/blob/HEAD/vignettes/articles/introduction_to_responsesR.Rmd" class="external-link"><code>vignettes/articles/introduction_to_responsesR.Rmd</code></a></small>
-      <div class="d-none name"><code>introduction_to_responsesR.Rmd</code></div>
+      <div class="hidden name"><code>introduction_to_responsesR.Rmd</code></div>
+
     </div>
 
     
     
+<!--
+   TODO: change <img src="../reference/ ... /> to <img src="../reference/ ... /> 
+-->
 <!-- avoid border around the images -->
 <style>
     img {
@@ -103,7 +118,12 @@ Lalovic</h4>
 </h2>
 <p>The responsesR package provides an easy framework to simulate survey
 data commonly analyzed in applied social research, specifically Likert
-items. Users can specify latent variables by providing means, standard
+items. Likert items represent responses to survey questions or ratings,
+typically arranged on a psychometric scale defined by verbal labels with
+roughly equidistant categories symmetrically centered around a neutral
+midpoint. The most common form has five categories: Strongly disagree,
+Disagree, Neutral, Agree, and Strongly agree.</p>
+<p>Users can specify latent variables by providing means, standard
 deviations, and optionally, skewness and correlations. The generated
 dataset represents responses to Likert scale questions, useful for
 various purposes such as validating theoretical findings obtained
@@ -115,25 +135,18 @@ existing survey data to replicate it more accurately.</p>
 <h2 id="statement-of-need">Statement of Need<a class="anchor" aria-label="anchor" href="#statement-of-need"></a>
 </h2>
 <p>In social sciences, variables of interest are often conceptualized as
-hidden continuous variables, known as latent variables. These latent
-variables are not observed directly but are instead measured through
-Likert scale questions. This process is illustrated in Figure 1.</p>
+latent variables—hidden continuous variables that are measured through
+Likert scale questions, see Figure 1.</p>
 <div class="figure" style="text-align: center">
 <img src="../reference/figures/survey_process.png" alt="Figure 1: Flow diagram of the survey process." width="70%"><p class="caption">
 Figure 1: Flow diagram of the survey process.
 </p>
 </div>
 <p>Researchers frequently aim to uncover the connections between these
-latent variables using diverse statistical techniques. For comparative
-analysis through simulation, having access to an effective algorithm to
-generate Likert items from hypothetical latent variables is essential.
-Furthermore, statistical techniques like Factor Analysis and Structural
-Equation Models assume metric data. However, survey data in the form of
-Likert items is ordinal, violating this assumption. Nevertheless, the
-use of these statistical techniques for probing such survey data is
-widespread. Realistic simulation of Likert items provides a way to
-assess the potential for inaccurate, biased, or misleading results when
-utilizing these techniques.</p>
+latent variables using diverse statistical techniques. Having access to
+an effective algorithm to generate Likert items from hypothetical latent
+variables is essential for comparative analysis through simulation <span class="citation">(<a href="#ref-boari2015">Boari and Ruscone
+2015</a>)</span>.</p>
 <p>Simulating Likert item responses often begins by selecting a
 continuous distribution, which is then transformed into a discrete
 probability distribution using a method called discretization. This
@@ -143,42 +156,24 @@ process is illustrated in Figure 2.</p>
 Figure 2: Flow diagram of the simulation process.
 </p>
 </div>
-<p>Typically, an unsupervised discretization approach is employed <span class="citation">(<a href="#ref-wu2017">Wu and Leung 2017</a>)</span>,
-where the continuous range is subdivided into smaller intervals.
-Adjusting these intervals allows for simulating responses with different
-distributions. While this unsupervised approach is popular for its
-simplicity, it may yield less than optimal results, particularly if the
-continuous distribution is non-uniform <span class="citation">(<a href="#ref-catlett1991">Catlett 1991</a>)</span>. Furthermore, in many
-simulation studies, e.g.: <span class="citation">(<a href="#ref-velicer2000">Velicer, Eaton, and Fava 2000</a>)</span>, <span class="citation">(<a href="#ref-cho2009">Cho, Li, and Bandalos
-2009</a>)</span>, the latent distribution is often assumed to follow a
-normal distribution. However, this assumption is primarily for
-statistical convenience.</p>
-<p>The purpose of the responsesR package is to address some of these
-issues by improving the simulation process. It achieves this by
-implementing a supervised discretization approach, using Lloyd’s
-algorithm to ensure unbiased results and minimize distortion. This
-results in simulated Likert items with discrete probability
-distributions closely resembling the chosen continuous distributions.
-Additionally, this enables the reconstruction of the latent distribution
-from the given discrete probability distribution, or the estimation of
-latent parameters from actual survey data. Furthermore, the package can
-handle non-normal latent distributions and generate responses following
-skewed distributions. This functionality allows researchers to replicate
-survey data or simulate diverse survey data by adjusting parameters such
-as mean and standard deviation according to specific needs.</p>
-<p>In summary, the purpose of this package is to provide an easy way
-to:</p>
-<ul>
-<li>Generate simulated survey responses with various distributions.</li>
-<li>Create synthetic survey data, particularly Likert items, by setting
-means, standard deviations, and correlations among latent
-variables.</li>
-<li>Recreate existing rating-scale data by estimating latent variable
-means and standard deviations.</li>
-</ul>
+<p>Unsupervised discretization, which subdivides the continuous range
+into intervals, is common <span class="citation">(<a href="#ref-wu2017">Wu and Leung 2017</a>)</span> but may yield
+suboptimal results, especially for non-uniform distributions <span class="citation">(<a href="#ref-catlett1991">Catlett 1991</a>)</span>.
+Furthermore, in many simulation studies, e.g.: <span class="citation">(<a href="#ref-velicer2000">Velicer, Eaton, and Fava
+2000</a>)</span>, <span class="citation">(<a href="#ref-cho2009">Cho,
+Li, and Bandalos 2009</a>)</span>, the latent distribution is often
+assumed to follow a normal distribution. However, this assumption is
+primarily for statistical convenience.</p>
+<p>The responsesR package addresses these issues by implementing a
+supervised discretization approach using Lloyd’s algorithm. This ensures
+that simulated Likert items closely mirror the chosen continuous
+distributions, minimizing distortion and bias. The package also allows
+for the reconstruction of latent distributions from discrete data and
+handles non-normal latent distributions, enabling the generation of
+skewed responses.</p>
 </div>
 <div class="section level2">
-<h2 id="dependency-statement">Dependency statement<a class="anchor" aria-label="anchor" href="#dependency-statement"></a>
+<h2 id="dependency-statement">Dependency Statement<a class="anchor" aria-label="anchor" href="#dependency-statement"></a>
 </h2>
 <p>To maintain a lightweight package, responsesR only imports <span class="citation">(<a href="#ref-genz2020">Genz et al. 2020</a>)</span>,
 along with the standard R packages stats and graphics, which are
@@ -190,7 +185,7 @@ prompts the user to install this dependency during interactive
 sessions.</p>
 </div>
 <div class="section level2">
-<h2 id="related-software">Related software<a class="anchor" aria-label="anchor" href="#related-software"></a>
+<h2 id="related-software">Related Software<a class="anchor" aria-label="anchor" href="#related-software"></a>
 </h2>
 <p>There are alternative approaches for simulating Likert item
 responses. One approach is to define a discrete probability distribution
@@ -210,19 +205,16 @@ package <span class="citation">(<a href="#ref-chalmers2012">Chalmers
 parameters for choosing each response category.</p>
 </div>
 <div class="section level2">
-<h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
+<h2 id="simulation-process">Simulation Process<a class="anchor" aria-label="anchor" href="#simulation-process"></a>
 </h2>
-<p>To describe the relationship between latent variables and Likert
-items consider the following model, detailed in <span class="citation">(<a href="#ref-boari2015">Boari and Ruscone
-2015</a>)</span>. Let <span class="math inline">\(X\)</span> denote the
-continuous variable of interest, measured using Likert scale question
-with <span class="math inline">\(K\)</span> response categories. The
-observed discrete variable <span class="math inline">\(Y\)</span>,
-representing possible responses, is defined as follows <span class="math display">\[
+<p>Consider the following model, detailed in <span class="citation">(<a href="#ref-boari2015">Boari and Ruscone 2015</a>)</span>. Let <span class="math inline">\(X\)</span> denote the continuous variable of
+interest, measured using Likert scale question with <span class="math inline">\(K\)</span> response categories. The observed
+discrete variable <span class="math inline">\(Y\)</span>, representing
+possible responses, is defined as follows <span class="math display">\[
 Y = k, \quad \text{ if } \ \ \tau_{k - 1} &lt; X \leq \tau_{k}
-\quad \text{ for } \ \ k = 1, \dots, K.
-\]</span> Here <span class="math inline">\(\tau_{k}\)</span>, <span class="math inline">\(k = 0, \dots, K\)</span>, are thresholds defined
-in the domain of <span class="math inline">\(X\)</span> such that <span class="math display">\[
+\quad \text{ for } \ \ k = 1, \dots, K
+\]</span> where <span class="math inline">\(\tau_{k}\)</span>, <span class="math inline">\(k = 0, \dots, K\)</span> are thresholds defined in
+the domain of <span class="math inline">\(X\)</span> such that <span class="math display">\[
 -\infty = \tau_{0} &lt; \tau_{1} &lt; \dots &lt; \tau_{K - 1} &lt;
 \tau_{K} = \infty.
 \]</span> The thresholds dictate the transformation of density <span class="math inline">\(f_{X}\)</span> of <span class="math inline">\(X\)</span> into a discrete probability
@@ -233,23 +225,17 @@ distribution <span class="math display">\[\begin{equation*}
 \end{equation*}\]</span></p>
 <p>To derive the thresholds, let <span class="math inline">\(X_{1}\)</span> be a random variable with mean 0
 and standard deviation 1, representing the opinion or agreement of a
-neutral population which is measured using Likert scale question with
-<span class="math inline">\(K\)</span> response categories. To transform
-<span class="math inline">\(X_{1}\)</span> into a discrete random
-variable <span class="math inline">\(Y_{1}\)</span> with as little
-distortion as possible, define the distortion as mean-squared error
-<span class="math display">\[
+neutral population. To transform <span class="math inline">\(X_{1}\)</span> into a discrete random variable
+<span class="math inline">\(Y_{1}\)</span> with as little distortion as
+possible, define the distortion as mean-squared error <span class="math display">\[
 \text{MSE} = \sum_{k = 1}^{K} \int_{\tau_{k - 1}}^{\tau_{k}}
 f_{X_{1}}(x) \left( x - r_{k} \right)^{2} \, dx.
 \]</span> Here, <span class="math inline">\(r_{k}\)</span>, <span class="math inline">\(k = 1, \dots, K\)</span>, are representatives of
 intervals <span class="math inline">\((\tau_{k - 1}, \tau_{k}), k = 0,
 \dots, K\)</span> that divide the domain of <span class="math inline">\(X_{1}\)</span>. Quantization, achieved through
 Lloyd’s algorithm, finds optimal thresholds <span class="math inline">\(\tau_{k}\)</span> minimizing the mean-squared
-error (MSE). Although optimal representatives <span class="math inline">\(r_{k}\)</span> are found, they are not used since
-<span class="math inline">\(Y_{1}\)</span> takes values from <span class="math inline">\(1\)</span> to <span class="math inline">\(K\)</span>. There are some disadvantages to
-measuring distortion only in a mean-squared sense. For example, we could
-make use of the fact that humans are more sensitive to some kinds of
-error than other, and for example permit larger errors when <span class="math inline">\(|x|\)</span> is large than when it is small.</p>
+error. Although optimal representatives <span class="math inline">\(r_{k}\)</span> are found, they are not used since
+<span class="math inline">\(Y_{1}\)</span> takes values from <span class="math inline">\(1\)</span> to <span class="math inline">\(K\)</span>.</p>
 <p>Next, let <span class="math inline">\(X_{2}\)</span> be a random
 variable following the same distribution as <span class="math inline">\(X_{1}\)</span> but with different mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, representing the opinion or
 agreement of another population. The same thresholds <span class="math inline">\(\tau_{k}\)</span> are employed to compute the
@@ -272,23 +258,27 @@ Figure 3: Relationship between normally distributed <span class="math inline">\(
 Figure 4: Relationship between skew normal <span class="math inline">\(X\)</span> with <span class="math inline">\(\gamma_{1} = -0.6\)</span>, and responses <span class="math inline">\(Y\)</span>.
 </p>
 </div>
-<p>The relationship between continuous variable <span class="math inline">\(X\)</span> and discrete probability distribution
-<span class="math inline">\(p_k\)</span> can also be described by a
-system of non-linear equations <span class="math display">\[
+<p>Note that there are some disadvantages to measuring distortion only
+in a mean-squared sense. For example, we could make use of the fact that
+humans are more sensitive to some kinds of error than other, and for
+example permit larger errors when <span class="math inline">\(|x|\)</span> is large than when it is small.</p>
+<p>Let <span class="math inline">\(F_{X}\)</span> be the cumulative
+distribution function of continuous variable <span class="math inline">\(X\)</span>. The relationship between continuous
+variable <span class="math inline">\(X\)</span> and discrete probability
+distribution <span class="math inline">\(p_k\)</span> can also be
+described by a system of non-linear equations <span class="math display">\[
 p_{k} = F_{X}\left( \frac{\tau_{k - 1} - \xi}{\omega} \right)
 - F_{X}\left( \frac{\tau_{k} - \xi}{\omega} \right)
 \quad \text{ for } \ \ k = 1, \dots, K.
-\]</span> where <span class="math inline">\(F_{X}\)</span> denotes the
-cumulative distribution function of continuous variable <span class="math inline">\(X\)</span>. Solving these equations using an
-iterative scheme like the Newton method yields location and scaling
-parameters <span class="math inline">\(\xi\)</span> and <span class="math inline">\(\omega\)</span>, allowing the reversal of the
-transformation. Consequently, knowing the discrete probability
-distribution <span class="math inline">\(p_{k}\)</span>, we can
-reconstruct the parameters of the continuous distribution. Additionally,
-by utilizing estimates <span class="math inline">\(\hat{p}_{k}\)</span>
-instead of discrete probability distribution <span class="math inline">\(p_{k}\)</span>, we can estimate the means and
-standard deviations of corresponding continuous random variables from
-responses to Likert-type questions.</p>
+\]</span> Solving these equations using an iterative scheme yields
+location and scaling parameters <span class="math inline">\(\xi\)</span>
+and <span class="math inline">\(\omega\)</span>, allowing the reversal
+of the transformation. Thus, we can reconstruct the parameters of the
+continuous distribution based on the discrete probability distribution
+<span class="math inline">\(p_{k}\)</span>. Additionally, we can
+estimate the means and standard deviations of corresponding continuous
+random variables from responses to Likert-type questions from the
+estimates of <span class="math inline">\(p_{k}\)</span>.</p>
 <p>To generate random responses from correlated Likert items, we first
 select the location vector, marginal skewness, and correlations between
 the latent variables. Then, draw a random sample from the multivariate
@@ -375,24 +365,33 @@ Social Service Research</em> 43 (4): 527–32. <a href="https://doi.org/10.1080/
 </div>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside>
+  </div>
+
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
+
 </div>
 
 
 
-    <footer><div class="pkgdown-footer-left">
-  <p>Developed by Marko Lalovic.</p>
+      <footer><div class="copyright">
+  <p></p>
+<p>Developed by <a href="https://lalovic.io/" class="external-link">Marko Lalovic</a>.</p>
 </div>
 
-<div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<div class="pkgdown">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
-    </footer>
+      </footer>
 </div>
 
   
+
 
   
 

@@ -15,7 +15,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "../man/figures/get_started/",
-  dev = "svg")
+  dpi=250,
+  fig.width=7,
+  out.width = "98%")
 ```
 
 This is a quick overview of the responsesR package:
@@ -60,7 +62,7 @@ head(data)
 ```
 
 The corresponding bar plots are shown below:
-```{r random_responses_barplots, fig.height=3, fig.width=10, fig.ext="svg"}
+```{r random_responses_barplots, fig.height=3, fig.width=10}
 par(mfrow=c(1, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -104,7 +106,7 @@ data <- get_responses(n = 1000, mu = c(-1, 0, 1))
 ```
 
 The generated responses and the corresponding densities of latent distributions are displayed below.
-```{r adjusting_the_mean, fig.height=6, fig.width=10, fig.ext="svg"}
+```{r adjusting_the_mean, fig.height=6, fig.width=10}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -125,7 +127,7 @@ data <- get_responses(n = 1000, sd = c(0.5, 1, 1.5))
 ```
 
 This generates the following responses with corresponding densities of latent distributions depicted below:
-```{r adjusting_the_sd, fig.height=6, fig.width=10, fig.ext="svg"}
+```{r adjusting_the_sd, fig.height=6, fig.width=10}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -145,7 +147,7 @@ data <- get_responses(n = 10^6, gamma1 = c(-0.5, 0, 0.5))
 ```
 
 The resulting responses with corresponding densities of latent distributions are displayed below:
-```{r adjusting_the_skewness, fig.height=6, fig.width=10, fig.ext="svg"}
+```{r adjusting_the_skewness, fig.height=6, fig.width=10}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -174,11 +176,10 @@ A positive value makes the distribution right-skewed, while a negative value mak
 In order to replicate existing survey data, you can estimate the parameters of latent distributions using the function `estimate_parameters`.
 
 As an illustration, let's generate 1000 responses with an underlying normal distribution having `mu = -0.5` and `sd = 0.5`, and assuming there are `K = 5` response categories. Note that not all possible categories may have responses. In this example, `n`, `mu`, and `sd` are chosen such that no responses have a value of 5:
-```{r estimation_of_parameters_example, fig.height=4, fig.width=4, fig.ext="svg"}
+```{r}
 set.seed(12345)
 data <- get_responses(n = 1000, mu = -0.5, sd = 0.5, K = 5)
-par(mfrow=c(1, 1))
-barplot(table(data))
+table(data)
 ```
 
 In addition to the responses, the `estimate_parameters` function requires specifying the number of possible response categories `K` to return the estimates:
@@ -187,7 +188,7 @@ estimate_parameters(data, K = 5)
 ```
 
 You can also provide responses to multiple items. For instance, if we generate responses to three items with different latent parameter values:
-```{r estimation_of_parameters_for_multiple_items, fig.height=4, fig.width=10, fig.ext="svg"}
+```{r estimation_of_parameters_for_multiple_items, fig.height=4, fig.width=10}
 data <- get_responses(n = 1000,
                       mu = c(1, 2, 3),
                       sd = c(0.5, 1, 1.5),
@@ -205,7 +206,7 @@ estimate_parameters(data, K = c(5, 6, 7))
 ```
 
 To ensure good results, it is crucial to provide a large enough sample of responses, say `n > 200`. Otherwise, the estimated values may vary and deviate significantly from actual values. For instance, if we generate 100 observations from the same underlying latent distribution:
-```{r estimation_of_parameters_small_sample, fig.height=4, fig.width=10, fig.ext="svg"}
+```{r estimation_of_parameters_small_sample, fig.height=4, fig.width=10}
 data <- get_responses(n = 100,
                       mu = c(1, 2, 3),
                       sd = c(0.5, 1, 1.5),
