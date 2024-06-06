@@ -94,7 +94,7 @@ p
 </details>
 <p> </p>
 
-```{r courses_grouped_bar_chart, fig.height=3.3, out.width = "100%", echo = FALSE}
+```{r courses_grouped_bar_chart, fig.height=3.3, out.width = "100%", echo = FALSE, fig.alt="Courses grouped bar chart"}
 knitr::include_graphics("./man/figures/articles/courses_grouped_bar_chart.svg")
 ```
 
@@ -191,7 +191,7 @@ p
 </details>
 <p> </p>
 
-```{r courses_stacked_bar_chart, fig.height=5.6, out.width = "100%", echo = FALSE}
+```{r courses_stacked_bar_chart, fig.height=5.6, out.width = "100%", echo = FALSE, fig.alt="Courses stacked bar chart"}
 knitr::include_graphics("./man/figures/articles/courses_stacked_bar_chart.svg")
 ```
 
@@ -270,7 +270,7 @@ new_items_F <- get_responses(n = nrow(items_F),
 
 To compare the results, we can plot the correlation matrix with bar charts on the diagonal:
 
-```{r agree_items_correlations_comparison, fig.height=10, out.width = "100%", echo = FALSE}
+```{r agree_items_correlations_comparison, fig.height=10, out.width = "100%", echo = FALSE, fig.alt="Agreeableness items correlations comparison"}
 knitr::include_graphics("./man/figures/articles/agree_items_correlations_comparison.svg")
 ```
 
@@ -312,7 +312,7 @@ plot_grid(p1, p2,  nrow = 2)
 </details>
 <p> </p>
 
-```{r agreeableness_grouped_boxplot, fig.height=4.8, out.width = "100%", echo = FALSE}
+```{r agreeableness_grouped_boxplot, fig.height=4.8, out.width = "100%", echo = FALSE, fig.alt="Agreeableness items grouped boxplot"}
 knitr::include_graphics("./man/figures/articles/agreeableness_grouped_boxplot.svg")
 ```
 

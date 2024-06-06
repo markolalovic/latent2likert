@@ -25,7 +25,6 @@ knitr::opts_chunk$set(
   comment = "#>",
   dpi=450)
 ```
-<!-- TODO: ../../reference/ to ../reference/ -->
 <!-- avoid border around the images -->
 <style>
     img {
@@ -41,7 +40,7 @@ Users can specify latent variables by providing means, standard deviations, and 
 ## Statement of need
 In social sciences, variables of interest are often conceptualized as latent variables—hidden continuous variables that are measured through Likert scale questions, see Figure 1.
 
-```{r survey_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 1: Flow diagram of the survey process.", echo = FALSE}
+```{r survey_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 1: Flow diagram of the survey process.", echo = FALSE, fig.alt="Flow diagram of the survey process"}
 knitr::include_graphics("../../man/figures/articles/survey_process.png")
 ```
 
@@ -49,7 +48,7 @@ Researchers frequently aim to uncover the connections between these latent varia
 
 Simulating Likert item responses often begins by selecting a continuous distribution, which is then transformed into a discrete probability distribution using a method called discretization. This process is illustrated in Figure 2.
 
-```{r simulation_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 2: Flow diagram of the simulation process.", echo = FALSE}
+```{r simulation_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 2: Flow diagram of the simulation process.", echo = FALSE, fig.alt="Flow diagram of the simulation process"}
 knitr::include_graphics("../../man/figures/articles/simulation_process.png")
 ```
 
@@ -91,11 +90,11 @@ Next, let $X_{2}$ be a random variable following the same distribution as $X_{1}
 
 This simulation process is visually depicted in Figures 3 and 4. These figures show the densities of normally distributed $X_{1}$ and $X_{2}$ in Figure 3A and skew normally distributed $X_{1}$ and $X_{2}$ with skewness $\gamma_{1} = - 0.6$ in Figure 4A. Corresponding discrete probability distributions of $Y_{1}$ and $Y_{2}$ with $K=5$ categories are presented in Figures 3B and 4B. 
 
-```{r mapping_normal_r, fig.align = 'center', out.width = "90%", fig.cap = "Figure 3: Relationship between normally distributed $X$", echo = FALSE}
+```{r mapping_normal_r, fig.align = 'center', out.width = "90%", fig.cap = "Figure 3: Relationship between normally distributed $X$ and responses $Y$.", echo = FALSE, fig.alt="Relationship between normally distributed latent variables and responses."}
 knitr::include_graphics("../../man/figures/articles/mapping_normal.png")
 ```
 
-```{r mapping_skew_r, fig.align = 'center', out.width = "90%", fig.cap = "Figure 4: Relationship between skew normal $X$ with $\\gamma_{1} = -0.6$, and responses $Y$.", echo = FALSE}
+```{r mapping_skew_r, fig.align = 'center', out.width = "90%", fig.cap = "Figure 4: Relationship between skew normal $X$ with $\\gamma_{1} = -0.6$, and responses $Y$.", echo = FALSE, fig.alt="Relationship between skew normally distributed latent variables and responses."}
 knitr::include_graphics("../../man/figures/articles/mapping_skew.png")
 ```
 
@@ -111,7 +110,7 @@ Solving these equations using an iterative scheme yields location and scaling pa
 
 To generate random responses from correlated Likert items, we first select the location vector, marginal skewness, and correlations between the latent variables. Then, draw a random sample from the multivariate normal or skew normal distribution with the appropriate location vector and covariance matrix. Lastly, discretize the sample using optimal thresholds $\tau_{k}$. Figure 5 illustrates this process for the case of 2 Likert items with 5 response categories, normal latent variables with means 0 and standard deviations 1, and a correlation of 0.7 between the variables.
 
-```{r multivatiate_case_r, fig.align = 'center', out.width = "50%", fig.cap = "Figure 5: Normal bivariate and marginal latent distributions with a correlation of $0.7$ and optimal thresholds $\\tau_1, \\dots, \\tau_{4}$.", echo = FALSE}
+```{r multivatiate_case_r, fig.align = 'center', out.width = "50%", fig.cap = "Figure 5: Normal bivariate and marginal latent distributions with a correlation of $0.7$ and optimal thresholds $\\tau_1, \\dots, \\tau_{4}$.", echo = FALSE, fig.alt="Normal bivariate and marginal latent distributions"}
 knitr::include_graphics("../../man/figures/articles/multivatiate_case.png")
 ```
 

@@ -20,8 +20,6 @@ knitr::opts_chunk$set(
   fig.path = "../man/figures/articles/",
   dev = "svg")
 ```
-<!-- TODO: figures/   to      ../figures/ -->
-
 ```{r}
 library(responsesR) # load responsesR
 library(psych) # for the bfi data set
