@@ -36,6 +36,10 @@ if __name__ == '__main__':
     for i in range(len(str_wrongs)):
         replace(str_wrongs[i], str_rights[i], './README.md')
 
+    str_wrong = '<img src="./reference/figures/logo.png" align="right" height="160" style="float:right; height:160px;">'
+    str_right = '<img src="./reference/figures/logo.png" alt="Package logo" align="right" height="160" style="float:right; height:160px;">'
+    replace(str_wrong, str_right, './docs/index.html')
+
     # add .nojekyll to docs for githubpages
     os.system("touch ./docs/.nojekyll")
 

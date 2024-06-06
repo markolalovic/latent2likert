@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   dev = 'svg')
 ```
 
-## responsesR: simulate Likert item responses in R <img src="./man/figures/logo.png" align="right" height="160" style="float:right; height:160px;"/>
+## responsesR: simulate Likert item responses in R <img src="./man/figures/logo.png" alt="Package logo" align="right" height="160" style="float:right; height:160px;"/>
 
 <!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

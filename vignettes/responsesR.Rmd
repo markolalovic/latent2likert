@@ -63,7 +63,7 @@ head(data)
 ```
 
 The corresponding bar plots are shown below:
-```{r random_responses_barplots, fig.height=3, fig.width=10}
+```{r random_responses_barplots, fig.height=3, fig.width=10, fig.alt="Bar plots of simulated responses"}
 par(mfrow=c(1, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -107,7 +107,7 @@ data <- get_responses(n = 1000, mu = c(-1, 0, 1))
 ```
 
 The generated responses and the corresponding densities of latent distributions are displayed below.
-```{r adjusting_the_mean, fig.height=6, fig.width=10}
+```{r adjusting_the_mean, fig.height=6, fig.width=10, fig.alt="Adjusting the mean"}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -128,7 +128,7 @@ data <- get_responses(n = 1000, sd = c(0.5, 1, 1.5))
 ```
 
 This generates the following responses with corresponding densities of latent distributions depicted below:
-```{r adjusting_the_sd, fig.height=6, fig.width=10}
+```{r adjusting_the_sd, fig.height=6, fig.width=10, fig.alt="Adjusting the standard deviation"}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -148,7 +148,7 @@ data <- get_responses(n = 10^6, gamma1 = c(-0.5, 0, 0.5))
 ```
 
 The resulting responses with corresponding densities of latent distributions are displayed below:
-```{r adjusting_the_skewness, fig.height=6, fig.width=10}
+```{r adjusting_the_skewness, fig.height=6, fig.width=10, fig.alt="Adjusting the skewness"}
 par(mfrow=c(2, 3))
 for(i in 1:3) {
   barplot(table(data[, i]))
@@ -189,7 +189,7 @@ estimate_parameters(data, K = 5)
 ```
 
 You can also provide responses to multiple items. For instance, if we generate responses to three items with different latent parameter values:
-```{r estimation_of_parameters_for_multiple_items, fig.height=4, fig.width=10}
+```{r estimation_of_parameters_for_multiple_items, fig.height=4, fig.width=10, fig.alt="Estimation of parameters for multiple items"}
 data <- get_responses(n = 1000,
                       mu = c(1, 2, 3),
                       sd = c(0.5, 1, 1.5),
@@ -207,7 +207,7 @@ estimate_parameters(data, K = c(5, 6, 7))
 ```
 
 To ensure good results, it is crucial to provide a large enough sample of responses, say `n > 200`. Otherwise, the estimated values may vary and deviate significantly from actual values. For instance, if we generate 100 observations from the same underlying latent distribution:
-```{r estimation_of_parameters_small_sample, fig.height=4, fig.width=10}
+```{r estimation_of_parameters_small_sample, fig.height=4, fig.width=10, fig.alt="Estimation of parameters on a small sample"}
 data <- get_responses(n = 100,
                       mu = c(1, 2, 3),
                       sd = c(0.5, 1, 1.5),
