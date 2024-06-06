@@ -1,0 +1,6 @@
+*.html linguist-vendored=false
+*.htm linguist-vendored=false
+*.py linguist-vendored=false
+*.tex linguist-vendored=false
+docs/* linguist-vendored=false
+man/* linguist-vendored=false
