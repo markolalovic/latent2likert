@@ -1,6 +1,6 @@
 #' Get responses
 #'
-#' Generates a sample of random responses based on parameters of latent variables.
+#' Returns a sample of random responses based on parameters of latent variables.
 #'
 #' @export
 #' @param n number of observations
@@ -20,15 +20,17 @@
 #' @examples
 #' data <- get_responses(n = 5, mu = c(0, 1, 2))
 get_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5, R=0) {
-  inputs <- list(mu, sd, gamma1, K)
-  nitems <- max(lengths(inputs))
+  raw_inputs <- list(mu, sd, gamma1, K)
+  nitems <- max(lengths(raw_inputs))
 
   if (nitems == 1) {
     return(get_univariate_responses(n, mu, sd, gamma1, K))
   }
 
-  # single inputs are repeated to create a vector
-  inputs <- sapply(inputs, function(input) rep(input, length.out = nitems))
+  # single raw_inputs are repeated to create a vector
+  inputs <- vapply(raw_inputs,
+                   function(input) { rep(input, length.out=nitems) },
+                   numeric(nitems))
   colnames(inputs) <- c("mu", "sd", "gamma1", "K")
 
   # conditions to deal with correlation input `R`
@@ -42,7 +44,7 @@ get_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5, R=0) {
       get_univariate_responses(
         n, input[["mu"]], input[["sd"]], input[["gamma1"]], input[["K"]])
     })
-    colnames(data) <- sapply(1:nitems, function(i) paste("Y", i, sep = ""))
+    colnames(data) <- sapply(seq_len(nitems), function(i) paste("Y", i, sep=""))
     return(data)
   }
   if (case_2(R) == 1) { # random correlation matrix is used
@@ -56,7 +58,8 @@ get_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5, R=0) {
   } else {
     # a correlation matrix must be provided
     if(case_4(R) != 1)
-      stop("Error: correlation R can be a number, \"random\", or a correlation matrix.")
+      stop("Error: correlation R can be a number, \"random\", 
+           or a correlation matrix.")
   }
   sigma <- cor2cov(R, inputs[, "sd"])
 
@@ -84,10 +87,10 @@ get_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5, R=0) {
                        c("mu"=0, "sd"=1, "gamma1"=input[["gamma1"]]))
   })
 
-  data <- sapply(1:nitems, function(i) {
+  data <- sapply(seq_len(nitems), function(i) {
     findInterval(lat[, i], c(-Inf, sims[[i]]$xk, Inf))
   })
-  colnames(data) <- sapply(1:nitems, function(i) paste("Y", i, sep = ""))
+  colnames(data) <- sapply(seq_len(nitems), function(i) paste("Y", i, sep = ""))
   return(data)
 }
 
@@ -105,7 +108,7 @@ get_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5, R=0) {
 #' discrete random variable from which samples are taken.
 get_univariate_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5) {
   sim <- simulate_responses(K, c("mu" = mu, "sd" = sd, "gamma1" = gamma1))
-  data <- sample(x = 1:K, size = n, replace = TRUE, prob = sim$pk)
+  data <- sample(x = seq_len(K), size = n, replace = TRUE, prob = sim$pk)
   return(data)
 }
 
@@ -117,7 +120,7 @@ get_univariate_responses <- function(n=10, mu=0, sd=1, gamma1=0, K=5) {
 #'
 #' @export
 #' @param K number of response categories
-#' @param params parameters `xi`, `omega` and `alpha` of skew-normal distribution
+#' @param params skew-normal parameters `xi`, `omega` and `alpha`
 #' @return lists of probabilities `pk` and cut points `xk`
 #' @examples
 #' simulate_responses(K = 5, params = c("mu"=0, "sd"=1, "gamma1"=0))
@@ -141,7 +144,7 @@ simulate_responses <- function(K, params) {
 
 #' Implementation of Lloyd's algorithm
 #'
-#' Given a probability density function `fX` of a continuous random variable `X`,
+#' Given a probability density function `fX` of a random variable `X`,
 #' the function returns a discrete random variable with `K` possible outcomes
 #' that best approximates `X` in the mean-square or L2 sense by minimizing MSE.
 #'
@@ -157,7 +160,7 @@ run_Lloyd <- function(fX, K) {
   niters <- 100 # enough for convergence
   pk_means <- c()
   pk_MS_errors <- c()
-  for (i in 1:niters) {
+  for (i in seq_len(niters)) {
     xk <- get_new_xk(rk) # calculate the new cut points
     rk <- get_new_rk(xk, fX) # calculate the new representatives
     ## calculate estimated probabilities, means and distortion measure
@@ -179,7 +182,7 @@ run_Lloyd <- function(fX, K) {
 get_new_xk <- function(rk) {
   K <- (length(rk) - 1) # generalized to arbitrary number of points
   xk <- rep(0, K)
-  for (k in 1:K) {
+  for (k in seq_len(K)) {
     xk[k] <- (rk[k] + rk[k+1])/2
   }
   return(xk)
@@ -200,7 +203,7 @@ get_new_rk <- function(xk, fX) {
   f_below <- function(x) {
     fX(x)
   }
-  for (k in 1:K) {
+  for (k in seq_len(K)) {
     result_above <- stats::integrate(f_above, lower=xk[k], upper=xk[k+1])[[1]]
     result_below <- stats::integrate(f_below, lower=xk[k], upper=xk[k+1])[[1]]
     rk[k] <- result_above/result_below
@@ -217,7 +220,7 @@ get_pk <- function(xk, fX) {
   K <- length(xk) + 1
   xk <- c(-Inf, xk, Inf)
   pk <- rep(0, K)
-  for (k in 1:K) {
+  for (k in seq_len(K)) {
     lower_bound <- xk[k]
     upper_bound <- xk[k+1]
     pk[k] <- stats::integrate(fX, lower=lower_bound, upper=upper_bound)[[1]]
@@ -230,7 +233,7 @@ get_pk <- function(xk, fX) {
 #' @param pk vector of probabilities `pk`
 #' @return mean of `pk`
 get_pk_mean <- function(pk) {
-  domain <- (1:length(pk))
+  domain <- seq_len(length(pk))
   return(sum(pk * domain))
 }
 
@@ -244,11 +247,12 @@ get_MSE <- function(xk, rk, fX) {
   K <- length(rk) # generalized for testing
   xk <- c(-Inf, xk, Inf)
   mse <- 0
-  for (k in 1:K) {
+  for (k in seq_len(K)) {
     lower_bound <- xk[k]
     upper_bound <- xk[k+1]
     integrand <- function(x) { ((x - rk[k])^2)*fX(x)  }
-    mse <- mse + stats::integrate(integrand, lower=lower_bound, upper=upper_bound)[[1]]
+    mse <- mse + stats::integrate(integrand, 
+                                  lower=lower_bound, upper=upper_bound)[[1]]
   }
   return(mse)
 }
@@ -263,7 +267,8 @@ get_MSE <- function(xk, rk, fX) {
 #' @return density at `x`
 #' @seealso [sn::dsn()]
 d_skew_normal <- function(x, xi=0, omega=1, alpha=0) {
-  return(2/omega*stats::dnorm((x - xi)/omega)*stats::pnorm(alpha*(x - xi)/omega))
+  return(2/omega*stats::dnorm((x - xi)/omega) * 
+           stats::pnorm(alpha*(x - xi)/omega))
 }
 
 #' The mean of skew normal distribution
@@ -280,6 +285,14 @@ mean_skew_normal <- function(alpha) {
 #' @return delta of a skew-normal distribution
 delta_skew_normal <- function(alpha) {
   return(alpha / (sqrt(1 + alpha^2)))
+}
+
+#' Variance of a skew normal distribution
+#'
+#' @param alpha determines the shape
+#' @return variance of a skew-normal distribution
+var_skew_normal <- function(alpha) {
+  return(1 - 2*(delta_skew_normal(alpha)^2)/pi)
 }
 
 #' Convert parameters

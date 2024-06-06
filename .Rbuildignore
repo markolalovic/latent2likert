@@ -14,3 +14,5 @@
 ^data$
 ^man/figures/*\.png$
 ^CODE_OF_CONDUCT.md
+^fix_site.py
+^tests/informal$

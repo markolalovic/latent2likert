@@ -4,7 +4,7 @@
 #' variables assuming that the latent variables are normally distributed.
 #'
 #' @export
-#' @param data survey responses, where the columns correspond to individual items.
+#' @param data responses, where the columns correspond to individual items.
 #'             Apart from this, `data` can be of almost any class such as
 #'             "data.frame" "matrix" or "array".
 #' @param K number of response categories, a vector or a number
@@ -25,8 +25,8 @@ estimate_parameters <- function(data, K, gamma1=0) {
     if (is.numeric(K)) {
       K <- rep(K, nitems)
     }
-    mat = matrix(data=NA, nrow=nitems, ncol=2)
-    for (i in 1:ncol(data)) {
+    mat <- matrix(data=NA, nrow=nitems, ncol=2)
+    for (i in seq_len(ncol(data))) {
       pk <- prop.table(table(data[,i]))
       estimates <- estimate_mu_sd(pk, K[i], gamma1[i])
       mat[i, ] <- estimates
@@ -62,14 +62,14 @@ estimate_mu_sd <- function(pk, K, gamma1=0, trace=FALSE) {
   cp <- c("mu"=x[1], "sd"=x[2], "gamma1"=gamma1)
   sim <- simulate_responses(K, cp)
   xk <- c(-Inf, sim$xk, Inf)
-  pk <- sapply(as.character(1:K), function(k) { # pad missing levels
+  pk <- vapply(as.character(seq_len(K)), function(k) { # pad missing levels
     ifelse(k %in% names(pk), pk[[k]], 0)
-  })
+  }, numeric(1))
 
   if (abs(gamma1) > 0) { # X ~ skew normal
     if (!requireNamespace("sn", quietly = TRUE)) {
       stop(
-        "Package \"sn\" must be installed estimate parameters for skew responses.
+        "Package \"sn\" must be installed to estimate skew normal parameters.
         Please run:\n\n \tinstall.packages(\"sn\")\n\n",
         call. = FALSE)
     }
@@ -114,16 +114,16 @@ estimate_mu_sd <- function(pk, K, gamma1=0, trace=FALSE) {
     }
   }
   f <- function(x) { # function to find roots
-    matrix(sapply(1:K, function(k) hk(x, k)))
+    matrix(vapply(seq_len(K), function(k) { hk(x, k) }, numeric(1)))
   }
   Df <- function(x) { # Jacobian column wise
-    matrix(c(sapply(1:K, function(k) dhk_u(x, k)),
-             sapply(1:K, function(k) dhk_v(x, k))),
+    matrix(c(vapply(seq_len(K), function(k) { dhk_u(x, k) }, numeric(1)),
+             vapply(seq_len(K), function(k) { dhk_v(x, k) }, numeric(1))),
            ncol=2)
   }
   x_trace <- c(x[1])
   y_trace <- c(x[2])
-  for (i in 1:niters) {
+  for (i in seq_len(niters)) {
     b <- f(x) # evaluate f
     A <- Df(x) # evaluate Jacobian
     A.svd <- svd(A) # can be unstable, use SVD
@@ -163,12 +163,13 @@ plot_contour <- function(f, x_trace, y_trace) {
   xgrid <- seq(-3, 3, length.out = xlen) # -5, 5
   ygrid <- seq(0.1, 3, length.out = ylen) # 0.1, 10
   zvals <- matrix(NA, ncol = xlen, nrow = ylen)
-  for (i in 1:xlen) {
-    for (j in 1:ylen) {
+  for (i in seq_len(xlen)) {
+    for (j in seq_len(ylen)) {
       zvals[i, j] <- norm(f(matrix(c(xgrid[i], ygrid[j]))) , "2")
     }
   }
-  graphics::contour(x = xgrid, y = ygrid, z = zvals, col="gray42", xlab = "u", ylab = "v")
+  graphics::contour(x = xgrid, y = ygrid, z = zvals, 
+                    col="gray42", xlab = "u", ylab = "v")
   graphics::grid(col = "lightgray", lty = "dotted")
   graphics::points(x_trace, y_trace, pch=20, col="blue")
 }

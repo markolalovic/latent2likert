@@ -1,7 +1,8 @@
 context("Testing get responses")
 
 set.seed(12345)
-test_that("props of random responses match actual props for a random corr matrix", {
+test_that("props of random responses match actual 
+          props for a random corr matrix", {
   n <- 10^6
   nitems <- 3
   mu <- c(0, -1, -1)
@@ -17,10 +18,11 @@ test_that("props of random responses match actual props for a random corr matrix
   # e.g. P(Y3 = k):
   #   sim1 <- simulate_responses(5, params = c("mu"=-1, "sd"=1, "gamma1"=0))
   #   round(sim1$pk, 3)
-  props <- t(sapply(1:nitems, function(i) {
-    sim <- simulate_responses(5, params = c("mu"=mu[i], "sd"=sd[i], "gamma1"=gamma1[i]))
+  props <- t(vapply(1:nitems, function(i) {
+    sim <- simulate_responses(5, params = 
+                                c("mu"=mu[i], "sd"=sd[i], "gamma1"=gamma1[i]))
     return(round(sim$pk, 3))
-  }))
+  }, numeric(5)))
   dimnames(props) <- dimnames(data_props)
 
   expect_equal(data_props, props, tolerance=0.01)
@@ -61,7 +63,8 @@ test_that("correlation of random responses match actual correlation", {
   expect_equal(R_data, R, tolerance=0.05)
 })
 
-test_that("correlation of random responses match actual correlation, harder case", {
+test_that("correlation of random responses matches 
+          actual correlation, harder case", {
   n <- 10^6
   mu <- c(-0.5, 0, 0.5)
   sd <- c(0.5, 0.5, 0.5)
@@ -77,4 +80,15 @@ test_that("correlation of random responses match actual correlation, harder case
   dimnames(R) <- dimnames(R_data)
 
   expect_equal(R_data, R, tolerance=0.109)
+})
+
+test_that("wrong R raises error", {
+  mu <- c(0, 0, 0)
+  R <- 2
+  res <- try(get_responses(n=n, mu=mu, R=R), silent = TRUE)
+  expect_equal(class(res), "try-error")
+  
+  R <- "wrong"
+  res <- try(get_responses(n=n, mu=mu, R=R), silent = TRUE)
+  expect_equal(class(res), "try-error")
 })

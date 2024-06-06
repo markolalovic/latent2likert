@@ -31,7 +31,7 @@ test_that("pad_levels gives the correct result", {
 
 test_that("percentify gives the correct result", {
   xbreaks <- seq(from = 0, to = 1, length.out = 6)
-  xlabs <- sapply(xbreaks, percentify)
+  xlabs <- vapply(xbreaks, percentify, character(1))
   correct_xlabs <- c("0%", "20%", "40%", "60%", "80%", "100%")
   expect_that( identical(xlabs, correct_xlabs), equals(TRUE) )
 })

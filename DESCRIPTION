@@ -17,7 +17,7 @@ Description: Provides an easy framework to simulate survey data commonly analyze
     The package also allows for the estimation of parameters from existing survey data to replicate it more accurately.
 URL: https://lalovic.io/responsesR, https://github.com/markolalovic/responsesR
 BugReports: https://github.com/markolalovic/responsesR/issues
-License: MIT + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3)

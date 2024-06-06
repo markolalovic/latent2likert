@@ -6,7 +6,10 @@ plot_density <- function(K, params) {
 
   params_dp <- convert_params(params)
   x <- seq(-3, 3, length = 200)
-  y <- d_skew_normal(x, params_dp[["xi"]], params_dp[["omega"]], params_dp[["alpha"]])
+  y <- d_skew_normal(x, 
+                     params_dp[["xi"]], 
+                     params_dp[["omega"]], 
+                     params_dp[["alpha"]])
 
   dd <- data.frame(x=x, y=y)
   eps <- 0.008

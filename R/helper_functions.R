@@ -1,21 +1,3 @@
-#' Calculate variance of probabilities `pk`
-#'
-#' @param pk vector of probabilities
-#' @return variance of `pk`
-get_pk_var <- function(pk) {
-  domain <- (1:length(pk))
-  m <- get_pk_mean(pk)
-  return(sum(pk * (domain - m)^2))
-}
-
-#' Variance of a skew normal distribution
-#'
-#' @param alpha determines the shape
-#' @return variance of a skew-normal distribution
-var_skew_normal <- function(alpha) {
-  return(1 - 2*(delta_skew_normal(alpha)^2)/pi)
-}
-
 #' Pad missing levels with zeros
 #'
 #' @export
@@ -23,9 +5,9 @@ var_skew_normal <- function(alpha) {
 #' @param K number of response categories
 #' @return table of proportions across all possible responses
 pad_levels <- function(pk, K) {
-  pk <- sapply(as.character(1:K), function(k) {
+  pk <- vapply(as.character(seq_len(K)), function(k) {
     ifelse(k %in% names(pk), pk[[k]], 0)
-  })
+  }, numeric(1))
   return(pk)
 }
 

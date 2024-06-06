@@ -140,8 +140,10 @@ p2 <- corr_plot(new_items_M, "Reproduced agreeableness items for man")
 
 p3 <- corr_plot(items_F, "Agreeableness items for women")
 p4 <- corr_plot(new_items_F, "Reproduced agreeableness items for women")
-p <- plot_grid(ggmatrix_gtable(p1), ggmatrix_gtable(p2), ggmatrix_gtable(p3), ggmatrix_gtable(p4),  ncol = 2)
-ggsave(file="./man/figures/articles/agree_items_correlations_comparison.svg", plot=p, width=10, height=10)
+p <- plot_grid(ggmatrix_gtable(p1), ggmatrix_gtable(p2), ggmatrix_gtable(p3), 
+               ggmatrix_gtable(p4),  ncol = 2)
+ggsave(file="./man/figures/articles/agree_items_correlations_comparison.svg", 
+       plot=p, width=10, height=10)
 ```
 ```{r agree_items_correlations_comparison, fig.height=10, out.width = "100%", echo = FALSE, fig.alt="Agreeableness items correlations comparison"}
 knitr::include_graphics("./man/figures/articles/agree_items_correlations_comparison.svg")
@@ -183,7 +185,8 @@ scale_boxplot <- function(data, title="") {
 p1 <- scale_boxplot(data, "Agreeableness in men and women")
 p2 <- scale_boxplot(new_data, "Reproduced agreeableness in men and women")
 p <- plot_grid(p1, p2,  nrow = 2)
-ggsave(file="./man/figures/articles/agreeableness_grouped_boxplot.svg", plot=p, width=10, height=4.8)
+ggsave(file="./man/figures/articles/agreeableness_grouped_boxplot.svg", 
+       plot=p, width=10, height=4.8)
 ```
 
 ```{r agreeableness_grouped_boxplot, fig.height=4.8, out.width = "100%", echo = FALSE, fig.alt="Agreeableness items grouped boxplot"}

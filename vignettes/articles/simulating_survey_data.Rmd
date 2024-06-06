@@ -83,7 +83,8 @@ p <- ggplot(data=data, aes(x=Prop, y=Response, fill=Course)) +
         legend.title = element_blank(),
         plot.title = element_text(size=16))
 
-ggsave(file="./man/figures/articles/courses_grouped_bar_chart.svg", plot=p, width=10, height=3.3)
+ggsave(file="./man/figures/articles/courses_grouped_bar_chart.svg", 
+       plot=p, width=10, height=3.3)
 ```
 
 ```{r courses_grouped_bar_chart, fig.height=3.3, out.width = "100%", echo = FALSE, fig.alt="Courses grouped bar chart"}
@@ -126,8 +127,9 @@ data <- data.frame (
   Course = c(rep("Course A", items * K), rep("Course B", items * K)),
   Question = questions,
   Time = as.factor(rep(c(rep("before", 3*K), rep("after", 3*K)), 2)),
-  resp = rep(rep(1:K, 3), length(data)),
-  prop = as.vector(sapply(data, function(d) as.vector(t(get_prop_table(d, K))))))
+  resp = rep(rep(seq_len(K), 3), length(data)),
+  prop = as.vector(sapply(data, function(d) { 
+    as.vector(t(get_prop_table(d, K))) })))
 head(data)
 ```
 
@@ -157,7 +159,8 @@ p <- ggplot(data = data_pos, aes(x = Time, y = prop, fill = resp)) +
     strip = strip_nested(size = "variable"),
     labeller = labeller(Question = label_wrap_gen(width = 10))
   ) +
-  ggtitle("On a scale of 1 = Very poor to 5 = Very good, how would you rate your skills?") +  
+  ggtitle("On a scale of 1 = Very poor to 5 = Very good, 
+          how would you rate your skills?") +  
   theme_bw() +
   theme(strip.placement = "outside") +
   theme(
@@ -176,9 +179,11 @@ p <- ggplot(data = data_pos, aes(x = Time, y = prop, fill = resp)) +
                      breaks = seq(from = -1, to = 1, by = 0.5), 
                      labels = c(100, 50, 0, 50, 100)) + 
   scale_fill_manual("", breaks = 1:5, values = color_palette,
-                      labels = c("Very poor", "Poor", "Fair", "Good", "Very good"))
+                      labels = c("Very poor", "Poor", 
+                                 "Fair", "Good", "Very good"))
 
-ggsave(file="./man/figures/articles/courses_stacked_bar_chart.svg", plot=p, width=10, height=5.6)
+ggsave(file="./man/figures/articles/courses_stacked_bar_chart.svg", 
+       plot=p, width=10, height=5.6)
 ```
 
 ```{r courses_stacked_bar_chart, fig.height=5.6, out.width = "100%", echo = FALSE, fig.alt="Courses stacked bar chart"}

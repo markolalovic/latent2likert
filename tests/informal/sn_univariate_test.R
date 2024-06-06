@@ -1,4 +1,3 @@
-setwd("/home/marko/repos/responsesR/R/")
 source("simulation_of_responses.R")
 source("helper_functions.R")
 
