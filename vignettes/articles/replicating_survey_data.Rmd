@@ -12,10 +12,6 @@ vignette: >
 bibliography: references.bib
 link-citations: true
 ---
-<!--
-   TODO: change <img src="../../reference/ ... /> to <img src="../reference/ ... /> 
--->
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
@@ -24,6 +20,7 @@ knitr::opts_chunk$set(
   fig.path = "../man/figures/articles/",
   dev = "svg")
 ```
+<!-- TODO: figures/   to      ../figures/ -->
 
 ```{r}
 library(responsesR) # load responsesR

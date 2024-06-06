@@ -12,7 +12,6 @@ vignette: >
 bibliography: references.bib
 link-citations: true
 ---
-<!-- ../../man/figures/   or      man/figures/ -->
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
@@ -21,6 +20,7 @@ knitr::opts_chunk$set(
   fig.path = "./man/figures/articles/",
   dev = "svg")
 ```
+<!-- TODO: figures/   to      ../figures/ -->
 
 ```{r}
 # load responsesR
@@ -30,10 +30,6 @@ library(responsesR)
 library(RColorBrewer)
 library(ggh4x)
 ```
-<!--
-   TODO: change <img src="../../reference/ ... /> to <img src="../reference/ ... /> 
--->
-
 This article covers the topic of simulating hypothetical survey data. The hypothetical survey simulation is roughly based on the actual comparative study on teaching and learning R in a pair of introductory statistics labs [@mcnamara2024teaching].
 
 ##  Comparison of introductory statistics courses

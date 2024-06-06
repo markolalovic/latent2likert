@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10889981.svg)](https://doi.org/10.5281/zenodo.10889981)
 <!-- badges: end -->
 
-This package provides an easy framework to simulate survey data commonly analyzed in applied social research, specifically Likert items. Users can specify latent variables by providing means, standard deviations, and optionally, skewness and correlations. The generated data sets represents responses to Likert scale questions, which can be used for various purposes, such as validating theoretical findings obtained through factor analysis and structural equation modeling. The package also allows for the estimation of parameters from existing survey data to replicate it more accurately.
+This package provides an easy framework to simulate survey data commonly analyzed in applied social research, specifically Likert items. Users can specify latent variables by providing means, standard deviations, and optionally, skewness and correlations. The generated data set represents responses to Likert scale questions, which can be used for various purposes, such as validating theoretical findings obtained through factor analysis and structural equation modeling. The package also allows for the estimation of parameters from existing survey data to replicate it more accurately.
 
 ## Installation
 You can install the latest version using devtools:

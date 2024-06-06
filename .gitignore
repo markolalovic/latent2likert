@@ -49,4 +49,6 @@ po/*~
 rsconnect/
 .Rproj.user
 
+# Ignore Mac DS_Store files
 .DS_Store
+**/.DS_Store

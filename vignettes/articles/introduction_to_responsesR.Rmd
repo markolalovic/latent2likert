@@ -12,16 +12,12 @@ vignette: >
 bibliography: references.bib
 link-citations: true
 resource_files:
-  - '../man/figures/survey_process.png'
-  - '../man/figures/simulation_process.png'
-  - '../man/figures/mapping_normal.png'
-  - '../man/figures/mapping_skew.png'
-  - '../man/figures/multivatiate_case.png'
+  - "../../man/figures/articles/survey_process.png"
+  - "../../man/figures/articles/simulation_process.png"
+  - "../../man/figures/articles/mapping_normal.png"
+  - "../../man/figures/articles/mapping_skew.png"
+  - "../../man/figures/articles/multivatiate_case.png"
 ---
-<!--
-   TODO: change <img src="../../reference/ ... /> to <img src="../reference/ ... /> 
--->
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE,
@@ -29,7 +25,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   dpi=450)
 ```
-
+<!-- TODO: ../../reference/ to ../reference/ -->
 <!-- avoid border around the images -->
 <style>
     img {
@@ -40,13 +36,13 @@ knitr::opts_chunk$set(
 ## Summary
 The responsesR package provides an easy framework to simulate survey data commonly analyzed in applied social research, specifically Likert items. Likert items represent responses to survey questions or ratings, typically arranged on a psychometric scale defined by verbal labels with roughly equidistant categories symmetrically centered around a neutral midpoint. The most common form has five categories: Strongly disagree, Disagree, Neutral, Agree, and Strongly agree.
 
-Users can specify latent variables by providing means, standard deviations, and optionally, skewness and correlations. The generated dataset represents responses to Likert scale questions, useful for various purposes such as validating theoretical findings obtained through techniques like Factor Analysis and Structural Equation Modeling. The package also allows for the estimation of parameters from existing survey data to replicate it more accurately.
+Users can specify latent variables by providing means, standard deviations, and optionally, skewness and correlations. The generated data set represents responses to Likert scale questions, useful for various purposes such as validating theoretical findings obtained through techniques like Factor Analysis and Structural Equation Modeling. The package also allows for the estimation of parameters from existing survey data to replicate it more accurately.
 
-## Statement of Need
+## Statement of need
 In social sciences, variables of interest are often conceptualized as latent variables—hidden continuous variables that are measured through Likert scale questions, see Figure 1.
 
 ```{r survey_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 1: Flow diagram of the survey process.", echo = FALSE}
-knitr::include_graphics("../../man/figures/survey_process.png")
+knitr::include_graphics("../../man/figures/articles/survey_process.png")
 ```
 
 Researchers frequently aim to uncover the connections between these latent variables using diverse statistical techniques. Having access to an effective algorithm to generate Likert items from hypothetical latent variables is essential for comparative analysis through simulation [@boari2015].
@@ -54,20 +50,20 @@ Researchers frequently aim to uncover the connections between these latent varia
 Simulating Likert item responses often begins by selecting a continuous distribution, which is then transformed into a discrete probability distribution using a method called discretization. This process is illustrated in Figure 2.
 
 ```{r simulation_process_r, fig.align = 'center', out.width = "70%", fig.cap = "Figure 2: Flow diagram of the simulation process.", echo = FALSE}
-knitr::include_graphics("../../man/figures/simulation_process.png")
+knitr::include_graphics("../../man/figures/articles/simulation_process.png")
 ```
 
 Unsupervised discretization, which subdivides the continuous range into intervals, is common [@wu2017] but may yield suboptimal results, especially for non-uniform distributions [@catlett1991]. Furthermore, in many simulation studies, e.g.: [@velicer2000], [@cho2009], the latent distribution is often assumed to follow a normal distribution. However, this assumption is primarily for statistical convenience.
 
 The responsesR package addresses these issues by implementing a supervised discretization approach using Lloyd's algorithm. This ensures that simulated Likert items closely mirror the chosen continuous distributions, minimizing distortion and bias. The package also allows for the reconstruction of latent distributions from discrete data and handles non-normal latent distributions, enabling the generation of skewed responses.
 
-## Dependency Statement
+## Dependency statement
 To maintain a lightweight package, responsesR only imports [@genz2020], along with the standard R packages stats and graphics, which are typically included in R releases. An additional suggested dependency is the package sn [@azzalini2023], necessary only for generating random responses from correlated Likert items with multivariate skew normal latent distribution. However, the package prompts the user to install this dependency during interactive sessions.
 
-## Related Software
+## Related software
 There are alternative approaches for simulating Likert item responses. One approach is to define a discrete probability distribution and sample from it. This can be done using the `sample` function in R or the `likert` function from package wakefield [@rinker2018]. Another approach involves specifying the means, standard deviations, and correlations among the Likert items, using packages such as LikertMakeR [@winzar2022] or SimCorMultRes [@touloumis2016] to generate correlated multinomial responses. Alternatively, one can define a data generating process. For example [@arnulf2018] is based on the semantic theory of survey responses. For those acquainted with item response theory, the mirt package [@chalmers2012] enables users to input discrimination and difficulty parameters for choosing each response category.
 
-## Simulation Process
+## Simulation process
 Consider the following model, detailed in [@boari2015]. Let $X$ denote the continuous variable of interest, measured using Likert scale question with $K$ response categories. The observed discrete variable $Y$, representing possible responses, is defined as follows
 $$
 Y = k, \quad \text{ if } \ \ \tau_{k - 1} < X \leq \tau_{k}
@@ -96,11 +92,11 @@ Next, let $X_{2}$ be a random variable following the same distribution as $X_{1}
 This simulation process is visually depicted in Figures 3 and 4. These figures show the densities of normally distributed $X_{1}$ and $X_{2}$ in Figure 3A and skew normally distributed $X_{1}$ and $X_{2}$ with skewness $\gamma_{1} = - 0.6$ in Figure 4A. Corresponding discrete probability distributions of $Y_{1}$ and $Y_{2}$ with $K=5$ categories are presented in Figures 3B and 4B. 
 
 ```{r mapping_normal_r, fig.align = 'center', out.width = "90%", fig.cap = "Figure 3: Relationship between normally distributed $X$", echo = FALSE}
-knitr::include_graphics("../../man/figures/mapping_normal.png")
+knitr::include_graphics("../../man/figures/articles/mapping_normal.png")
 ```
 
 ```{r mapping_skew_r, fig.align = 'center', out.width = "90%", fig.cap = "Figure 4: Relationship between skew normal $X$ with $\\gamma_{1} = -0.6$, and responses $Y$.", echo = FALSE}
-knitr::include_graphics("../../man/figures/mapping_skew.png")
+knitr::include_graphics("../../man/figures/articles/mapping_skew.png")
 ```
 
 Note that there are some disadvantages to measuring distortion only in a mean-squared sense. For example, we could make use of the fact that humans are more sensitive to some kinds of error than other, and for example permit larger errors when $|x|$ is large than when it is small.
@@ -116,7 +112,7 @@ Solving these equations using an iterative scheme yields location and scaling pa
 To generate random responses from correlated Likert items, we first select the location vector, marginal skewness, and correlations between the latent variables. Then, draw a random sample from the multivariate normal or skew normal distribution with the appropriate location vector and covariance matrix. Lastly, discretize the sample using optimal thresholds $\tau_{k}$. Figure 5 illustrates this process for the case of 2 Likert items with 5 response categories, normal latent variables with means 0 and standard deviations 1, and a correlation of 0.7 between the variables.
 
 ```{r multivatiate_case_r, fig.align = 'center', out.width = "50%", fig.cap = "Figure 5: Normal bivariate and marginal latent distributions with a correlation of $0.7$ and optimal thresholds $\\tau_1, \\dots, \\tau_{4}$.", echo = FALSE}
-knitr::include_graphics("../../man/figures/multivatiate_case.png")
+knitr::include_graphics("../../man/figures/articles/multivatiate_case.png")
 ```
 
 

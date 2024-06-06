@@ -104,9 +104,7 @@ Lalovic</h4>
 
     
     
-<!--
-   TODO: change <img src="../reference/ ... /> to <img src="../reference/ ... /> 
--->
+<!-- TODO: ../../reference/ to ../reference/ -->
 <!-- avoid border around the images -->
 <style>
     img {
@@ -125,20 +123,20 @@ midpoint. The most common form has five categories: Strongly disagree,
 Disagree, Neutral, Agree, and Strongly agree.</p>
 <p>Users can specify latent variables by providing means, standard
 deviations, and optionally, skewness and correlations. The generated
-dataset represents responses to Likert scale questions, useful for
+data set represents responses to Likert scale questions, useful for
 various purposes such as validating theoretical findings obtained
 through techniques like Factor Analysis and Structural Equation
 Modeling. The package also allows for the estimation of parameters from
 existing survey data to replicate it more accurately.</p>
 </div>
 <div class="section level2">
-<h2 id="statement-of-need">Statement of Need<a class="anchor" aria-label="anchor" href="#statement-of-need"></a>
+<h2 id="statement-of-need">Statement of need<a class="anchor" aria-label="anchor" href="#statement-of-need"></a>
 </h2>
 <p>In social sciences, variables of interest are often conceptualized as
 latent variables—hidden continuous variables that are measured through
 Likert scale questions, see Figure 1.</p>
 <div class="figure" style="text-align: center">
-<img src="../reference/figures/survey_process.png" alt="Figure 1: Flow diagram of the survey process." width="70%"><p class="caption">
+<img src="../reference/figures/articles/survey_process.png" alt="Figure 1: Flow diagram of the survey process." width="70%"><p class="caption">
 Figure 1: Flow diagram of the survey process.
 </p>
 </div>
@@ -152,7 +150,7 @@ continuous distribution, which is then transformed into a discrete
 probability distribution using a method called discretization. This
 process is illustrated in Figure 2.</p>
 <div class="figure" style="text-align: center">
-<img src="../reference/figures/simulation_process.png" alt="Figure 2: Flow diagram of the simulation process." width="70%"><p class="caption">
+<img src="../reference/figures/articles/simulation_process.png" alt="Figure 2: Flow diagram of the simulation process." width="70%"><p class="caption">
 Figure 2: Flow diagram of the simulation process.
 </p>
 </div>
@@ -173,7 +171,7 @@ handles non-normal latent distributions, enabling the generation of
 skewed responses.</p>
 </div>
 <div class="section level2">
-<h2 id="dependency-statement">Dependency Statement<a class="anchor" aria-label="anchor" href="#dependency-statement"></a>
+<h2 id="dependency-statement">Dependency statement<a class="anchor" aria-label="anchor" href="#dependency-statement"></a>
 </h2>
 <p>To maintain a lightweight package, responsesR only imports <span class="citation">(<a href="#ref-genz2020">Genz et al. 2020</a>)</span>,
 along with the standard R packages stats and graphics, which are
@@ -185,7 +183,7 @@ prompts the user to install this dependency during interactive
 sessions.</p>
 </div>
 <div class="section level2">
-<h2 id="related-software">Related Software<a class="anchor" aria-label="anchor" href="#related-software"></a>
+<h2 id="related-software">Related software<a class="anchor" aria-label="anchor" href="#related-software"></a>
 </h2>
 <p>There are alternative approaches for simulating Likert item
 responses. One approach is to define a discrete probability distribution
@@ -205,7 +203,7 @@ package <span class="citation">(<a href="#ref-chalmers2012">Chalmers
 parameters for choosing each response category.</p>
 </div>
 <div class="section level2">
-<h2 id="simulation-process">Simulation Process<a class="anchor" aria-label="anchor" href="#simulation-process"></a>
+<h2 id="simulation-process">Simulation process<a class="anchor" aria-label="anchor" href="#simulation-process"></a>
 </h2>
 <p>Consider the following model, detailed in <span class="citation">(<a href="#ref-boari2015">Boari and Ruscone 2015</a>)</span>. Let <span class="math inline">\(X\)</span> denote the continuous variable of
 interest, measured using Likert scale question with <span class="math inline">\(K\)</span> response categories. The observed
@@ -249,12 +247,12 @@ distributed <span class="math inline">\(X_{1}\)</span> and <span class="math inl
 Corresponding discrete probability distributions of <span class="math inline">\(Y_{1}\)</span> and <span class="math inline">\(Y_{2}\)</span> with <span class="math inline">\(K=5\)</span> categories are presented in Figures
 3B and 4B.</p>
 <div class="figure" style="text-align: center">
-<img src="../reference/figures/mapping_normal.png" alt="Figure 3: Relationship between normally distributed $X$" width="90%"><p class="caption">
+<img src="../reference/figures/articles/mapping_normal.png" alt="Figure 3: Relationship between normally distributed $X$" width="90%"><p class="caption">
 Figure 3: Relationship between normally distributed <span class="math inline">\(X\)</span>
 </p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="../reference/figures/mapping_skew.png" alt="Figure 4: Relationship between skew normal $X$ with $\gamma_{1} = -0.6$, and responses $Y$." width="90%"><p class="caption">
+<img src="../reference/figures/articles/mapping_skew.png" alt="Figure 4: Relationship between skew normal $X$ with $\gamma_{1} = -0.6$, and responses $Y$." width="90%"><p class="caption">
 Figure 4: Relationship between skew normal <span class="math inline">\(X\)</span> with <span class="math inline">\(\gamma_{1} = -0.6\)</span>, and responses <span class="math inline">\(Y\)</span>.
 </p>
 </div>
@@ -289,7 +287,7 @@ illustrates this process for the case of 2 Likert items with 5 response
 categories, normal latent variables with means 0 and standard deviations
 1, and a correlation of 0.7 between the variables.</p>
 <div class="figure" style="text-align: center">
-<img src="../reference/figures/multivatiate_case.png" alt="Figure 5: Normal bivariate and marginal latent distributions with a correlation of $0.7$ and optimal thresholds $\tau_1, \dots, \tau_{4}$." width="50%"><p class="caption">
+<img src="../reference/figures/articles/multivatiate_case.png" alt="Figure 5: Normal bivariate and marginal latent distributions with a correlation of $0.7$ and optimal thresholds $\tau_1, \dots, \tau_{4}$." width="50%"><p class="caption">
 Figure 5: Normal bivariate and marginal latent distributions with a
 correlation of <span class="math inline">\(0.7\)</span> and optimal
 thresholds <span class="math inline">\(\tau_1, \dots, \tau_{4}\)</span>.

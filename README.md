@@ -13,7 +13,7 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 This package provides an easy framework to simulate survey data commonly
 analyzed in applied social research, specifically Likert items. Users
 can specify latent variables by providing means, standard deviations,
-and optionally, skewness and correlations. The generated data sets
+and optionally, skewness and correlations. The generated data set
 represents responses to Likert scale questions, which can be used for
 various purposes, such as validating theoretical findings obtained
 through factor analysis and structural equation modeling. The package
