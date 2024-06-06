@@ -29,7 +29,7 @@ The value can be:
 an array of random responses
 }
 \description{
-Generates a sample of random responses based on parameters of latent variables.
+Returns a sample of random responses based on parameters of latent variables.
 }
 \examples{
 data <- get_responses(n = 5, mu = c(0, 1, 2))

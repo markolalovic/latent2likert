@@ -110,7 +110,7 @@ p
 <p>
 </p>
 
-<img src="./man/figures/articles/courses_grouped_bar_chart.svg" alt="Courses grouped bar chart" width="100%" />
+<img src="./man/figures/articles/courses_grouped_bar_chart.svg" alt="Courses grouped bar chart" width="80%" />
 
 For a pre- and post comparison, suppose that the participants completed
 the survey both before and after taking the course. And suppose that
@@ -213,7 +213,7 @@ p
 <p>
 </p>
 
-<img src="./man/figures/articles/courses_stacked_bar_chart.svg" alt="Courses stacked bar chart" width="100%" />
+<img src="./man/figures/articles/courses_stacked_bar_chart.svg" alt="Courses stacked bar chart" width="80%" />
 
 ### Replicating survey data
 
@@ -475,7 +475,7 @@ new_items_F <- get_responses(n = nrow(items_F),
 To compare the results, we can plot the correlation matrix with bar
 charts on the diagonal:
 
-<img src="./man/figures/articles/agree_items_correlations_comparison.svg" alt="Agreeableness items correlations comparison" width="100%" />
+<img src="./man/figures/articles/agree_items_correlations_comparison.svg" alt="Agreeableness items correlations comparison" width="80%" />
 
 The next step would be to create agreeableness scale scores for both
 groups of participants, by taking the average of these 5 items and
@@ -520,7 +520,7 @@ plot_grid(p1, p2,  nrow = 2)
 <p>
 </p>
 
-<img src="./man/figures/articles/agreeableness_grouped_boxplot.svg" alt="Agreeableness items grouped boxplot" width="100%" />
+<img src="./man/figures/articles/agreeableness_grouped_boxplot.svg" alt="Agreeableness items grouped boxplot" width="80%" />
 
 ## Dependency statement
 

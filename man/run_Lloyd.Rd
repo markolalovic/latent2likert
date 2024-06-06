@@ -23,7 +23,7 @@ pk_means list of means of estimated probabilities
 pk_MS_errors list of mean squared errors for convergence plots
 }
 \description{
-Given a probability density function `fX` of a continuous random variable `X`,
+Given a probability density function `fX` of a random variable `X`,
 the function returns a discrete random variable with `K` possible outcomes
 that best approximates `X` in the mean-square or L2 sense by minimizing MSE.
 }

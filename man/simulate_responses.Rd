@@ -9,7 +9,7 @@ simulate_responses(K, params)
 \arguments{
 \item{K}{number of response categories}
 
-\item{params}{parameters `xi`, `omega` and `alpha` of skew-normal distribution}
+\item{params}{skew-normal parameters `xi`, `omega` and `alpha`}
 }
 \value{
 lists of probabilities `pk` and cut points `xk`

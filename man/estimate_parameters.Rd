@@ -7,7 +7,7 @@
 estimate_parameters(data, K, gamma1 = 0)
 }
 \arguments{
-\item{data}{survey responses, where the columns correspond to individual items.
+\item{data}{responses, where the columns correspond to individual items.
 Apart from this, `data` can be of almost any class such as
 "data.frame" "matrix" or "array".}
 

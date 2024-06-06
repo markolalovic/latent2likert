@@ -87,7 +87,7 @@ ggsave(file="./man/figures/articles/courses_grouped_bar_chart.svg",
        plot=p, width=10, height=3.3)
 ```
 
-```{r courses_grouped_bar_chart, fig.height=3.3, out.width = "100%", echo = FALSE, fig.alt="Courses grouped bar chart"}
+```{r courses_grouped_bar_chart, fig.height=3.3, out.width = "80%", echo = FALSE, fig.alt="Courses grouped bar chart"}
 knitr::include_graphics("./man/figures/articles/courses_grouped_bar_chart.svg")
 ```
 
@@ -186,7 +186,7 @@ ggsave(file="./man/figures/articles/courses_stacked_bar_chart.svg",
        plot=p, width=10, height=5.6)
 ```
 
-```{r courses_stacked_bar_chart, fig.height=5.6, out.width = "100%", echo = FALSE, fig.alt="Courses stacked bar chart"}
+```{r courses_stacked_bar_chart, fig.height=5.6, out.width = "80%", echo = FALSE, fig.alt="Courses stacked bar chart"}
 knitr::include_graphics("./man/figures/articles/courses_stacked_bar_chart.svg")
 ```
 
