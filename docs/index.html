@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulation of Likert Item Responses • responsesR</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<meta name="description" content="Generate Likert-scale responses in R. responsesR provides an easy framework to simulate survey data, specifically Likert items." /><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
@@ -169,7 +169,7 @@ Below are the generated responses visualized using a grouped bar chart:
 <span><span class="va">p</span></span></code></pre></div>
 </details><p>
 </p>
-<p><img src="./reference/figures/articles/courses_grouped_bar_chart.svg" width="100%" alt="Courses grouped bar chart"></p>
+<p><img src="./reference/figures/articles/courses_grouped_bar_chart.svg" alt="Courses grouped bar chart" width="100%"></p>
 <p>For a pre- and post comparison, suppose that the participants completed the survey both before and after taking the course. And suppose that participants’ assessments of their skills in:</p>
 <ol style="list-style-type: decimal">
 <li>Programming on average increased,</li>
@@ -256,7 +256,7 @@ Below is the grouped bar chart of the generated responses:
 <span><span class="va">p</span></span></code></pre></div>
 </details><p>
 </p>
-<p><img src="./reference/figures/articles/courses_stacked_bar_chart.svg" width="100%" alt="Courses stacked bar chart"></p>
+<p><img src="./reference/figures/articles/courses_stacked_bar_chart.svg" alt="Courses stacked bar chart" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="replicating-survey-data">Replicating survey data<a class="anchor" aria-label="anchor" href="#replicating-survey-data"></a>
@@ -483,7 +483,7 @@ Female
 <span>                             K <span class="op">=</span> <span class="fl">6</span>,</span>
 <span>                             R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">items_F</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>To compare the results, we can plot the correlation matrix with bar charts on the diagonal:</p>
-<p><img src="./reference/figures/articles/agree_items_correlations_comparison.svg" width="100%" alt="Agreeableness items correlations comparison"></p>
+<p><img src="./reference/figures/articles/agree_items_correlations_comparison.svg" alt="Agreeableness items correlations comparison" width="100%"></p>
 The next step would be to create agreeableness scale scores for both groups of participants, by taking the average of these 5 items and visualize the results with a grouped boxplot:
 <details><summary><b><a style="cursor: pointer;">Click here to expand </a></b>
 </summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -517,7 +517,7 @@ The next step would be to create agreeableness scale scores for both groups of p
 <span><span class="fu">plot_grid</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>,  nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 </details><p>
 </p>
-<p><img src="./reference/figures/articles/agreeableness_grouped_boxplot.svg" width="100%" alt="Agreeableness grouped boxplot"></p>
+<p><img src="./reference/figures/articles/agreeableness_grouped_boxplot.svg" alt="Agreeableness items grouped boxplot" width="100%"></p>
 </div>
 </div>
 <div class="section level2">
