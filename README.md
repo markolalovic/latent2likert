@@ -213,7 +213,7 @@ p
 <p>
 </p>
 
-<img src="./man/figures/articles/courses_stacked_bar_chart.svg" alt="Courses stacked bar chart" width="80%" />
+<img src="./man/figures/articles/courses_stacked_bar_chart.svg" alt="Courses stacked bar chart" width="90%" />
 
 ### Replicating survey data
 

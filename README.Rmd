@@ -191,7 +191,7 @@ p
 </details>
 <p> </p>
 
-```{r courses_stacked_bar_chart, fig.height=5.6, out.width = "80%", echo = FALSE, fig.alt="Courses stacked bar chart"}
+```{r courses_stacked_bar_chart, fig.height=5.6, out.width = "90%", echo = FALSE, fig.alt="Courses stacked bar chart"}
 knitr::include_graphics("./man/figures/articles/courses_stacked_bar_chart.svg")
 ```
 

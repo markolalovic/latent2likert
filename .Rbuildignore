@@ -16,3 +16,4 @@
 ^CODE_OF_CONDUCT.md
 ^fix_site.py
 ^tests/informal$
+^dev$
