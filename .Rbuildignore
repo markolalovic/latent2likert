@@ -17,3 +17,7 @@
 ^fix_site.py
 ^tests/informal$
 ^dev$
+^doc$
+^Meta$
+^revdep$
+^cran-comments\.md$

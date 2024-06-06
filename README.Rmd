@@ -12,10 +12,10 @@ knitr::opts_chunk$set(
 ## responsesR: simulate Likert item responses in R <img src="./man/figures/logo.png" alt="Package logo" align="right" height="160" style="float:right; height:160px;"/>
 
 <!-- badges: start -->
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![codecov](https://codecov.io/gh/markolalovic/responsesR/graph/badge.svg?token=HZTG6RUB2J)](https://codecov.io/gh/markolalovic/responsesR)
 [![R-CMD-check](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/markolalovic/responsesR/graph/badge.svg?token=HZTG6RUB2J)](https://codecov.io/gh/markolalovic/responsesR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10889981.svg)](https://doi.org/10.5281/zenodo.10889981)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
 This package provides an easy framework to simulate survey data commonly analyzed in applied social research, specifically Likert items. Users can specify latent variables by providing means, standard deviations, and optionally, skewness and correlations. The generated data set represents responses to Likert scale questions, which can be used for various purposes, such as validating theoretical findings obtained through factor analysis and structural equation modeling. The package also allows for the estimation of parameters from existing survey data to replicate it more accurately.
@@ -317,12 +317,12 @@ knitr::include_graphics("./man/figures/articles/agreeableness_grouped_boxplot.sv
 ```
 
 ## Dependency statement
-To maintain a lightweight package, responsesR only imports [mvtnorm](https://cran.r-project.org/web/packages/mvtnorm/index.html), along with the standard R packages stats and graphics, which are typically included in R releases. An additional suggested dependency is the package [sn](https://cran.r-project.org/web/packages/sn/index.html), necessary only for generating random responses from correlated Likert items with multivariate skew normal latent distribution. However, the package prompts the user to install this dependency during interactive sessions.
+To maintain a lightweight package, responsesR only imports [mvtnorm](https://cran.r-project.org/package=mvtnorm), along with the standard R packages stats and graphics, which are typically included in R releases. An additional suggested dependency is the [package sn](https://cran.r-project.org/package=sn), necessary only for generating random responses from correlated Likert items with multivariate skew normal latent distribution. However, the package prompts the user to install this dependency during interactive sessions.
 
 ## Further reading
-* [Get started](https://markolalovic.github.io/responsesR/articles/responsesR.html)
-* [Functions reference documentation](https://markolalovic.github.io/responsesR/reference/index.html)
-* [Introduction to responsesR package](https://markolalovic.github.io/responsesR/articles/introduction_to_responsesR.html)
+* [Get started](https://lalovic.io/responsesR/articles/responsesR.html)
+* [Functions reference documentation](https://lalovic.io/responsesR/reference/index.html)
+* [Introduction to responsesR package](https://lalovic.io/responsesR/articles/introduction_to_responsesR.html)
 
 ## Contributions
 Feel free to create issues for bugs or suggestions on the [issues page](https://github.com/markolalovic/responsesR/issues).

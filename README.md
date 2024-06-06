@@ -3,11 +3,11 @@
 
 <!-- badges: start -->
 
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![codecov](https://codecov.io/gh/markolalovic/responsesR/graph/badge.svg?token=HZTG6RUB2J)](https://codecov.io/gh/markolalovic/responsesR)
 [![R-CMD-check](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/responsesR/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/markolalovic/responsesR/graph/badge.svg?token=HZTG6RUB2J)](https://codecov.io/gh/markolalovic/responsesR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10889981.svg)](https://doi.org/10.5281/zenodo.10889981)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
 This package provides an easy framework to simulate survey data commonly
@@ -525,23 +525,21 @@ plot_grid(p1, p2,  nrow = 2)
 ## Dependency statement
 
 To maintain a lightweight package, responsesR only imports
-[mvtnorm](https://cran.r-project.org/web/packages/mvtnorm/index.html),
-along with the standard R packages stats and graphics, which are
-typically included in R releases. An additional suggested dependency is
-the package [sn](https://cran.r-project.org/web/packages/sn/index.html),
-necessary only for generating random responses from correlated Likert
-items with multivariate skew normal latent distribution. However, the
-package prompts the user to install this dependency during interactive
-sessions.
+[mvtnorm](https://cran.r-project.org/package=mvtnorm), along with the
+standard R packages stats and graphics, which are typically included in
+R releases. An additional suggested dependency is the [package
+sn](https://cran.r-project.org/package=sn), necessary only for
+generating random responses from correlated Likert items with
+multivariate skew normal latent distribution. However, the package
+prompts the user to install this dependency during interactive sessions.
 
 ## Further reading
 
-- [Get
-  started](https://markolalovic.github.io/responsesR/articles/responsesR.html)
+- [Get started](https://lalovic.io/responsesR/articles/responsesR.html)
 - [Functions reference
-  documentation](https://markolalovic.github.io/responsesR/reference/index.html)
+  documentation](https://lalovic.io/responsesR/reference/index.html)
 - [Introduction to responsesR
-  package](https://markolalovic.github.io/responsesR/articles/introduction_to_responsesR.html)
+  package](https://lalovic.io/responsesR/articles/introduction_to_responsesR.html)
 
 ## Contributions
 

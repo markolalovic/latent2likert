@@ -7,18 +7,6 @@
     <loc>https://markolalovic.github.io/responsesR/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/responsesR/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/responsesR/articles/articles/introduction_to_responsesR.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/responsesR/articles/articles/replicating_survey_data.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/responsesR/articles/articles/simulating_survey_data.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/responsesR/articles/index.html</loc>
   </url>
   <url>
@@ -71,9 +59,6 @@
   </url>
   <url>
     <loc>https://markolalovic.github.io/responsesR/reference/get_pk_mean.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/responsesR/reference/get_pk_var.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/responsesR/reference/get_prop_table.html</loc>

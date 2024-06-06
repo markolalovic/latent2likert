@@ -16,9 +16,9 @@ Description: Provides an easy framework to simulate survey data commonly
     also allows for the estimation of parameters from existing survey data
     to replicate it more accurately.
 License: GPL-3
-URL: https://lalovic.io/responsesR,
-    https://github.com/markolalovic/responsesR
-BugReports: https://github.com/markolalovic/responsesR/issues
+URL: https://lalovic.io/responsesR/,
+    https://github.com/markolalovic/responsesR/
+BugReports: https://github.com/markolalovic/responsesR/issues/
 Depends: 
     R (>= 3.3)
 Imports: 
