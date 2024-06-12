@@ -2,12 +2,9 @@ pandoc: 3.1.11
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  introduction_to_responsesR: introduction_to_responsesR.html
-  replicating_survey_data: replicating_survey_data.html
-  responsesR: responsesR.html
-  simulating_survey_data: simulating_survey_data.html
-last_built: 2024-06-06T19:02Z
+  latent2likert: latent2likert.html
+last_built: 2024-06-12T23:24Z
 urls:
-  reference: https://markolalovic.github.io/responsesR/reference
-  article: https://markolalovic.github.io/responsesR/articles
+  reference: https://markolalovic.github.io/latent2likert/reference
+  article: https://markolalovic.github.io/latent2likert/articles
 

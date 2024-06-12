@@ -1,0 +1,123 @@
+context("Testing simulation")
+
+testthat::test_that("proportions of generated responses match actual probabilities", {
+    size = 10^6
+    n_levels = 5
+    n_items = 3
+
+    mean <- c(0, -1, -1)
+    sd <- c(1, 1, 0.5)
+    skew <- c(0.5, 0.5, 0.5)
+    corr = 0.5
+    
+    data = rLikert(size, n_levels, n_items, mean, sd, skew, corr)
+    for (i in seq_len(n_items)) {
+        cp = c("mu"=mean[i], "sd"=sd[i], "skew"=skew[i])
+        prob = calc_Likert_prob(5, cp)
+        
+        data_prop = as.numeric(prop.table(table(data[,i])))
+        testthat::expect_equal(prob, data_prop, tolerance = 0.05)
+    }
+})
+
+testthat::test_that("proportions of generated responses match actual probabilities, 
+                     when using a random corr matrix", {
+    size = 10^6
+    n_levels = 5
+    n_items = 3
+
+    mean <- c(0, -1, -1)
+    sd <- c(1, 1, 0.5)
+    skew <- c(0, 0, 0)
+    corr = "random"
+    
+    data = rLikert(size, n_levels, n_items, mean, sd, skew, corr)
+    for (i in seq_len(n_items)) {
+        cp = c("mu"=mean[i], "sd"=sd[i], "skew"=skew[i])
+        prob = calc_Likert_prob(5, cp)
+        
+        data_prop = as.numeric(prop.table(table(data[,i])))
+        testthat::expect_equal(prob, data_prop, tolerance = 0.05)
+    }
+})
+
+testthat::test_that("correlations of random responses match actual correlations", {
+    size = 10^6
+    n_levels = 5
+    n_items = 3
+    
+    mean <- c(0, -1, -1)
+    sd <- c(1, 1, 0.5)
+    skew <- c(0.5, 0.5, 0.5)
+    corr = 0.5
+    
+    data = rLikert(size, n_levels, n_items, mean, sd, skew, corr)
+    data_corr_matrix = cor(data)
+    
+    actual_corr_matrix = generate_corr_matrix(corr, 3, n_items)
+    dimnames(actual_corr_matrix) <- dimnames(data_corr_matrix)
+
+    testthat::expect_equal(actual_corr_matrix, 
+                           data_corr_matrix, tolerance = 0.05)
+})
+
+testthat::test_that("correlations of random responses match actual correlations,
+                     harder case", {
+    size = 10^6
+    n_levels = 6
+    n_items = 3
+    
+    mean <- c(-0.5, 0, 0.5)
+    sd <- c(0.5, 0.5, 0.5)
+    skew <- c(-0.3, -0.4, -0.5)
+    corr = 0.7
+    
+    data = rLikert(size, n_levels, n_items, mean, sd, skew, corr)
+    data_corr_matrix = cor(data)
+    
+    actual_corr_matrix = generate_corr_matrix(corr, 3, n_items)
+    dimnames(actual_corr_matrix) <- dimnames(data_corr_matrix)
+
+    testthat::expect_equal(actual_corr_matrix, 
+                           data_corr_matrix, tolerance = 0.11)
+})
+
+testthat::test_that("calc_Likert_prob using 5 levels 
+                    and N(0,1) gives expected result", {
+    n_levels = 5
+    cp = c("mu"=0, "sd"=1, "skew"=0)
+    prob = calc_Likert_prob(n_levels, cp)
+    expected_prob = c(0.106, 0.244, 0.298, 0.244, 0.106)
+    testthat::expect_equal(prob, expected_prob, tolerance = 0.05)
+})
+
+testthat::test_that("Correlation input is handled correctly", {
+    corr_matrix <- get_rand_corr_matrix(3)
+    corr_inputs <- list(0, "random", 0.5, corr_matrix)
+    
+    for (i in seq_along(corr_inputs)) {
+        corr <- corr_inputs[[i]]
+        corr_case <- handle_corr_case(corr)
+        testthat::expect_equal(i, corr_case)
+    }
+})
+
+testthat::test_that("Invalid corr input raises error", {
+  res <- try(handle_corr_case("Invalid"), silent = TRUE)
+  testthat::expect_equal(class(res), "try-error")
+})
+
+testthat::test_that("generate_corr_matrix returns a matrix that 
+                    ressembles a correlation matrix", {
+    n_items <- 3
+    corr_matrix <- get_rand_corr_matrix(n_items)
+    corr_inputs <- list("random", 0.5, corr_matrix)
+    for (i in seq_along(corr_inputs)) {
+        corr <- corr_inputs[[i]]
+        corr_case <- handle_corr_case(corr)
+        res <- generate_corr_matrix(corr, corr_case, n_items)
+
+        testthat::expect_true(all(diag(res) == 1))
+        testthat::expect_true(isSymmetric(res))
+    }
+})

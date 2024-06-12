@@ -1,26 +1,19 @@
 Type: Package
-Package: responsesR
-Title: Simulation of Likert Item Responses
-Version: 1.2.2
-Date: 2024-06-06
-Authors@R: 
-    person("Marko", "Lalovic", , "marko@lalovic.me", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-1305-0192"))
-Description: Provides an easy framework to simulate survey data commonly
-    analyzed in applied social research, specifically Likert items. Users
-    can specify latent variables by providing means, standard deviations,
-    and optionally, skewness and correlations. The generated dataset
-    represents responses to Likert scale questions, which can be used for
-    various purposes, such as validating theoretical findings obtained
-    through factor analysis and structural equation modeling.  The package
-    also allows for the estimation of parameters from existing survey data
-    to replicate it more accurately.
-License: GPL-3
+Package: latent2likert
+Title: Converting Latent Variables Into Likert Scale Responses
+Version: 1.2.1
+Date: 2024-06-12
+Authors@R: c(person(given = "Marko", family = "Lalovic", email = "marko@lalovic.io", role = c("aut", "cre")))
+Description: Effectively simulates the discretization process inherent to Likert scales while minimizing distortion. 
+    It converts continuous latent variables into ordinal categories to generate Likert scale item responses. 
+    Particularly useful for accurately modeling and analyzing survey data that use Likert scales, especially 
+    when applying statistical techniques that require metric data.
+License: MIT + file LICENSE
 URL: https://lalovic.io/responsesR/,
     https://github.com/markolalovic/responsesR/
 BugReports: https://github.com/markolalovic/responsesR/issues/
 Depends: 
-    R (>= 3.3)
+    R (>= 3.5)
 Imports: 
     graphics,
     mvtnorm,
@@ -35,9 +28,10 @@ Suggests:
     psych,
     RColorBrewer,
     rmarkdown,
-    testthat (>= 2.0.0)
+    testthat (>= 3.0.0),
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 RoxygenNote: 7.3.1
