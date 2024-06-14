@@ -4,40 +4,16 @@
     <loc>https://markolalovic.github.io/latent2likert/404.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/LICENSE-text.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/articles/articles/introduction_to_responsesR.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/articles/articles/replicating_survey_data.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/articles/articles/simulating_survey_data.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/articles/introduction_to_responsesR.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/articles/latent2likert.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/articles/replicating_survey_data.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/articles/responsesR.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/articles/simulating_survey_data.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/authors.html</loc>
@@ -64,9 +40,6 @@
     <loc>https://markolalovic.github.io/latent2likert/reference/cor2cov.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/d_skew_normal.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/delta_skew_normal.html</loc>
   </url>
   <url>
@@ -74,9 +47,6 @@
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/discretize_density.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/estimate_mu_sd.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/estimate_parameters.html</loc>
@@ -91,34 +61,7 @@
     <loc>https://markolalovic.github.io/latent2likert/reference/generate_random_cp.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_MSE.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_new_rk.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_new_xk.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_pk.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_pk_mean.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/get_prop_table.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_rand_corr_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_random_cp.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_responses.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_univariate_responses.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/index.html</loc>
@@ -133,19 +76,10 @@
     <loc>https://markolalovic.github.io/latent2likert/reference/percentify.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/plot_contour.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/rLikert.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/run_Lloyd.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/scale_and_shift.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/simulate_responses.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/var_skew_normal.html</loc>

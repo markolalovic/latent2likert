@@ -1,5 +1,5 @@
 
-## latent2likert <img src="./man/figures/hex-latent2likert.png" alt="Package logo" align="right" width="150"/>
+## latent2likert <img src="./man/figures/logo.png" alt="Package logo" align="right" width="150"/>
 
 <!-- badges: start -->
 

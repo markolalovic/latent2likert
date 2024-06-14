@@ -46,7 +46,7 @@ First, load the package latent2likert, and set seed for reproducibility:
 # TODO: load the new package
 # library(latent2likert) 
 # set.seed(12345)
-setwd("/Users/markolalovic/dev/responsesR")
+setwd("/Users/markolalovic/dev/latent2likert/")
 source("./R/discretization.R")
 source("./R/simulation.R")
 source("./R/estimation.R")
