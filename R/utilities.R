@@ -1,8 +1,30 @@
+# Visualize latent and Likert variables
+plot_likert_transform <- function(n_items, n_levels, mean, sd, skew) {
+  n_levels <- rep(n_levels, length.out = n_items)
+  mean <- rep(mean, length.out = n_items)
+  sd <- rep(sd, length.out = n_items)
+  skew <- rep(skew, length.out = n_items)
+  layout(matrix(seq_len(n_items * 2), nrow=2, ncol=n_items))
+  x <- seq(-3, 3, length = 1000)
+  for (i in seq_len(n_items)) {
+    # Draw the latent variable
+    cp <- c("mu" = mean[i], "sd" = sd[i], "skew" = skew[i])
+    dp <- convert_params(cp)
+    y <- density_sn(x, dp[["xi"]], dp[["omega"]], dp[["alpha"]])
+    plot(x, y, type="l", lwd = 2, xlab = "", ylab = "", main="")
+    title(paste("X", i, sep = ""))
+    # Draw the corresponding manifest variable
+    prob <- simulate_likert(n_levels[i], cp)
+    barplot(prob)
+    title(paste("Y", i, sep = ""))
+  }
+}
+
 # Helper function to check if package is installed
 check_package <- function(pkg) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-        stop(sprintf('Package "%s" must be installed. Please run:\n\n\tinstall.packages("%s")\n\n', pkg, pkg), call. = FALSE)
-    }
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    stop(sprintf('Package "%s" must be installed. Please run:\n\n\tinstall.packages("%s")\n\n', pkg, pkg), call. = FALSE)
+  }
 }
 
 #' Probability density function of a skew normal distribution
@@ -14,9 +36,9 @@ check_package <- function(pkg) {
 #' @param alpha determines the shape
 #' @return density at x
 #' @seealso [sn::dsn()]
-density_sn = function(x, xi=0, omega=1, alpha=0) {
-    return(2/omega*stats::dnorm((x - xi)/omega) * 
-           stats::pnorm(alpha*(x - xi)/omega))
+density_sn <- function(x, xi = 0, omega = 1, alpha = 0) {
+  return(2 / omega * stats::dnorm((x - xi) / omega) *
+    stats::pnorm(alpha * (x - xi) / omega))
 }
 
 #' Convert parameters
@@ -28,23 +50,23 @@ density_sn = function(x, xi=0, omega=1, alpha=0) {
 #' @param cp centered parameters c(mu, sd, skew)
 #' @return direct parameters c(xi, omega, alpha)
 #' @seealso [sn::cp2dp]
-convert_params = function(cp) {
-  mu = cp[1]
-  sd = cp[2]
-  skew = cp[3]
+convert_params <- function(cp) {
+  mu <- cp[1]
+  sd <- cp[2]
+  skew <- cp[3]
 
-  b = sqrt(2/pi)
-  r  = sign(skew)*(2*abs(skew)/(4 - pi))^(1/3)
-  delta = r/(b*sqrt(1 + r^2))
+  b <- sqrt(2 / pi)
+  r <- sign(skew) * (2 * abs(skew) / (4 - pi))^(1 / 3)
+  delta <- r / (b * sqrt(1 + r^2))
 
-  mu_z = b*delta
-  sd_z = sqrt(1 - mu_z^2)
+  mu_z <- b * delta
+  sd_z <- sqrt(1 - mu_z^2)
 
-  omega = sd / sd_z
-  xi = mu - omega * mu_z
-  alpha = delta / sqrt(1 - delta^2)
-  dp = as.numeric(c(xi, omega, alpha))
-  names(dp) = c("xi", "omega", "alpha")
+  omega <- sd / sd_z
+  xi <- mu - omega * mu_z
+  alpha <- delta / sqrt(1 - delta^2)
+  dp <- as.numeric(c(xi, omega, alpha))
+  names(dp) <- c("xi", "omega", "alpha")
   return(dp)
 }
 
@@ -52,15 +74,15 @@ convert_params = function(cp) {
 #'
 #' @param alpha determines the shape
 #' @return mean of a skew-normal distribution
-mean_skew_normal = function(alpha) {
-  return(delta_skew_normal(alpha) * sqrt(2/pi))
+mean_skew_normal <- function(alpha) {
+  return(delta_skew_normal(alpha) * sqrt(2 / pi))
 }
 
 #' Delta parameter of a skew normal distribution
 #'
 #' @param alpha determines the shape
 #' @return delta of a skew-normal distribution
-delta_skew_normal = function(alpha) {
+delta_skew_normal <- function(alpha) {
   return(alpha / (sqrt(1 + alpha^2)))
 }
 
@@ -68,8 +90,8 @@ delta_skew_normal = function(alpha) {
 #'
 #' @param alpha determines the shape
 #' @return variance of a skew-normal distribution
-var_skew_normal = function(alpha) {
-  return(1 - 2*(delta_skew_normal(alpha)^2)/pi)
+var_skew_normal <- function(alpha) {
+  return(1 - 2 * (delta_skew_normal(alpha)^2) / pi)
 }
 
 #' Scale and shift
@@ -77,21 +99,21 @@ var_skew_normal = function(alpha) {
 #' @param x variable
 #' @param dp direct parameters xi, omega, alpha
 #' @return shifted and scaled x
-scale_and_shift = function(x, dp) {
-  xi = dp[["xi"]]
-  omega = dp[["omega"]]
-  alpha = dp[["alpha"]]
-  mean_sn = mean_skew_normal(alpha)
-  return((x - mean_sn)/omega + mean_sn - xi/omega)
+scale_and_shift <- function(x, dp) {
+  xi <- dp[["xi"]]
+  omega <- dp[["omega"]]
+  alpha <- dp[["alpha"]]
+  mean_sn <- mean_skew_normal(alpha)
+  return((x - mean_sn) / omega + mean_sn - xi / omega)
 }
 
 #' Generate a random p x p correlation matrix
 #'
 #' @param p the size of the correlation matrix
 #' @return a random p x p correlation matrix
-generate_rand_corr_matrix = function(p) {
-  corr = drop(stats::rWishart(1, p, diag(p)))
-  corr = stats::cov2cor(corr)
+generate_rand_corr_matrix <- function(p) {
+  corr <- drop(stats::rWishart(1, p, diag(p)))
+  corr <- stats::cov2cor(corr)
   return(corr)
 }
 
@@ -100,7 +122,7 @@ generate_rand_corr_matrix = function(p) {
 #' @param corr correlation matrix
 #' @param s vector of standard deviations
 #' @return covariance matrix
-cor2cov = function(corr, s) {
+cor2cov <- function(corr, s) {
   return(diag(s) %*% corr %*% diag(s))
 }
 
@@ -143,7 +165,7 @@ generate_random_cp <- function() {
   mu <- stats::rnorm(1, 0, 1)
   sd <- stats::runif(1, 0.1, 2)
   gamma1 <- stats::runif(1, -0.95, 0.95)
-  cp <- c("mu"=mu, "sd"=sd, "gamma1"=gamma1)
+  cp <- c("mu" = mu, "sd" = sd, "gamma1" = gamma1)
   return(cp)
 }
 
@@ -152,7 +174,7 @@ generate_random_cp <- function() {
 #' @export
 #' @param x number
 #' @param digits number of digits
-percentify <- function(x, digits=0) {
-  percentage <-formatC(x*100, format="f", digits=digits)
+percentify <- function(x, digits = 0) {
+  percentage <- formatC(x * 100, format = "f", digits = digits)
   return(paste0(percentage, "%"))
 }

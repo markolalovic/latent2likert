@@ -1,38 +1,42 @@
 context("Testing estimation of parameters")
 
 testthat::test_that("`mean` and `sd` are well estimated given `pk` for normal case", {
-    actual <- c(-1, 0.5) # actual mean and sd
-    prob <- list("1"=0.313, "2"=0.579, "3"=0.105, "4"=0.003)
-    estimates <- estimate_mean_and_sd(prob, 5)
-    testthat::expect_equal(estimates, actual, tolerance=0.1)
+  actual <- c(-1, 0.5) # actual mean and sd
+  prob <- list("1" = 0.313, "2" = 0.579, "3" = 0.105, "4" = 0.003)
+  estimates <- estimate_mean_and_sd(prob, 5)
+  testthat::expect_equal(estimates, actual, tolerance = 0.1)
 })
 
-# TODO: fix the warnings
-# “longer object length is not a multiple of shorter object length”
-# Warning message in tail(y, -1) - head(y, -1) - prob:
+testthat::test_that("`mean` and `sd` are well estimated given `pk` for skew case", {
+  actual <- c(0.146858, 1.084341) # actual mean and sd
+  skew <- -0.4565873 # skewness
+  prob <- list(
+    "1" = 0.036, "2" = 0.089, "3" = 0.142,
+    "4" = 0.185, "5" = 0.21, "6" = 0.201, "7" = 0.137
+  )
+  estimates <- estimate_mean_and_sd(prob, 7, skew)
+  testthat::expect_equal(estimates, actual, tolerance = 0.05)
+})
 
-# test_that("`mean` and `sd` are well estimated given `pk` for skew case", {
-#   actual <- c(0.146858, 1.084341) # actual mean and sd
-#   skew <- -0.4565873 # skewness
-#   pk <- list("1"=0.036, "2"=0.089, "3"=0.142, 
-#              "4"=0.185, "5"=0.21, "6"=0.201, "7"=0.137)
-#   estimates <- estimate_mean_and_sd(pk=pk, n_levels=7, skew=skew)
-#   expect_equal(estimates, actual, tolerance=0.1)
-# })
+testthat::test_that("`mean` and `sd` are well estimated given data for normal case", {
+  actual <- c(0.5, 0.5) # actual mean and sd
+  data <- rLikert(
+    size = 1000,
+    n_levels = 5,
+    n_items = 1,
+    mean = actual[1],
+    sd = actual[1]
+  )
 
-# test_that("`mean` and `sd` are well estimated given data for normal case", {
-#   params <- c("mu"=0.5, "sd"=0.5) # actual parameters
-#   n <- 1000 # number of observations
-#   data <- get_responses(n=n, mu=params[["mu"]], sd=params["sd"], n_levels=5)
-#   estimates <- estimate_parameters(data, 5)
-#   expect_equal(c(estimates), params, tolerance=0.1)
-# })
+  estimates <- estimate_parameters(data, 5)
+  testthatexpect_equal(c(estimates), params, tolerance = 0.1)
+})
 
 # test_that("`mean` and `sd` are well estimated given data for skew case", {
 #   params <- c("mu"=0.5, "sd"=0.5) # actual parameters
 #   n <- 1000 # number of observations
 #   skew <- 0.5 # skewness
-#   data <- get_responses(n=n, mu=params[["mu"]], sd=params["sd"], 
+#   data <- get_responses(n=n, mu=params[["mu"]], sd=params["sd"],
 #                         skew=skew, n_levels=5)
 #   estimates <- estimate_parameters(data, 5, skew)
 #   expect_equal(c(estimates), params, tolerance=0.1)
@@ -75,5 +79,3 @@ testthat::test_that("`mean` and `sd` are well estimated given `pk` for normal ca
 #   res <- try(estimate_mu_sd(pk = pk),silent = TRUE)
 #   expect_equal(class(res), "try-error")
 # })
-
-

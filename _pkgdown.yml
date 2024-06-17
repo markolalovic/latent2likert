@@ -1,6 +1,3 @@
 url: https://markolalovic.github.io/latent2likert/
 template:
-  bootstrap: 3
-authors:
-  Marko Lalovic:
-    href: "https://lalovic.io/"
+  bootstrap: 5

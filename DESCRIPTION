@@ -9,9 +9,8 @@ Description: Effectively simulates the discretization process inherent to Likert
     Particularly useful for accurately modeling and analyzing survey data that use Likert scales, especially 
     when applying statistical techniques that require metric data.
 License: MIT + file LICENSE
-URL: https://lalovic.io/responsesR/,
-    https://github.com/markolalovic/responsesR/
-BugReports: https://github.com/markolalovic/responsesR/issues/
+URL: https://lalovic.io/latent2likert/
+BugReports: https://github.com/markolalovic/latent2likert/issues/
 Depends: 
     R (>= 3.5)
 Imports: 

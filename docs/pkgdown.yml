@@ -2,8 +2,8 @@ pandoc: 3.1.11
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  latent2likert: latent2likert.html
-last_built: 2024-06-14T01:11Z
+  intro_to_latent2likert: intro_to_latent2likert.html
+last_built: 2024-06-17T23:41Z
 urls:
   reference: https://markolalovic.github.io/latent2likert/reference
   article: https://markolalovic.github.io/latent2likert/articles

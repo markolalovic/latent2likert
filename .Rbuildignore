@@ -21,3 +21,4 @@
 ^Meta$
 ^revdep$
 ^cran-comments\.md$
+^codemeta\.json$
