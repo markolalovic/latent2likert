@@ -53,7 +53,7 @@ install this dependency during interactive sessions if needed.
 <figure>
 <img src="man/figures/overview-min.png" width="80%" alt="Overview of inputs and outputs"/>
 <figcaption>
-Overview of inputs and outputs.
+<em>Overview of inputs and outputs.</em>
 </figcaption>
 </figure>
 
@@ -65,7 +65,7 @@ scale, use:
 ``` r
 #library(latent2likert)
 rlikert(size = 10, n_items = 1, n_levels = 5)
-#>  [1] 3 5 3 5 4 3 4 1 4 4
+#>  [1] 3 4 3 3 2 3 2 1 4 2
 ```
 
 To generate responses to multiple items with specified parameters:
@@ -78,16 +78,16 @@ rlikert(size = 10,
         sd   = c(0.8, 1, 1),
         corr = 0.5)
 #>       Y1 Y2 Y3
-#>  [1,]  1  2  2
+#>  [1,]  2  3  3
 #>  [2,]  3  3  5
-#>  [3,]  3  1  4
-#>  [4,]  2  1  2
-#>  [5,]  2  1  1
-#>  [6,]  2  2  5
-#>  [7,]  3  2  4
-#>  [8,]  3  2  4
-#>  [9,]  4  3  5
-#> [10,]  2  2  3
+#>  [3,]  3  4  2
+#>  [4,]  3  3  4
+#>  [5,]  3  2  4
+#>  [6,]  1  2  3
+#>  [7,]  3  4  5
+#>  [8,]  3  2  5
+#>  [9,]  3  1  4
+#> [10,]  3  2  5
 ```
 
 You can also provide a correlation matrix:
@@ -111,9 +111,9 @@ these estimates are typically lower:
 ``` r
 cor(data)
 #>            Y1         Y2         Y3
-#> Y1  1.0000000 -0.5090828 -0.3381242
-#> Y2 -0.5090828  1.0000000  0.3457403
-#> Y3 -0.3381242  0.3457403  1.0000000
+#> Y1  1.0000000 -0.5107040 -0.3641031
+#> Y2 -0.5107040  1.0000000  0.3611259
+#> Y3 -0.3641031  0.3611259  1.0000000
 ```
 
 ## Using `estimate_params`
@@ -123,9 +123,9 @@ Given the data, you can estimate the values of latent parameters using:
 ``` r
 estimate_params(data, n_levels = c(4, 5, 6), skew = 0)
 #>          items
-#> estimates          Y1          Y2          Y3
-#>      mean  0.02541975 -1.01621955 -0.02109863
-#>      sd    0.76973240  1.00480055  1.02129603
+#> estimates           Y1           Y2           Y3
+#>      mean  0.009327867 -1.061836850 -0.019093065
+#>      sd    0.785412451  0.980961288  0.965227444
 ```
 
 ## Transformation
@@ -145,16 +145,19 @@ plot_likert_transform(n_items = 3,
 <figure>
 <img src="man/figures/transformation-min.png" width="80%" alt="Transformation of latent variables to Likert response variables"/>
 <figcaption>
-Transformation of latent variables to Likert response variables.
+<em>Transformation of latent variables to Likert response
+variables.</em>
 </figcaption>
 </figure>
 
+<br>
+
 Note that, depending on the value of the skewness parameter, the normal
 latent distribution is used if skew = 0, otherwise the skew normal
-distribution is used. The value of skewness is limited to slightly less
-than the interval (-1, 1):
+distribution is used. The value of skewness is restricted to the range
+-0.95 to 0.95, that is
 
-`skew >= -0.95` and `skew <= 0.95`.
+> `skew >= -0.95` and `skew <= 0.95`.
 
 ## Further Reading
 
@@ -168,7 +171,7 @@ To simulate Likert item responses, the `draw_likert` function from the
 [fabricatr](https://CRAN.R-project.org/package=fabricatr) package can be
 used to recode a latent variable into a Likert response variable by
 specifying intervals that subdivide the continuous range. The
-`latent2likert` package, however, offers an advantage by automatically
+**latent2likert** package, however, offers an advantage by automatically
 calculating optimal intervals that minimize distortion between the
 latent variable and the Likert response variable for both normal and
 skew normal latent distributions, eliminating the need to manually

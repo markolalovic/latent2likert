@@ -35,11 +35,7 @@ You can install the development version from GitHub with:
 ```
 
 ```{r, include = FALSE}
-setwd("/Users/markolalovic/dev/latent2likert/")
-source("./R/discretization.R")
-source("./R/simulation.R")
-source("./R/estimation.R")
-source("./R/utilities.R")
+devtools::load_all("/Users/markolalovic/dev/latent2likert/")
 ```
 
 
@@ -58,7 +54,7 @@ To keep the package lightweight, **latent2likert** only imports [mvtnorm](https:
 
 <figure>
     <img src="man/figures/overview-min.png" width="80%" alt="Overview of inputs and outputs"/>
-    <figcaption>Overview of inputs and outputs.</figcaption>
+    <figcaption><em>Overview of inputs and outputs.</em></figcaption>
 </figure>
 
 
@@ -124,12 +120,14 @@ plot_likert_transform(n_items = 3,
 
 <figure>
     <img src="man/figures/transformation-min.png" width="80%" alt="Transformation of latent variables to Likert response variables"/>
-    <figcaption>Transformation of latent variables to Likert response variables.</figcaption>
+    <figcaption><em>Transformation of latent variables to Likert response variables.</em></figcaption>
 </figure>
+<br>
 
-Note that, depending on the value of the skewness parameter, the normal latent distribution is used if skew = 0, otherwise the skew normal distribution is used. The value of skewness is limited to slightly less than the interval (-1, 1):
 
-| `skew >= -0.95` and `skew <= 0.95`.
+Note that, depending on the value of the skewness parameter, the normal latent distribution is used if skew = 0, otherwise the skew normal distribution is used. The value of skewness is restricted to the range -0.95 to 0.95, that is
+
+>  `skew >= -0.95` and `skew <= 0.95`.
 
 
 ## Further Reading
@@ -139,7 +137,7 @@ For more detailed information and practical examples, please refer to the packag
 
 ## Related R Packages
 
-To simulate Likert item responses, the `draw_likert` function from the [fabricatr](https://CRAN.R-project.org/package=fabricatr) package can be used to recode a latent variable into a Likert response variable by specifying intervals that subdivide the continuous range. The `latent2likert` package, however, offers an advantage by automatically calculating optimal intervals that minimize distortion between the latent variable and the Likert response variable for both normal and skew normal latent distributions, eliminating the need to manually specify the intervals.
+To simulate Likert item responses, the `draw_likert` function from the [fabricatr](https://CRAN.R-project.org/package=fabricatr) package can be used to recode a latent variable into a Likert response variable by specifying intervals that subdivide the continuous range. The **latent2likert** package, however, offers an advantage by automatically calculating optimal intervals that minimize distortion between the latent variable and the Likert response variable for both normal and skew normal latent distributions, eliminating the need to manually specify the intervals.
 
 There are also several alternative approaches that do not rely on latent distributions. One method involves directly defining a discrete probability distribution and sampling from it using the sample function in R or the `likert` function from the [wakefield](https://CRAN.R-project.org/package=wakefield) package. Another approach is to specify the means, standard deviations, and correlations among Likert response variables. For this, you can use [LikertMakeR](https://CRAN.R-project.org/package=LikertMakeR) or [SimCorMultRes](https://CRAN.R-project.org/package=SimCorMultRes) to generate correlated multinomial responses.
 

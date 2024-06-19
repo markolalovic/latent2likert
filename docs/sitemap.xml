@@ -16,6 +16,9 @@
     <loc>https://markolalovic.github.io/latent2likert/articles/intro_to_latent2likert.html</loc>
   </url>
   <url>
+    <loc>https://markolalovic.github.io/latent2likert/articles/using_latent2likert.html</loc>
+  </url>
+  <url>
     <loc>https://markolalovic.github.io/latent2likert/authors.html</loc>
   </url>
   <url>
@@ -52,6 +55,9 @@
     <loc>https://markolalovic.github.io/latent2likert/reference/estimate_parameters.html</loc>
   </url>
   <url>
+    <loc>https://markolalovic.github.io/latent2likert/reference/estimate_params.html</loc>
+  </url>
+  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/find_representatives.html</loc>
   </url>
   <url>
@@ -73,7 +79,13 @@
     <loc>https://markolalovic.github.io/latent2likert/reference/pad_levels.html</loc>
   </url>
   <url>
+    <loc>https://markolalovic.github.io/latent2likert/reference/part_bfi.html</loc>
+  </url>
+  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/percentify.html</loc>
+  </url>
+  <url>
+    <loc>https://markolalovic.github.io/latent2likert/reference/plot_likert_transform.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/rLikert.html</loc>

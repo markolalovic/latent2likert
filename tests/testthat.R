@@ -1,4 +1,5 @@
 library("testthat")
-library("responsesR")
 
-test_check("responsesR")
+devtools::load_all("/Users/markolalovic/dev/latent2likert/")
+
+test_check("latent2likert")

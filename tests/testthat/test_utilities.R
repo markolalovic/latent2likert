@@ -1,57 +1,65 @@
 context("Testing helper functions")
 
-test_that("prop_table gives the correct result, univariate case", {
-  data <- rep(c(1,2,3,4), each=2)
-  tab <- get_prop_table(data, K=4)
-  correct_tab <- rep(0.25, 4)
-  names(correct_tab) <- 1:4
-  expect_that( identical(tab, correct_tab), equals(TRUE) )
+testthat::test_that("pad_levels gives the correct result", {
+  pr <- c("2" = 0.25, "3" = 0.25, "4" = 0.50)
+  n_levels <- 5
+  actual_pr <- c("1" = 0, "2" = 0.25, "3" = 0.25, "4" = 0.50, "5" = 0)
+  padded_pr <- pad_levels(pr, n_levels)
+  testthat::expect_equal(padded_pr, actual_pr)
 })
 
-test_that("prop_table gives the correct result, multivariate case", {
-  y <- rep(c(1,2,3,4), each=2)
+test_that("get_prop_table gives the correct result, univariate case", {
+  data <- rep(c(1, 2, 3, 4), each = 2)
+  tab <- get_prop_table(data, K = 4)
+  correct_tab <- rep(0.25, 4)
+  names(correct_tab) <- 1:4
+  expect_true(identical(tab, correct_tab))
+})
+
+test_that("get_prop_table gives the correct result, multivariate case", {
+  y <- rep(c(1, 2, 3, 4), each = 2)
   data <- cbind(y, y)
-  tab <- get_prop_table(data, K=4)
+  tab <- get_prop_table(data, K = 4)
 
   correct_tab <- rbind(rep(0.25, 4), rep(0.25, 4))
   dimnames(correct_tab) <- dimnames(tab)
 
-  expect_that( identical(tab, correct_tab), equals(TRUE) )
+  expect_true(identical(tab, correct_tab))
 })
 
 test_that("pad_levels gives the correct result", {
   pk <- rep(0.25, 4)
   names(pk) <- 1:4
-  padded_pk <- pad_levels(pk = pk, K = 5)
+  padded_pk <- pad_levels(pk, 5)
 
   correct_pk <- c(rep(0.25, 4), 0)
   names(correct_pk) <- 1:5
-  expect_that( identical(padded_pk, correct_pk), equals(TRUE) )
+  expect_true(identical(padded_pk, correct_pk))
 })
 
 test_that("percentify gives the correct result", {
   xbreaks <- seq(from = 0, to = 1, length.out = 6)
   xlabs <- vapply(xbreaks, percentify, character(1))
   correct_xlabs <- c("0%", "20%", "40%", "60%", "80%", "100%")
-  expect_that( identical(xlabs, correct_xlabs), equals(TRUE) )
+  expect_true(identical(xlabs, correct_xlabs))
 })
 
 # parameter conversion test
 test_that("convert_params gives the same results as sn::cp2dp", {
-  cp <- get_random_cp()
-  dp1 <- sn::cp2dp(cp, family="SN")
+  cp <- generate_random_cp()
+  dp1 <- sn::cp2dp(cp, family = "SN")
   dp2 <- convert_params(cp)
-  expect_that( identical(dp1, dp2), equals(TRUE) )
+  expect_true(all.equal(dp1, dp2))
 })
 
 # density expression test
-test_that("d_skew_normal gives the same results as sn::dsn", {
-  cp <- get_random_cp()
+test_that("density_sn gives the same results as sn::dsn", {
+  cp <- generate_random_cp()
   dp <- convert_params(cp)
 
   x <- seq(-5, 5, length = 100)
-  y1 <- d_skew_normal(x, dp[["xi"]], dp[["omega"]], dp[["alpha"]])
+  y1 <- density_sn(x, dp[["xi"]], dp[["omega"]], dp[["alpha"]])
   y2 <- sn::dsn(x, dp = dp)
 
-  expect_that(y1, equals(y2))
+  expect_equal(y1, y2)
 })

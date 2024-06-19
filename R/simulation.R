@@ -1,25 +1,38 @@
-#' rlikert
+#' Generate Random Responses
 #'
 #' Generates an array of random responses to Likert-type questions based on
 #' specified latent variables.
 #'
-#' Arguments
-#' @param size: Integer. The number of observations (responses) to generate.
-#' @param n_items: Integer. The number of Likert scale items (questions). 
-#' @param n_levels: Integer or vector of integers. The number of response 
-#'              categories (points) for each Likert scale item.
-#'
-#' Latent Variables Parameters
-#' @param mean: Numeric or vector of numerics. Means of the latent variables.
-#'           Defaults to 0.
-#' @param sd: Numeric or vector of numerics. Standard deviations of the latent variables.
-#'           Defaults to 1.
-#' @param skew: Numeric or vector of numerics. Marginal skewness of the latent variables.
-#'           Defaults to 0.
-#' @param corr: Numeric or correlation matrix. Correlations between the latent variables.
-#'           Can be a single numeric value representing the same correlation for all pairs,
-#'           or an actual correlation matrix.
-#'           Defaults to 0.
+#' @param size: number of observations.
+#' @param n_items: number of Likert scale items (number of questions). 
+#' @param n_levels: number of response categories for each item. 
+#' Integer or vector of integers.
+#' @param mean: means of the latent variables. 
+#' Numeric or vector of numerics. Defaults to 0.
+#' @param sd: standard deviations of the latent variables. 
+#' Numeric or vector of numerics. Defaults to 1.
+#' @param skew: marginal skewness of the latent variables.
+#' Numeric or vector of numerics. Defaults to 0.
+#' @param corr: correlations between latent variables.
+#' Can be a single numeric value representing the same correlation for 
+#' all pairs, or an actual correlation matrix. Defaults to 0.
+#' 
+#' @return A matrix of random responses with dimensions \code{size} by 
+#' \code{n_items}. The column names are \code{Y1, Y2, ..., Yn} where 
+#' \code{n} is the number of items. Each entry in the matrix represents 
+#' a Likert scale response, ranging from 1 to \code{n_levels}.
+#' @examples
+#' # Generate responses for a single item with 5 levels
+#' rlikert(size = 10, n_items = 1, n_levels = 5)
+#' 
+#' # Generate responses for three items with different levels and parameters
+#' rlikert(size = 10, n_items = 3, n_levels = c(4, 5, 6), mean = c(0, -1, 0), sd = c(0.8, 1, 1), corr = 0.5)
+#' 
+#' # Generate responses with a correlation matrix
+#' corr <- matrix(c(1.00, -0.63, -0.39, -0.63, 1.00, 0.41, -0.39, 0.41, 1.00), nrow = 3)
+#' data <- rlikert(size = 1000, n_items = 3, n_levels = c(4, 5, 6), mean = c(0, -1, 0), sd = c(0.8, 1, 1), corr = corr)
+#' 
+#' @export
 rlikert <- function(size, n_items, n_levels,
                     mean = 0, sd = 1, skew = 0, corr = 0) {
   # If there's only one item, generate responses directly
@@ -66,21 +79,10 @@ rlikert <- function(size, n_items, n_levels,
   return(data)
 }
 
-# Returns the optimal endpoints of intervals that transform
-# a neutral density into discrete probability distribution
-calc_endpoints <- function(n_levels, skew) {
-  dp <- convert_params(c("mu" = 0, "sd" = 1, "skew" = skew))
-
-  density_fn <- function(x) {
-    density_sn(x, dp[["xi"]], dp[["omega"]], dp[["alpha"]])
-  }
-
-  endp <- discretize_density(density_fn, n_levels)[["endp"]]
-  return(endp)
-}
-
 # Returns a vector of probabilities across response levels
 simulate_likert <- function(n_levels, cp) {
+  validate_skewness(cp[["skew"]])
+  
   dp <- convert_params(cp)
   density_fn <- function(x) {
     density_sn(x, dp[["xi"]], dp[["omega"]], dp[["alpha"]])
@@ -89,6 +91,20 @@ simulate_likert <- function(n_levels, cp) {
   prob <- calc_probs(density_fn, endp)
   names(prob) <- paste(seq_len(n_levels))
   return(prob)
+}
+
+
+# Returns the optimal endpoints of intervals that transform
+# a neutral density into discrete probability distribution
+calc_endpoints <- function(n_levels, skew) {
+  dp <- convert_params(c("mu" = 0, "sd" = 1, "skew" = skew))
+  
+  density_fn <- function(x) {
+    density_sn(x, dp[["xi"]], dp[["omega"]], dp[["alpha"]])
+  }
+  
+  endp <- discretize_density(density_fn, n_levels)[["endp"]]
+  return(endp)
 }
 
 generate_responses <- function(size, n_levels, mean, sd, skew) {

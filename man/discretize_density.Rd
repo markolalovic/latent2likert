@@ -4,26 +4,90 @@
 \alias{discretize_density}
 \title{Discretize Density}
 \usage{
-discretize_density(density_func, n_levels, eps = 1e-06)
+discretize_density(density_fn, n_levels, eps = 1e-06)
 }
 \arguments{
-\item{density_func}{The probability density function of the continuous random variable.}
+\item{density_fn}{probability density function of the continuous random variable.}
 
-\item{n_levels}{The cardinality of the set of all possible outcomes.}
+\item{n_levels}{cardinality of the set of all possible outcomes.}
 
-\item{eps}{The convergence threshold for the algorithm.}
+\item{eps}{convergence threshold for the algorithm.}
 }
 \value{
 A list containing:
 \describe{
-  \item{prob}{Discrete probability distribution.}
-  \item{endp}{Optimal end points of intervals that partition the domain.}
-  \item{repr}{Representation points of the intervals.}
-  \item{dist}{Distortion measured as the mean-squared error (MSE).}
+  \item{prob}{discrete probability distribution.}
+  \item{endp}{endpoints of intervals that partition the continuous domain.}
+  \item{repr}{representation points of the intervals.}
+  \item{dist}{distortion measured as the mean-squared error (MSE).}
 }
 }
 \description{
 Transforms the density function of a continuous random variable into a
-discrete probability distribution with minimal distortion 
+discrete probability distribution with minimal distortion
 using the Lloyd-Max algorithm.
+}
+\details{
+The function addresses the problem of transforming a continuous random 
+variable \eqn{X} into a discrete random variable \eqn{Y} with minimal 
+distortion. Distortion is measured as mean-squared error (MSE):
+\deqn{
+  \text{E}\left[ (X - Y)^2 \right] = 
+  \sum_{k=1}^{K} \int_{x_{k-1}}^{x_{k}} f_{X}(x) 
+  \left( x - r_{k} \right)^2 \, dx
+}
+where:
+\describe{
+  \item{\eqn{f_{X}}}{ is the probability density function of \eqn{X},}
+  \item{\eqn{K}}{ is the number of possible outcomes of \eqn{Y},}
+  \item{\eqn{x_{k}}}{ are endpoints of intervals that partition the domain of \eqn{X},}
+  \item{\eqn{r_{k}}}{ are representation points of the intervals.}
+}
+This problem is solved using the following iterative procedure:
+\enumerate{
+  \item{}{Start with an arbitrary initial set of representation points:
+                         \eqn{r_{1} < r_{2} < \dots < r_{K}}.}
+  \item{}{Repeat the following steps until the improvement in MSE falls 
+below given \eqn{\epsilon}.}
+  \enumerate{
+    \item{}{Calculate endpoints as \eqn{x_{k} = (r_{k+1} + r_{k})/2} for each 
+          \eqn{k = 1, \dots, K-1} and set \eqn{x_{0}} and \eqn{x_{K}} to 
+          \eqn{-\infty} and \eqn{\infty}, respectively.}
+    \item{}{Update representation points by setting \eqn{r_{k}} equal to the 
+          conditional mean of \eqn{X} given \eqn{X \in (x_{k-1}, x_{k})} for 
+          each \eqn{k = 1, \dots, K}.}
+ }
+}
+
+With each execution of steps (a) and (b), the MSE decreases or remains the same. 
+As MSE is nonnegative, 
+it approaches a limit. The algorithm terminates when the improvement in MSE is 
+less than a given \eqn{\epsilon > 0}, ensuring convergence after a finite number 
+of iterations.
+  
+This procedure is known as Lloyd-Max's algorithm, initially used for scalar 
+quantization and closely related to the k-means algorithm. Local convergence 
+has been proven for log-concave density functions by Kieffer. Many common 
+probability distributions are log-concave including the normal and skew 
+normal distribution, as shown by Azzalini.
+}
+\examples{
+discretize_density(density_fn = stats::dnorm, n_levels = 5)
+discretize_density(density_fn = function(x) {
+   2 * stats::dnorm(x) * stats::pnorm(0.5 * x)}, n_levels = 4)
+}
+\references{
+Azzalini, A. (1985). 
+A class of distributions which includes the normal ones. 
+\emph{Scandinavian Journal of Statistics} \bold{12(2)}, 171–178.
+\url{http://www.jstor.org/stable/4615982} 
+
+Kieffer, J. (1983).
+Uniqueness of locally optimal quantizer for log-concave density and convex 
+error function.
+\emph{IEEE Transactions on Information Theory} \bold{29}, 42–47.
+
+Lloyd, S. (1982). 
+Least squares quantization in PCM.
+\emph{IEEE Transactions on Information Theory} \bold{28 (2)}, 129–137.
 }

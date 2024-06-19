@@ -48,7 +48,6 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro_to_latent2likert.html">Using latent2likert</a>
     <a class="dropdown-item" href="../articles/using_latent2likert.html">Using latent2likert</a>
   </div>
 </li>
@@ -80,17 +79,17 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Using latent2likert</h1>
+                        <h4 data-toc-skip class="author">Marko
+Lalovic</h4>
             
-            <h4 data-toc-skip class="date">2024-06-19</h4>
+            <h4 data-toc-skip class="date">Last Updated: 2024-06-20</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/markolalovic/latent2likert/blob/HEAD/vignettes/intro_to_latent2likert.Rmd" class="external-link"><code>vignettes/intro_to_latent2likert.Rmd</code></a></small>
-      <div class="d-none name"><code>intro_to_latent2likert.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/markolalovic/latent2likert/blob/HEAD/vignettes/using_latent2likert.Rmd" class="external-link"><code>vignettes/using_latent2likert.Rmd</code></a></small>
+      <div class="d-none name"><code>using_latent2likert.Rmd</code></div>
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lalovic.io/latent2likert/" class="external-link">latent2likert</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -100,10 +99,11 @@ scale questions, typically categorized as Strongly disagree, Disagree,
 Neutral, Agree, and Strongly agree. Researchers frequently aim to
 uncover these latent variables using various statistical techniques.
 Accurate modeling of survey data is essential for comparative analysis
-through simulation. The latent2likert package addresses this need by
-providing an effective algorithm to generate Likert items from
-hypothetical latent variables. Here are two practical workflow examples
-demonstrating the use of the latent2likert package.</p>
+through simulation. The <strong>latent2likert</strong> package addresses
+this need by providing an effective algorithm to simulate Likert
+response variables from hypothetical latent variables. This vignette
+provides two practical workflow examples demonstrating the use of the
+<strong>latent2likert</strong> package.</p>
 </div>
 <div class="section level2">
 <h2 id="simulating-survey-data">Simulating Survey Data<a class="anchor" aria-label="anchor" href="#simulating-survey-data"></a>
@@ -128,12 +128,14 @@ experience on average.</p>
 setting the number of categories n_levels = 4, we can generate
 hypothetical responses (standard deviation sd = 1 and skewness skew = 0,
 by default):</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span> <span class="co"># to ensure reproducible results</span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#library(latent2likert) # load the package</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span> <span class="co"># to ensure reproducible results</span></span>
+<span></span>
 <span><span class="va">course_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, n_items <span class="op">=</span> <span class="fl">1</span>, n_levels <span class="op">=</span> <span class="fl">4</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">course_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, n_items <span class="op">=</span> <span class="fl">1</span>, n_levels <span class="op">=</span> <span class="fl">4</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>To summarize the results, create a data frame from all responses:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n_levels</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
 <span><span class="va">n_groups</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span><span class="va">cats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Poor"</span>, <span class="st">"Fair"</span>, <span class="st">"Good"</span>, <span class="st">"Excellent"</span><span class="op">)</span></span>
@@ -177,7 +179,7 @@ participants’ assessments of:</p>
 participants in Course B.</li>
 </ul>
 <p>Let’s simulate the survey data for this scenario:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pre- and post-assessments of skills for Course A</span></span>
 <span><span class="va">pre_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, n_items <span class="op">=</span> <span class="fl">3</span>, n_levels <span class="op">=</span> <span class="fl">5</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">post_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, n_items <span class="op">=</span> <span class="fl">3</span>, n_levels <span class="op">=</span> <span class="fl">5</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -186,7 +188,7 @@ participants in Course B.</li>
 <span><span class="va">pre_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, n_items <span class="op">=</span> <span class="fl">3</span>, n_levels <span class="op">=</span> <span class="fl">5</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">post_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, n_items <span class="op">=</span> <span class="fl">3</span>, n_levels <span class="op">=</span> <span class="fl">5</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Create a data frame from all responses to summarize the results:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">pre_A</span>, <span class="va">post_A</span>, <span class="va">pre_B</span>, <span class="va">post_B</span><span class="op">)</span></span>
 <span><span class="va">n_items</span> <span class="op">&lt;-</span> <span class="fl">6</span> <span class="co"># for 3 questions before and after</span></span>
 <span><span class="va">n_levels</span> <span class="op">&lt;-</span> <span class="fl">5</span> <span class="co"># for a 5-point Likert scale</span></span>
@@ -215,7 +217,7 @@ participants in Course B.</li>
 <figure><img src="../reference/figures/vignette/courses-stacked-min.png" width="100%" alt="Stacked bar chart"></figure>
 </div>
 <div class="section level2">
-<h2 id="recreating-scale-scores">Recreating scale scores<a class="anchor" aria-label="anchor" href="#recreating-scale-scores"></a>
+<h2 id="recreating-scale-scores">Recreating Scale Scores<a class="anchor" aria-label="anchor" href="#recreating-scale-scores"></a>
 </h2>
 <p>We will use part of <a href="https://search.r-project.org/CRAN/refmans/psych/html/bfi.html" class="external-link">bfi</a>
 data set from <span class="citation">(<a href="#ref-psych">Revelle
@@ -223,9 +225,9 @@ data set from <span class="citation">(<a href="#ref-psych">Revelle
 agreeableness. To investigate the differences in agreeableness between
 men and women we will also use the gender attribute.</p>
 <p>Load the data:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"/Users/markolalovic/dev/latent2likert/data/bfi_agreeableness_and_gender.csv"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span>file<span class="op">=</span><span class="st">"/Users/markolalovic/dev/latent2likert/data/part_bfi.rda"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">part_bfi</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   A1 A2 A3 A4 A5 gender</span></span>
 <span><span class="co">#&gt; 1  2  4  3  4  4   Male</span></span>
 <span><span class="co">#&gt; 2  2  4  5  2  5 Female</span></span>
@@ -234,19 +236,19 @@ men and women we will also use the gender attribute.</p>
 <span><span class="co">#&gt; 5  2  3  3  4  5   Male</span></span>
 <span><span class="co">#&gt; 6  6  6  5  6  5 Female</span></span></code></pre></div>
 <p>Separate the items into two groups according to their gender:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A2"</span>, <span class="st">"A3"</span>, <span class="st">"A4"</span>, <span class="st">"A5"</span><span class="op">)</span></span>
-<span><span class="va">items_M</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"Male"</span>, <span class="va">vars</span><span class="op">]</span></span>
-<span><span class="va">items_F</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"Female"</span>, <span class="va">vars</span><span class="op">]</span></span></code></pre></div>
+<span><span class="va">items_M</span> <span class="op">&lt;-</span> <span class="va">part_bfi</span><span class="op">[</span><span class="va">part_bfi</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"Male"</span>, <span class="va">vars</span><span class="op">]</span></span>
+<span><span class="va">items_F</span> <span class="op">&lt;-</span> <span class="va">part_bfi</span><span class="op">[</span><span class="va">part_bfi</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"Female"</span>, <span class="va">vars</span><span class="op">]</span></span></code></pre></div>
 <p>To reproduce the items, start by estimating the parameters of the
 latent variables, assuming they are normal and providing the number of
 possible response categories ‘n_levels = 6’:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">params_M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_params.html">estimate_params</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">items_M</span>, n_levels <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="va">params_F</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_params.html">estimate_params</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">items_F</span>, n_levels <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 <p>Then, generate new responses to the items using the estimated
 parameters and estimated correlations:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span> <span class="co"># to ensure reproducible results</span></span>
 <span></span>
 <span><span class="va">new_items_M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">items_M</span><span class="op">)</span>, </span>
@@ -264,7 +266,7 @@ parameters and estimated correlations:</p>
 <span>                       corr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">items_F</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The next step would be to create agreeableness scale scores for both
 groups of participants, by taking the average of these 5 items.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Combine new items and gender in new data frame</span></span>
 <span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">new_items_M</span>, <span class="va">new_items_F</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">new_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">items_M</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">items_F</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -276,14 +278,14 @@ groups of participants, by taking the average of these 5 items.</p>
 <span><span class="co">#&gt; 4  4  4  4  6  5   Male</span></span>
 <span><span class="co">#&gt; 5  4  5  3  2  2   Male</span></span>
 <span><span class="co">#&gt; 6  5  4  5  6  5   Male</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># We also need to reverse the first item because it has negative correlations</span></span>
-<span><span class="va">data</span><span class="op">$</span><span class="va">A1</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">A1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">A1</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="va">data</span><span class="op">$</span><span class="va">A1</span></span>
+<span><span class="va">part_bfi</span><span class="op">$</span><span class="va">A1</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">part_bfi</span><span class="op">$</span><span class="va">A1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">part_bfi</span><span class="op">$</span><span class="va">A1</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="va">part_bfi</span><span class="op">$</span><span class="va">A1</span></span>
 <span><span class="va">new_data</span><span class="op">$</span><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">new_data</span><span class="op">$</span><span class="va">Y1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">new_data</span><span class="op">$</span><span class="va">Y1</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="va">new_data</span><span class="op">$</span><span class="va">Y1</span></span>
 <span></span>
 <span><span class="co"># Create agreeableness scale scores</span></span>
-<span><span class="va">data</span><span class="op">$</span><span class="va">agreeable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">vars</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">part_bfi</span><span class="op">$</span><span class="va">agreeable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="va">part_bfi</span><span class="op">[</span>, <span class="va">vars</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">new_data</span><span class="op">$</span><span class="va">agreeable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="va">new_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Y1"</span>, <span class="st">"Y2"</span>, <span class="st">"Y3"</span>, <span class="st">"Y4"</span>, <span class="st">"Y5"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>And visualize the results with a grouped boxplot:</p>
 <figure><img src="../reference/figures/vignette/scales-min.png" width="100%" alt="Scales"></figure>
