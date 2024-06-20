@@ -17,9 +17,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/markolalovic/latent2likert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/latent2likert/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/markolalovic/latent2likert/branch/main/graph/badge.svg)](https://app.codecov.io/gh/markolalovic/latent2likert?branch=main)
+[![codecov](https://codecov.io/gh/markolalovic/latent2likert/branch/main/graph/badge.svg?token=HZTG6RUB2J)](https://codecov.io/gh/markolalovic/latent2likert)
 <!-- badges: end -->
-
 
 ## Overview
 

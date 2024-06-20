@@ -18,11 +18,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, include = FALSE}
-library(devtools)
-devtools::load_all("/Users/markolalovic/dev/latent2likert/")
-```
-
 ## Introduction
 
 In social sciences, variables of interest are often conceptualized as latent variables — hidden continuous variables measured through Likert scale questions, typically categorized as Strongly disagree, Disagree, Neutral, Agree, and Strongly agree. Researchers frequently aim to uncover these latent variables using various statistical techniques. Accurate modeling of survey data is essential for comparative analysis through simulation. The **latent2likert** package addresses this need by providing an effective algorithm to simulate Likert response variables from hypothetical latent variables. This vignette provides two practical workflow examples demonstrating the use of the **latent2likert** package.
@@ -45,7 +40,7 @@ Let's assume that the participants in Course A were neutral regarding the questi
 By choosing appropriate parameters for the latent distributions and setting the number of categories n_levels = 4, we can generate hypothetical responses (standard deviation sd = 1 and skewness skew = 0, by default):
 
 ```{r}
-#library(latent2likert) # load the package
+library(latent2likert) # load the package
 set.seed(12345) # to ensure reproducible results
 
 course_A <- rlikert(size = 10, n_items = 1, n_levels = 4, mean = 0, sd = 1)
@@ -61,8 +56,8 @@ cats <- c("Poor", "Fair", "Good", "Excellent")
 data <- data.frame(
   Course = rep(c("A", "B"), each = n_levels),
   Response = factor(rep(cats, n_groups), levels = cats),
-  Proportion = c(get_prop_table(course_A, n_levels),
-                 get_prop_table(course_B, n_levels))
+  Proportion = c(response_prop(course_A, n_levels),
+                 response_prop(course_B, n_levels))
 )
 data <- data[data$Prop > 0, ]
 data
@@ -103,7 +98,7 @@ post_B <- rlikert(size = 20, n_items = 3, n_levels = 5, mean = c(0, 0, 0))
 Create a data frame from all responses to summarize the results:
 
 ```{r}
-data <- list(pre_A, post_A, pre_B, post_B)
+pre_post <- list(pre_A, post_A, pre_B, post_B)
 n_items <- 6 # for 3 questions before and after
 n_levels <- 5 # for a 5-point Likert scale
 skills <- c("Programming", "Searching online", "Solving problems")
@@ -116,9 +111,9 @@ data <- data.frame (
   Question = questions,
   Time = as.factor(rep(c(rep("before", 3*n_levels), 
                          rep("after", 3*n_levels)), 2)),
-  Response = rep(rep(seq_len(n_levels), 3), length(data)),
-  Proportion = as.vector(sapply(data, function(d) { 
-    as.vector(t(get_prop_table(d, n_levels))) })))
+  Response = rep(rep(seq_len(n_levels), 3), length(pre_post)),
+  Proportion = as.vector(sapply(pre_post, function(d) { 
+    as.vector(t(response_prop(d, n_levels))) })))
 head(data)
 ```
 

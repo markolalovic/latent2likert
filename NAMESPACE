@@ -3,5 +3,6 @@
 export(discretize_density)
 export(estimate_params)
 export(plot_likert_transform)
+export(response_prop)
 export(rlikert)
 export(simulate_likert)

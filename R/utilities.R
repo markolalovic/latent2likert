@@ -37,11 +37,37 @@ plot_likert_transform <- function(n_items, n_levels, mean=0, sd=1, skew=0) {
   }
 }
 
+#' Calculate Response Proportions
+#'
+#' Returns a table of proportions for each possible response category.
+#'
+#' @param data numeric vector or matrix of responses.
+#' @param n_levels number of response categories.
+#' @return A table of response category proportions.
+#' @examples
+#' data <- c(1, 2, 2, 3, 3, 3)
+#' response_prop(data, n_levels = 3)
+#'
+#' data_matrix <- matrix(c(1, 2, 2, 3, 3, 3), ncol = 2)
+#' response_prop(data_matrix, n_levels = 3)
+#' @export
+response_prop <- function(data, n_levels) {
+  if (is.vector(data)) {
+    tab <- pad_levels(prop.table(table(data)), n_levels)
+  } else {
+    tab <- t(apply(data, 2, function(x_col) {
+      pad_levels(prop.table(table(x_col)), n_levels)
+    }))
+    dimnames(tab) <- list(Item = rownames(tab), Response = colnames(tab))
+  }
+  return(tab)
+}
+
 #' Pad Missing Levels
 #'
-#' Takes a vector of proportions or probabilities across possible responses
-#' and pads the missing levels with zeros up to the specified number
-#' of response categories.
+#' Helper function that takes a vector of proportions or probabilities 
+#' across possible responses and pads the missing levels with zeros up 
+#' to the specified number of response categories.
 #'
 #' @param pr proportions or probabilities across possible responses.
 #' @param n_levels number of response categories.
@@ -202,26 +228,6 @@ generate_rand_corr_matrix <- function(p) {
 #' @noRd
 cor2cov <- function(corr, s) {
   return(diag(s) %*% corr %*% diag(s))
-}
-
-#' Get Proportion Table
-#'
-#' Returns a table of proportions for each possible response.
-#'
-#' @param data numeric vector or matrix. Responses.
-#' @param K integer. Number of response categories.
-#' @return numeric vector or matrix. Table of proportions.
-#' @noRd
-get_prop_table <- function(data, K) {
-  if (is.vector(data)) {
-    tab <- pad_levels(prop.table(table(data)), K)
-  } else {
-    tab <- t(apply(data, 2, function(x_col) {
-      pad_levels(prop.table(table(x_col)), K)
-    }))
-    dimnames(tab) <- list(Item = rownames(tab), Response = colnames(tab))
-  }
-  return(tab)
 }
 
 #' Generate Random Centered Parameters

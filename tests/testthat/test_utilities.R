@@ -8,18 +8,18 @@ testthat::test_that("pad_levels gives the correct result", {
   testthat::expect_equal(padded_pr, actual_pr)
 })
 
-testthat::test_that("get_prop_table gives the correct result, univariate case", {
+testthat::test_that("response_prop gives the correct result, univariate case", {
   data <- rep(c(1, 2, 3, 4), each = 2)
-  tab <- get_prop_table(data, K = 4)
+  tab <- response_prop(data, n_levels = 4)
   correct_tab <- rep(0.25, 4)
   names(correct_tab) <- 1:4
   testthat::expect_true(identical(tab, correct_tab))
 })
 
-testthat::test_that("get_prop_table gives the correct result, multivariate case", {
+testthat::test_that("response_prop gives the correct result, multivariate case", {
   y <- rep(c(1, 2, 3, 4), each = 2)
   data <- cbind(y, y)
-  tab <- get_prop_table(data, K = 4)
+  tab <- response_prop(data, n_levels = 4)
 
   correct_tab <- rbind(rep(0.25, 4), rep(0.25, 4))
   dimnames(correct_tab) <- dimnames(tab)
