@@ -13,9 +13,6 @@
     <loc>https://markolalovic.github.io/latent2likert/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/articles/intro_to_latent2likert.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/articles/using_latent2likert.html</loc>
   </url>
   <url>
@@ -28,72 +25,24 @@
     <loc>https://markolalovic.github.io/latent2likert/news/index.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/calc_midpoints.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/calc_probs.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/compute_distortion.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/convert_params.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/cor2cov.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/delta_skew_normal.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/density_sn.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/discretize_density.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/estimate_parameters.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/estimate_params.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/find_representatives.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/generate_rand_corr_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/generate_random_cp.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/get_prop_table.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/mean_skew_normal.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/pad_levels.html</loc>
   </url>
   <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/part_bfi.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/percentify.html</loc>
-  </url>
-  <url>
     <loc>https://markolalovic.github.io/latent2likert/reference/plot_likert_transform.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/rLikert.html</loc>
+    <loc>https://markolalovic.github.io/latent2likert/reference/rlikert.html</loc>
   </url>
   <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/scale_and_shift.html</loc>
-  </url>
-  <url>
-    <loc>https://markolalovic.github.io/latent2likert/reference/var_skew_normal.html</loc>
+    <loc>https://markolalovic.github.io/latent2likert/reference/simulate_likert.html</loc>
   </url>
 </urlset>

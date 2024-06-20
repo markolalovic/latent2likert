@@ -66,8 +66,8 @@ existing survey data.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>survey responses where the columns correspond to individual items.
-Apart from this, `data` can be of almost any class such as
+<dd><p>survey data with columns representing individual items.
+Apart from this, <code>data</code> can be of almost any class such as
 "data.frame" "matrix" or "array".</p></dd>
 
 
@@ -87,48 +87,64 @@ Apart from this, `data` can be of almost any class such as
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The relationship between the continuous random variable \(X\) and the 
-discrete probability distribution \(p_k\) can be described by a system 
-of non-linear equations:
+    <p>The relationship between the continuous random variable \(X\) and the
+discrete probability distribution \(p_k\), for \(k = 1, \dots, K\),
+can be described by a system of non-linear equations:
 $$
-  p_{k} = F_{X}\left( \frac{x_{k - 1} - \xi}{\omega} \right) 
-        - F_{X}\left( \frac{x_{k} - \xi}{\omega} \right) 
+  p_{k} = F_{X}\left( \frac{x_{k - 1} - \xi}{\omega} \right)
+        - F_{X}\left( \frac{x_{k} - \xi}{\omega} \right)
         \quad \text{for} \ k = 1, \dots, K
 $$
 where:</p><dl><dt>\(F_{X}\)</dt>
-<dd><p>is the cumulative distribution function (CDF) of \(X\),</p></dd>
+<dd><p>is the cumulative distribution function of \(X\),</p></dd>
 
-  <dt>\(K\)</dt>
+<dt>\(K\)</dt>
 <dd><p>is the number of possible response categories,</p></dd>
 
-  <dt>\(x_{k}\)</dt>
-<dd><p>are the endpoints defining the boundaries of the response categories,</p></dd>
+<dt>\(x_{k}\)</dt>
+<dd><p>are the endpoints defining the boundaries of the
+response categories,</p></dd>
 
-  <dt>\(p_{k}\)</dt>
-<dd><p>is the probability of the \(k\)-th response category,</p></dd>
+<dt>\(p_{k}\)</dt>
+<dd><p>is the probability of the \(k\)-th
+response category,</p></dd>
 
-  <dt>\(\xi\)</dt>
+<dt>\(\xi\)</dt>
 <dd><p>is the location parameter of \(X\),</p></dd>
 
-  <dt>\(\omega\)</dt>
+<dt>\(\omega\)</dt>
 <dd><p>is the scaling parameter of \(X\).</p></dd>
 
 
-</dl><p>The endpoints \(x_{k}\) are calculated by discretizing a random variable \(Z\) 
-with mean 0 and standard deviation 1 that follows the same distribution as \(X\). 
-By solving the above system of non-linear equations iteratively, we can find the 
-parameters that best fit the observed discrete probability distribution \(p_{k}\).</p>
-<p>The function `estimate_params`:</p><ol><li><p>Computes the proportion table of the responses for each item.</p></li>
+</dl><p>The endpoints \(x_{k}\) are calculated by discretizing a
+random variable \(Z\)
+with mean 0 and standard deviation 1 that follows the same
+distribution as \(X\).
+By solving the above system of non-linear equations iteratively,
+we can find the parameters that best fit the observed discrete
+probability distribution \(p_{k}\).</p>
+<p>The function <code>estimate_params</code>:</p><ul><li><p>Computes the proportion table of the responses for each item.</p></li>
 <li><p>Estimates the probabilities \(p_{k}\) for each item.</p></li>
-<li><p>Computes the estimates of \(\xi\) and \(\omega\).</p></li>
-<li><p>Combines the estimates parameters for each item into a table.</p></li>
-</ol></div>
+<li><p>Computes the estimates of \(\xi\) and \(\omega\) for each item.</p></li>
+<li><p>Combines the estimated parameters for all items into a table.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="discretize_density.html">discretize_density</a></code> for details on calculating the endpoints,
-<code><a href="part_bfi.html">part_bfi</a></code> for example of the survey data.</p></div>
+    <div class="dont-index"><p><code><a href="discretize_density.html">discretize_density</a></code> for details on calculating
+the endpoints, and <code><a href="part_bfi.html">part_bfi</a></code> for example of the survey data.</p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">part_bfi</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A2"</span>, <span class="st">"A3"</span>, <span class="st">"A4"</span>, <span class="st">"A5"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">estimate_params</span><span class="op">(</span>data <span class="op">=</span> <span class="va">part_bfi</span><span class="op">[</span>, <span class="va">vars</span><span class="op">]</span>, n_levels <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          items</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimates         A1         A2         A3         A4         A5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mean -0.9759824  1.0830781  0.9776057  1.1723519  0.9006478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      sd    1.1798137  0.7968668  0.8432599  1.3825407  0.8648150</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

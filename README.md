@@ -65,7 +65,7 @@ scale, use:
 ``` r
 #library(latent2likert)
 rlikert(size = 10, n_items = 1, n_levels = 5)
-#>  [1] 3 4 3 3 2 3 2 1 4 2
+#>  [1] 3 2 3 4 3 4 3 4 4 1
 ```
 
 To generate responses to multiple items with specified parameters:
@@ -78,16 +78,16 @@ rlikert(size = 10,
         sd   = c(0.8, 1, 1),
         corr = 0.5)
 #>       Y1 Y2 Y3
-#>  [1,]  2  3  3
-#>  [2,]  3  3  5
-#>  [3,]  3  4  2
-#>  [4,]  3  3  4
-#>  [5,]  3  2  4
-#>  [6,]  1  2  3
-#>  [7,]  3  4  5
-#>  [8,]  3  2  5
-#>  [9,]  3  1  4
-#> [10,]  3  2  5
+#>  [1,]  2  1  4
+#>  [2,]  4  2  3
+#>  [3,]  2  2  2
+#>  [4,]  2  2  2
+#>  [5,]  2  1  3
+#>  [6,]  2  2  3
+#>  [7,]  3  1  2
+#>  [8,]  2  3  4
+#>  [9,]  3  5  4
+#> [10,]  3  1  5
 ```
 
 You can also provide a correlation matrix:
@@ -111,9 +111,9 @@ these estimates are typically lower:
 ``` r
 cor(data)
 #>            Y1         Y2         Y3
-#> Y1  1.0000000 -0.5107040 -0.3641031
-#> Y2 -0.5107040  1.0000000  0.3611259
-#> Y3 -0.3641031  0.3611259  1.0000000
+#> Y1  1.0000000 -0.5486188 -0.3592762
+#> Y2 -0.5486188  1.0000000  0.4172253
+#> Y3 -0.3592762  0.4172253  1.0000000
 ```
 
 ## Using `estimate_params`
@@ -124,8 +124,8 @@ Given the data, you can estimate the values of latent parameters using:
 estimate_params(data, n_levels = c(4, 5, 6), skew = 0)
 #>          items
 #> estimates           Y1           Y2           Y3
-#>      mean  0.009327867 -1.061836850 -0.019093065
-#>      sd    0.785412451  0.980961288  0.965227444
+#>      mean  0.014663647 -1.009504893  0.004589209
+#>      sd    0.775035961  0.955310905  1.018213994
 ```
 
 ## Transformation
@@ -161,9 +161,11 @@ distribution is used. The value of skewness is restricted to the range
 
 ## Further Reading
 
-For more detailed information and practical examples, please refer to
-the package
-[vignette](https://lalovic.io/latent2likert/articles/intro_to_latent2likert.html).
+- For more detailed information and practical examples, please refer to
+  the package
+  [vignette](https://lalovic.io/latent2likert/articles/intro_to_latent2likert.html).
+- The implemented algorithms are described in the functions
+  [reference](https://lalovic.io/latent2likert/reference/index.html).
 
 ## Related R Packages
 

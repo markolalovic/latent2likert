@@ -3,19 +3,12 @@
 #' Plots the densities of latent variables in the first row 
 #' and transformed discrete probability distributions below.
 #'
-#' Arguments
-#' @param n_items: Integer. The number of Likert scale items (questions). 
-#' @param n_levels: Integer or vector of integers. The number of response 
-#'              categories (points) for each Likert scale item.
-#'
-#' Latent Variables Parameters
-#' @param mean: Numeric or vector of numerics. Means of the latent variables.
-#'           Defaults to 0.
-#' @param sd: Numeric or vector of numerics. Standard deviations of the latent variables.
-#'           Defaults to 1.
-#' @param skew: Numeric or vector of numerics. Marginal skewness of the latent variables.
-#'           Defaults to 0.
-#'
+#' @param n_items number of Likert scale items (questions).
+#' @param n_levels number of response categories for each Likert item. Integer or vector of integers.
+#' @param mean means of the latent variables. Numeric or vector of numerics. Defaults to 0.
+#' @param sd standard deviations of the latent variables. Numeric or vector of numerics. Defaults to 1.
+#' @param skew marginal skewness of the latent variables. Numeric or vector of numerics. Defaults to 0.
+#' @return a plot showing the densities of latent variables and the corresponding discrete probability distributions.
 #' @examples
 #' plot_likert_transform(n_items = 3, n_levels = c(3, 4, 5))
 #' plot_likert_transform(n_items = 3, n_levels = 5, mean=c(0, 1, 2))
@@ -46,8 +39,8 @@ plot_likert_transform <- function(n_items, n_levels, mean=0, sd=1, skew=0) {
 
 #' Pad Missing Levels
 #'
-#' This function takes a vector of proportions or probabilities across possible 
-#' responses and pads the missing levels with zeros up to the specified number 
+#' Takes a vector of proportions or probabilities across possible responses
+#' and pads the missing levels with zeros up to the specified number
 #' of response categories.
 #'
 #' @param pr proportions or probabilities across possible responses.
@@ -65,7 +58,12 @@ pad_levels <- function(pr, n_levels) {
   return(padded_pr)
 }
 
-# Helper function to validate skewness
+#' Validate Skewness
+#'
+#' Checks if the skewness parameter is within the acceptable range.
+#'
+#' @param skew numeric. Skewness parameter.
+#' @noRd
 validate_skewness <- function(skew) {
   if (skew > 0.95 || skew < -0.95) {
     stop("The value of skewness must be in the range -0.95 to 0.95: 
@@ -73,20 +71,29 @@ validate_skewness <- function(skew) {
   }
 }
 
-# Helper function to check if package is installed
+#' Check Package Installation
+#'
+#' Checks if a package is installed, and stops with an error message if not.
+#'
+#' @param pkg character. The name of the package.
+#' @noRd
 check_package <- function(pkg) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
-    stop(sprintf('Package "%s" must be installed. Please run:\n\n\tinstall.packages("%s")\n\n', pkg, pkg), call. = FALSE)
+    stop(sprintf('Package "%s" must be installed. 
+         Please run:\n\n\tinstall.packages("%s")\n\n', 
+      pkg, pkg), call. = FALSE)
   }
 }
 
-#' Probability density function of a skew normal distribution
+#' Density of Skew Normal Distribution
 #'
-#' @param x variable
-#' @param xi determines the location
-#' @param omega determines the scale
-#' @param alpha determines the shape
-#' @return density at x
+#' Computes the probability density function of a skew normal distribution.
+#'
+#' @param x numeric. Variable.
+#' @param xi numeric. Location parameter.
+#' @param omega numeric. Scale parameter.
+#' @param alpha numeric. Shape parameter.
+#' @return numeric. Density at x.
 #' @seealso [sn::dsn()]
 #' @noRd
 density_sn <- function(x, xi = 0, omega = 1, alpha = 0) {
@@ -94,13 +101,13 @@ density_sn <- function(x, xi = 0, omega = 1, alpha = 0) {
     stats::pnorm(alpha * (x - xi) / omega))
 }
 
-#' Convert parameters
+#' Convert Centered Parameters
 #'
-#' Converts from centered parameters to direct parameters appearing in
-#' the skew normal density.
+#' Converts centered parameters to direct parameters used in the 
+#' skew normal density.
 #'
-#' @param cp centered parameters c(mu, sd, skew)
-#' @return direct parameters c(xi, omega, alpha)
+#' @param cp numeric vector. Centered parameters c(mu, sd, skew).
+#' @return numeric vector. Direct parameters c(xi, omega, alpha).
 #' @seealso [sn::cp2dp]
 #' @noRd
 convert_params <- function(cp) {
@@ -123,26 +130,46 @@ convert_params <- function(cp) {
   return(dp)
 }
 
-# Mean of a skew normal distribution
+#' Mean of Skew Normal Distribution
+#'
+#' Computes the mean of a skew normal distribution.
+#'
+#' @param alpha numeric. Shape parameter.
+#' @return numeric. Mean of the skew normal distribution.
+#' @noRd
 mean_skew_normal <- function(alpha) {
   return(delta_skew_normal(alpha) * sqrt(2 / pi))
 }
 
-# Delta parameter of a skew normal distribution
+#' Delta Parameter of Skew Normal Distribution
+#'
+#' Computes the delta parameter of a skew normal distribution.
+#'
+#' @param alpha numeric. Shape parameter.
+#' @return numeric. Delta parameter.
+#' @noRd
 delta_skew_normal <- function(alpha) {
   return(alpha / (sqrt(1 + alpha^2)))
 }
 
-# Variance of a skew normal distribution
+#' Variance of Skew Normal Distribution
+#'
+#' Computes the variance of a skew normal distribution.
+#'
+#' @param alpha numeric. Shape parameter.
+#' @return numeric. Variance of the skew normal distribution.
+#' @noRd
 var_skew_normal <- function(alpha) {
   return(1 - 2 * (delta_skew_normal(alpha)^2) / pi)
 }
 
-#' Scale and shift
+#' Scale and Shift
 #'
-#' @param x variable
-#' @param dp direct parameters xi, omega, alpha
-#' @return shifted and scaled x
+#' Scales and shifts a variable based on direct parameters.
+#'
+#' @param x numeric. Variable.
+#' @param dp numeric vector. Direct parameters xi, omega, alpha.
+#' @return numeric. Shifted and scaled variable.
 #' @noRd
 scale_and_shift <- function(x, dp) {
   xi <- dp[["xi"]]
@@ -152,10 +179,12 @@ scale_and_shift <- function(x, dp) {
   return((x - mean_sn) / omega + mean_sn - xi / omega)
 }
 
-#' Generate a random p x p correlation matrix
+#' Generate Random Correlation Matrix
 #'
-#' @param p the size of the correlation matrix
-#' @return a random p x p correlation matrix
+#' Generates a random p x p correlation matrix.
+#'
+#' @param p integer. The size of the correlation matrix.
+#' @return numeric matrix. A random p x p correlation matrix.
 #' @noRd
 generate_rand_corr_matrix <- function(p) {
   corr <- drop(stats::rWishart(1, p, diag(p)))
@@ -163,21 +192,25 @@ generate_rand_corr_matrix <- function(p) {
   return(corr)
 }
 
-#' Convert correlation matrix to covariance matrix
+#' Convert Correlation Matrix to Covariance Matrix
 #'
-#' @param corr correlation matrix
-#' @param s vector of standard deviations
-#' @return covariance matrix
+#' Converts a correlation matrix to a covariance matrix.
+#'
+#' @param corr numeric matrix. Correlation matrix.
+#' @param s numeric vector. Standard deviations.
+#' @return numeric matrix. Covariance matrix.
 #' @noRd
 cor2cov <- function(corr, s) {
   return(diag(s) %*% corr %*% diag(s))
 }
 
-#' Get a table of proportions across each possible response
+#' Get Proportion Table
 #'
-#' @param data a vector or array of responses
-#' @param K number of response categories
-#' @return table of proportions
+#' Returns a table of proportions for each possible response.
+#'
+#' @param data numeric vector or matrix. Responses.
+#' @param K integer. Number of response categories.
+#' @return numeric vector or matrix. Table of proportions.
 #' @noRd
 get_prop_table <- function(data, K) {
   if (is.vector(data)) {
@@ -191,7 +224,12 @@ get_prop_table <- function(data, K) {
   return(tab)
 }
 
-# Helper function to get random centered parameters `c(mu, sd, gamma1)`
+#' Generate Random Centered Parameters
+#'
+#' Generates random centered parameters for mu, sd, and skewness.
+#'
+#' @return numeric vector. Random centered parameters c(mu, sd, gamma1).
+#' @noRd
 generate_random_cp <- function() {
   mu <- stats::rnorm(1, 0, 1)
   sd <- stats::runif(1, 0.1, 2)
@@ -200,7 +238,14 @@ generate_random_cp <- function() {
   return(cp)
 }
 
-# Helper function to get percentage for a given number
+#' Percentify
+#'
+#' Converts a numeric value to a percentage string.
+#'
+#' @param x numeric. The value to convert.
+#' @param digits integer. Number of digits to round to. Defaults to 0.
+#' @return character. Percentage string.
+#' @noRd
 percentify <- function(x, digits = 0) {
   percentage <- formatC(x * 100, format = "f", digits = digits)
   return(paste0(percentage, "%"))

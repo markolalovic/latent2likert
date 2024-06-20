@@ -7,8 +7,8 @@
 estimate_params(data, n_levels, skew = 0)
 }
 \arguments{
-\item{data}{survey responses where the columns correspond to individual items.
-Apart from this, `data` can be of almost any class such as
+\item{data}{survey data with columns representing individual items.
+Apart from this, \code{data} can be of almost any class such as
 "data.frame" "matrix" or "array".}
 
 \item{n_levels}{number of response categories, a vector or a number.}
@@ -23,37 +23,47 @@ Estimates the location and scaling parameters of the latent variables from
 existing survey data.
 }
 \details{
-The relationship between the continuous random variable \eqn{X} and the 
-discrete probability distribution \eqn{p_k} can be described by a system 
-of non-linear equations:
+The relationship between the continuous random variable \eqn{X} and the
+discrete probability distribution \eqn{p_k}, for \eqn{k = 1, \dots, K},
+can be described by a system of non-linear equations:
 \deqn{
-  p_{k} = F_{X}\left( \frac{x_{k - 1} - \xi}{\omega} \right) 
-        - F_{X}\left( \frac{x_{k} - \xi}{\omega} \right) 
+  p_{k} = F_{X}\left( \frac{x_{k - 1} - \xi}{\omega} \right)
+        - F_{X}\left( \frac{x_{k} - \xi}{\omega} \right)
         \quad \text{for} \ k = 1, \dots, K
 }
 where:
 \describe{
-  \item{\eqn{F_{X}}}{ is the cumulative distribution function (CDF) of \eqn{X},}
-  \item{\eqn{K}}{ is the number of possible response categories,}
-  \item{\eqn{x_{k}}}{ are the endpoints defining the boundaries of the response categories,}
-  \item{\eqn{p_{k}}}{ is the probability of the \eqn{k}-th response category,}
-  \item{\eqn{\xi}}{ is the location parameter of \eqn{X},}
-  \item{\eqn{\omega}}{ is the scaling parameter of \eqn{X}.}
+\item{\eqn{F_{X}}}{ is the cumulative distribution function of \eqn{X},}
+\item{\eqn{K}}{ is the number of possible response categories,}
+\item{\eqn{x_{k}}}{ are the endpoints defining the boundaries of the
+response categories,}
+\item{\eqn{p_{k}}}{ is the probability of the \eqn{k}-th
+response category,}
+\item{\eqn{\xi}}{ is the location parameter of \eqn{X},}
+\item{\eqn{\omega}}{ is the scaling parameter of \eqn{X}.}
 }
-The endpoints \eqn{x_{k}} are calculated by discretizing a random variable \eqn{Z} 
-with mean 0 and standard deviation 1 that follows the same distribution as \eqn{X}. 
-By solving the above system of non-linear equations iteratively, we can find the 
-parameters that best fit the observed discrete probability distribution \eqn{p_{k}}.
+The endpoints \eqn{x_{k}} are calculated by discretizing a
+random variable \eqn{Z}
+with mean 0 and standard deviation 1 that follows the same
+distribution as \eqn{X}.
+By solving the above system of non-linear equations iteratively,
+we can find the parameters that best fit the observed discrete
+probability distribution \eqn{p_{k}}.
 
-The function `estimate_params`:
-\enumerate{ 
-    \item{}{Computes the proportion table of the responses for each item.}
-    \item{}{Estimates the probabilities \eqn{p_{k}} for each item.}
-    \item{}{Computes the estimates of \eqn{\xi} and \eqn{\omega}.}
-    \item{}{Combines the estimates parameters for each item into a table.}
+The function \code{estimate_params}:
+\itemize{
+\item Computes the proportion table of the responses for each item.
+\item Estimates the probabilities \eqn{p_{k}} for each item.
+\item Computes the estimates of \eqn{\xi} and \eqn{\omega} for each item.
+\item Combines the estimated parameters for all items into a table.
 }
+}
+\examples{
+data(part_bfi)
+vars <- c("A1", "A2", "A3", "A4", "A5")
+estimate_params(data = part_bfi[, vars], n_levels = 6)
 }
 \seealso{
-\code{\link{discretize_density}} for details on calculating the endpoints,
-\code{\link{part_bfi}} for example of the survey data.
+\code{\link{discretize_density}} for details on calculating
+the endpoints, and \code{\link{part_bfi}} for example of the survey data.
 }

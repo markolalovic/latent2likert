@@ -1,0 +1,36 @@
+#' Agreeableness and Gender Data
+#'
+#' This dataset is a cleaned up version of a small part of \code{bfi} dataset
+#' from \code{psychTools} package. It contains responses to the first 5 items
+#' of the agreeableness scale from the International Personality Item Pool
+#' (IPIP) and the gender attribute. It includes responses from 2800 subjects.
+#' Each item was answered on a six point Likert scale ranging from
+#' 1 (very inaccurate), to 6 (very accurate). Gender was coded as
+#' 0 for male and 1 for female. Missing values were addressed using
+#' mode imputation.
+#'
+#' @docType data
+#'
+#' @usage data(part_bfi)
+#'
+#' @format {An object of class \code{"data.frame"} with 2800 observations on
+#' the following 6 variables:}
+#' \describe{
+#'   \item{A1}{Am indifferent to the feelings of others.}
+#'   \item{A2}{Inquire about others' well-being.}
+#'   \item{A3}{Know how to comfort others.}
+#'   \item{A4}{Love children.}
+#'   \item{A5}{Make people feel at ease.}
+#'   \item{gender}{Gender of the respondent.}
+#' }
+#' @source {International Personality Item Pool (ipip.ori.org)}
+#' @source {https://search.r-project.org/CRAN/refmans/psychTools/html/bfi.html}
+#' @references
+#' Revelle, W. (2024).
+#' Psych: Procedures for Psychological, Psychometric, and Personality Research.
+#' \emph{Evanston, Illinois: Northwestern University.}
+#' \url{https://CRAN.R-project.org/package=psych}
+#' @examples
+#' data(part_bfi)
+#' head(part_bfi)
+"part_bfi"

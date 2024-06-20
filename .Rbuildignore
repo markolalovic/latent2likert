@@ -8,13 +8,11 @@
 ^pkgdown$
 ^responsesR\.Rproj$
 ^README.Rmd
-^README.md
 ^README.html
 ^LICENSE.md
 ^NEWS.html
 ^\.github$
 ^vignettes/articles$
-^data$
 ^man/figures/*\.png$
 ^CODE_OF_CONDUCT.md
 ^fix_site.py
@@ -25,3 +23,5 @@
 ^revdep$
 ^cran-comments\.md$
 ^codemeta\.json$
+^CRAN-SUBMISSION$
+^articles$

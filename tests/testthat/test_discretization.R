@@ -1,6 +1,7 @@
 context("Testing discretization")
 
 testthat::test_that("discretization of N(0,1) using 4 levels gives expected results", {
+    #print("TODO: test coverage")
     res = discretize_density(density_fn = dnorm, n_levels = 4)
     expected = list(
         prob = c(0.16, 0.34, 0.34, 0.16), 

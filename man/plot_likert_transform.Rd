@@ -7,28 +7,22 @@
 plot_likert_transform(n_items, n_levels, mean = 0, sd = 1, skew = 0)
 }
 \arguments{
-\item{n_items:}{Integer. The number of Likert scale items (questions).}
+\item{n_items}{number of Likert scale items (questions).}
 
-\item{n_levels:}{Integer or vector of integers. The number of response 
-             categories (points) for each Likert scale item.
+\item{n_levels}{number of response categories for each Likert item. Integer or vector of integers.}
 
-Latent Variables Parameters}
+\item{mean}{means of the latent variables. Numeric or vector of numerics. Defaults to 0.}
 
-\item{mean:}{Numeric or vector of numerics. Means of the latent variables.
-Defaults to 0.}
+\item{sd}{standard deviations of the latent variables. Numeric or vector of numerics. Defaults to 1.}
 
-\item{sd:}{Numeric or vector of numerics. Standard deviations of the latent variables.
-Defaults to 1.}
-
-\item{skew:}{Numeric or vector of numerics. Marginal skewness of the latent variables.
-Defaults to 0.}
+\item{skew}{marginal skewness of the latent variables. Numeric or vector of numerics. Defaults to 0.}
+}
+\value{
+a plot showing the densities of latent variables and the corresponding discrete probability distributions.
 }
 \description{
-Plots the densities of latent variables in the first row 
+Plots the densities of latent variables in the first row
 and transformed discrete probability distributions below.
-}
-\details{
-Arguments
 }
 \examples{
 plot_likert_transform(n_items = 3, n_levels = c(3, 4, 5))

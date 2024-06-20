@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 
 ''' 
-Script to run after `pkgdown::build_site()`, `pkgdown::build_favicons(overwrite = TRUE)`:
+Script adds:
 
-- Adds `/docs/.nojekyll` for githubpages.
-- Adds meta description to index.html
+- `/docs/.nojekyll` for githubpages.
+- meta description to index.html
+
+After running pkgdown::build_site()
 '''
 
 import os
@@ -14,7 +16,7 @@ import fileinput
 
 def add_meta():
     filename = './docs/index.html'
-    meta_line = '<meta name="description" content="Converting latent variables into Likert scale responses in R. Package latent2likert converts continuous latent variables into ordinal categories to generate Likert scale item responses." />'
+    meta_line = '<meta name="description" content="Converting latent variables into Likert scale responses in R. Package latent2likert converts continuous latent variables into ordinal categories to simulate Likert scale item responses." />'
 
     with open(filename, 'r') as f:
         in_file = f.readlines()

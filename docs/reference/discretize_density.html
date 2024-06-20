@@ -69,7 +69,7 @@ using the Lloyd-Max algorithm.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>density_fn</dt>
-<dd><p>probability density function of the continuous random variable.</p></dd>
+<dd><p>probability density function.</p></dd>
 
 
 <dt>n_levels</dt>
@@ -87,21 +87,21 @@ using the Lloyd-Max algorithm.</p>
 <p>A list containing:</p><dl><dt>prob</dt>
 <dd><p>discrete probability distribution.</p></dd>
 
-  <dt>endp</dt>
+<dt>endp</dt>
 <dd><p>endpoints of intervals that partition the continuous domain.</p></dd>
 
-  <dt>repr</dt>
+<dt>repr</dt>
 <dd><p>representation points of the intervals.</p></dd>
 
-  <dt>dist</dt>
+<dt>dist</dt>
 <dd><p>distortion measured as the mean-squared error (MSE).</p></dd>
 
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The function addresses the problem of transforming a continuous random 
-variable \(X\) into a discrete random variable \(Y\) with minimal 
+    <p>The function addresses the problem of transforming a continuous random
+variable \(X\) into a discrete random variable \(Y\) with minimal
 distortion. Distortion is measured as mean-squared error (MSE):
 $$
   \text{E}\left[ (X - Y)^2 \right] = 
@@ -111,48 +111,57 @@ $$
 where:</p><dl><dt>\(f_{X}\)</dt>
 <dd><p>is the probability density function of \(X\),</p></dd>
 
-  <dt>\(K\)</dt>
+<dt>\(K\)</dt>
 <dd><p>is the number of possible outcomes of \(Y\),</p></dd>
 
-  <dt>\(x_{k}\)</dt>
-<dd><p>are endpoints of intervals that partition the domain of \(X\),</p></dd>
+<dt>\(x_{k}\)</dt>
+<dd><p>are endpoints of intervals that partition the domain
+of \(X\),</p></dd>
 
-  <dt>\(r_{k}\)</dt>
+<dt>\(r_{k}\)</dt>
 <dd><p>are representation points of the intervals.</p></dd>
 
 
-</dl><p>This problem is solved using the following iterative procedure:</p><ol><li><p>Start with an arbitrary initial set of representation points:
-                         \(r_{1} &lt; r_{2} &lt; \dots &lt; r_{K}\).</p></li>
-<li><p>Repeat the following steps until the improvement in MSE falls 
-below given \(\epsilon\).</p><ol><li><p>Calculate endpoints as \(x_{k} = (r_{k+1} + r_{k})/2\) for each 
-          \(k = 1, \dots, K-1\) and set \(x_{0}\) and \(x_{K}\) to 
-          \(-\infty\) and \(\infty\), respectively.</p></li>
-<li><p>Update representation points by setting \(r_{k}\) equal to the 
-          conditional mean of \(X\) given \(X \in (x_{k-1}, x_{k})\) for 
-          each \(k = 1, \dots, K\).</p></li>
-</ol></li>
-</ol><p>With each execution of steps (a) and (b), the MSE decreases or remains the same. 
-As MSE is nonnegative, 
-it approaches a limit. The algorithm terminates when the improvement in MSE is 
-less than a given \(\epsilon &gt; 0\), ensuring convergence after a finite number 
-of iterations.</p>  
-<p>This procedure is known as Lloyd-Max's algorithm, initially used for scalar 
-quantization and closely related to the k-means algorithm. Local convergence 
-has been proven for log-concave density functions by Kieffer. Many common 
-probability distributions are log-concave including the normal and skew 
+</dl><p>This problem is solved using the following iterative procedure:</p><dl><dt>\(1.\)</dt>
+<dd><p>Start with an arbitrary initial set of representation
+points: \(r_{1} &lt; r_{2} &lt; \dots &lt; r_{K}\).</p></dd>
+
+<dt>\(2.\)</dt>
+<dd><p>Repeat the following steps until the improvement in MSE
+falls below given \(\varepsilon\).</p></dd>
+
+<dt>\(3.\)</dt>
+<dd><p>Calculate endpoints as \(x_{k} = (r_{k+1} + r_{k})/2\)
+for each \(k = 1, \dots, K-1\) and set \(x_{0}\) and \(x_{K}\) to
+\(-\infty\) and \(\infty\), respectively.</p></dd>
+
+<dt>\(4.\)</dt>
+<dd><p>Update representation points by setting \(r_{k}\)
+equal to the conditional mean of \(X\) given \(X \in (x_{k-1}, x_{k})\)
+for each \(k = 1, \dots, K\).</p></dd>
+
+
+</dl><p>With each execution of step \((3)\) and step \((4)\), the MSE decreases
+or remains the same. As MSE is nonnegative, it approaches a limit.
+The algorithm terminates when the improvement in MSE is less than a given
+\(\varepsilon &gt; 0\), ensuring convergence after a finite number
+of iterations.</p>
+<p>This procedure is known as Lloyd-Max's algorithm, initially used for scalar
+quantization and closely related to the k-means algorithm. Local convergence
+has been proven for log-concave density functions by Kieffer. Many common
+probability distributions are log-concave including the normal and skew
 normal distribution, as shown by Azzalini.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Azzalini, A. (1985). 
-A class of distributions which includes the normal ones. 
-<em>Scandinavian Journal of Statistics</em> <b>12(2)</b>, 171–178.
-<a href="http://www.jstor.org/stable/4615982" class="external-link">http://www.jstor.org/stable/4615982</a></p>
+    <p>Azzalini, A. (1985).
+A class of distributions which includes the normal ones.
+<em>Scandinavian Journal of Statistics</em> <b>12(2)</b>, 171–178.</p>
 <p>Kieffer, J. (1983).
-Uniqueness of locally optimal quantizer for log-concave density and convex 
+Uniqueness of locally optimal quantizer for log-concave density and convex
 error function.
 <em>IEEE Transactions on Information Theory</em> <b>29</b>, 42–47.</p>
-<p>Lloyd, S. (1982). 
+<p>Lloyd, S. (1982).
 Least squares quantization in PCM.
 <em>IEEE Transactions on Information Theory</em> <b>28 (2)</b>, 129–137.</p>
     </div>

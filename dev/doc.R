@@ -1,3 +1,3 @@
-setwd("/Users/markolalovic/dev/latent2likert")
+# Documentation
 devtools::document()
 devtools::build_manual()

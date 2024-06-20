@@ -1,13 +1,15 @@
 Type: Package
 Package: latent2likert
-Title: Converting Latent Variables Into Likert Scale Responses
+Title: Converting Latent Variables into Likert Scale Responses
 Version: 1.2.1
-Date: 2024-06-12
-Authors@R: c(person(given = "Marko", family = "Lalovic", email = "marko@lalovic.io", role = c("aut", "cre")))
-Description: Effectively simulates the discretization process inherent to Likert scales while minimizing distortion. 
-    It converts continuous latent variables into ordinal categories to generate Likert scale item responses. 
-    Particularly useful for accurately modeling and analyzing survey data that use Likert scales, especially 
-    when applying statistical techniques that require metric data.
+Authors@R: 
+    person("Marko", "Lalovic", , "marko@lalovic.io", role = c("aut", "cre"))
+Description: Effectively simulates the discretization process inherent to
+    Likert scales while minimizing distortion.  It converts continuous
+    latent variables into ordinal categories to generate Likert scale item
+    responses.  Particularly useful for accurately modeling and analyzing
+    survey data that use Likert scales, especially when applying
+    statistical techniques that require metric data.
 License: MIT + file LICENSE
 URL: https://lalovic.io/latent2likert/
 BugReports: https://github.com/markolalovic/latent2likert/issues/
@@ -16,21 +18,19 @@ Depends:
 Imports: 
     graphics,
     mvtnorm,
-    stats
+    stats,
+    utils
 Suggests: 
     sn,
-    cowplot,
-    GGally,
-    ggh4x,
-    gridExtra,
+    devtools,
     knitr,
-    psych,
-    RColorBrewer,
     rmarkdown,
     testthat (>= 3.0.0),
+    covr
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1

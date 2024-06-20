@@ -4,7 +4,7 @@
 #' discrete probability distribution with minimal distortion
 #' using the Lloyd-Max algorithm.
 #'
-#' @param density_fn probability density function of the continuous random variable.
+#' @param density_fn probability density function.
 #' @param n_levels cardinality of the set of all possible outcomes.
 #' @param eps convergence threshold for the algorithm.
 #'
@@ -32,29 +32,28 @@
 #' \describe{
 #'   \item{\eqn{f_{X}}}{ is the probability density function of \eqn{X},}
 #'   \item{\eqn{K}}{ is the number of possible outcomes of \eqn{Y},}
-#'   \item{\eqn{x_{k}}}{ are endpoints of intervals that partition the domain of \eqn{X},}
+#'   \item{\eqn{x_{k}}}{ are endpoints of intervals that partition the domain
+#'  of \eqn{X},}
 #'   \item{\eqn{r_{k}}}{ are representation points of the intervals.}
 #' }
 #' This problem is solved using the following iterative procedure:
-#' \enumerate{
-#'   \item{}{Start with an arbitrary initial set of representation points:
-#'                          \eqn{r_{1} < r_{2} < \dots < r_{K}}.}
-#'   \item{}{Repeat the following steps until the improvement in MSE falls 
-#' below given \eqn{\epsilon}.}
-#'   \enumerate{
-#'     \item{}{Calculate endpoints as \eqn{x_{k} = (r_{k+1} + r_{k})/2} for each 
-#'           \eqn{k = 1, \dots, K-1} and set \eqn{x_{0}} and \eqn{x_{K}} to 
-#'           \eqn{-\infty} and \eqn{\infty}, respectively.}
-#'     \item{}{Update representation points by setting \eqn{r_{k}} equal to the 
-#'           conditional mean of \eqn{X} given \eqn{X \in (x_{k-1}, x_{k})} for 
-#'           each \eqn{k = 1, \dots, K}.}
-#'  }
+#' \describe{
+#'   \item{\eqn{1.}}{Start with an arbitrary initial set of representation 
+#' points: \eqn{r_{1} < r_{2} < \dots < r_{K}}.}
+#'   \item{\eqn{2.}}{Repeat the following steps until the improvement in MSE 
+#' falls below given \eqn{\varepsilon}.}
+#'    \item{\eqn{3.}}{Calculate endpoints as \eqn{x_{k} = (r_{k+1} + r_{k})/2}
+#' for each \eqn{k = 1, \dots, K-1} and set \eqn{x_{0}} and \eqn{x_{K}} to 
+#' \eqn{-\infty} and \eqn{\infty}, respectively.}
+#'    \item{\eqn{4.}}{Update representation points by setting \eqn{r_{k}} 
+#' equal to the conditional mean of \eqn{X} given \eqn{X \in (x_{k-1}, x_{k})}
+#' for each \eqn{k = 1, \dots, K}.}
 #' }
 #' 
-#' With each execution of steps (a) and (b), the MSE decreases or remains the same. 
-#' As MSE is nonnegative, 
-#' it approaches a limit. The algorithm terminates when the improvement in MSE is 
-#' less than a given \eqn{\epsilon > 0}, ensuring convergence after a finite number 
+#' With each execution of step \eqn{(3)} and step \eqn{(4)}, the MSE decreases
+#'  or remains the same. As MSE is nonnegative, it approaches a limit. 
+#' The algorithm terminates when the improvement in MSE is less than a given 
+#' \eqn{\varepsilon > 0}, ensuring convergence after a finite number 
 #' of iterations.
 #'   
 #' This procedure is known as Lloyd-Max's algorithm, initially used for scalar 
@@ -67,7 +66,6 @@
 #' Azzalini, A. (1985). 
 #' A class of distributions which includes the normal ones. 
 #' \emph{Scandinavian Journal of Statistics} \bold{12(2)}, 171–178.
-#' \url{http://www.jstor.org/stable/4615982} 
 #' 
 #' Kieffer, J. (1983).
 #' Uniqueness of locally optimal quantizer for log-concave density and convex 
@@ -102,10 +100,9 @@ discretize_density <- function(density_fn, n_levels, eps = 1e-6) {
 
 #' Calculate Midpoints
 #'
-#' Calculate the midpoints of the intervals defined by the representation points.
+#' Calculates the midpoints of the intervals given their representation points.
 #'
 #' @param repr representation points.
-#'
 #' @return a vector of midpoints.
 #' @noRd
 calc_midpoints <- function(repr) {
@@ -116,9 +113,9 @@ calc_midpoints <- function(repr) {
 
 #' Update Representation Points
 #'
-#' Calculate the representation points for the intervals given the new midpoints.
+#' Calculates the representation points for the intervals given the midpoints.
 #'
-#' @param density_fn probability density function of the continuous random variable.
+#' @param density_fn probability density function.
 #' @param midp midpoints of the intervals.
 #'
 #' @return a vector of representation points.
@@ -128,7 +125,7 @@ update_epresentatives <- function(density_fn, midp) {
   endp <- c(-Inf, midp, Inf)
   repr <- numeric(n_levels)
   for (k in seq_len(n_levels)) {
-    a <- stats::integrate(function(x) {x * density_fn(x)}, endp[k], endp[k + 1])
+    a <- stats::integrate(function(x) x * density_fn(x), endp[k], endp[k + 1])
     b <- stats::integrate(density_fn, endp[k], endp[k + 1])
     repr[k] <- a[[1]] / b[[1]]
   }
@@ -137,7 +134,7 @@ update_epresentatives <- function(density_fn, midp) {
 
 #' Compute Distortion
 #'
-#' Compute the distortion (mean-squared error) given the midpoints and 
+#' Computes the distortion (mean-squared error) given the midpoints and 
 #' representation points.
 #'
 #' @param density_fn probability density function.
@@ -158,9 +155,9 @@ compute_distortion <- function(density_fn, midp, repr) {
 
 #' Calculate Probabilities
 #'
-#' Calculate the discrete probabilities for the given endpoints.
+#' Calculates the discrete probabilities for the given endpoints.
 #'
-#' @param density_fn probability density function of the continuous random variable.
+#' @param density_fn probability density function.
 #' @param endp endpoints of the intervals.
 #'
 #' @return a vector of probabilities for the intervals.

@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="Effectively simulates the discretization process inherent to Likert scales while minimizing distortion. It converts continuous latent variables into ordinal categories to generate Likert scale item responses. Particularly useful for accurately modeling and analyzing survey data that use Likert scales, especially when applying statistical techniques that require metric data.">
-<title>Converting Latent Variables Into Likert Scale Responses • latent2likert</title>
-<meta name="description" content="Converting latent variables into Likert scale responses in R. Package latent2likert converts continuous latent variables into ordinal categories to generate Likert scale item responses." /><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<title>Converting Latent Variables into Likert Scale Responses • latent2likert</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
@@ -17,7 +17,7 @@
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Converting Latent Variables Into Likert Scale Responses">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Converting Latent Variables into Likert Scale Responses">
 <meta property="og:description" content="Effectively simulates the discretization process inherent to Likert scales while minimizing distortion. It converts continuous latent variables into ordinal categories to generate Likert scale item responses. Particularly useful for accurately modeling and analyzing survey data that use Likert scales, especially when applying statistical techniques that require metric data.">
 <meta property="og:image" content="https://markolalovic.github.io/latent2likert/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -123,7 +123,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#library(latent2likert)</span></span>
 <span><span class="fu"><a href="reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, n_items <span class="op">=</span> <span class="fl">1</span>, n_levels <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 3 4 3 3 2 3 2 1 4 2</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] 3 2 3 4 3 4 3 4 4 1</span></span></code></pre></div>
 <p>To generate responses to multiple items with specified parameters:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>,</span>
@@ -133,16 +133,16 @@
 <span>        sd   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>        corr <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       Y1 Y2 Y3</span></span>
-<span><span class="co">#&gt;  [1,]  2  3  3</span></span>
-<span><span class="co">#&gt;  [2,]  3  3  5</span></span>
-<span><span class="co">#&gt;  [3,]  3  4  2</span></span>
-<span><span class="co">#&gt;  [4,]  3  3  4</span></span>
-<span><span class="co">#&gt;  [5,]  3  2  4</span></span>
-<span><span class="co">#&gt;  [6,]  1  2  3</span></span>
-<span><span class="co">#&gt;  [7,]  3  4  5</span></span>
-<span><span class="co">#&gt;  [8,]  3  2  5</span></span>
-<span><span class="co">#&gt;  [9,]  3  1  4</span></span>
-<span><span class="co">#&gt; [10,]  3  2  5</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1,]  2  1  4</span></span>
+<span><span class="co">#&gt;  [2,]  4  2  3</span></span>
+<span><span class="co">#&gt;  [3,]  2  2  2</span></span>
+<span><span class="co">#&gt;  [4,]  2  2  2</span></span>
+<span><span class="co">#&gt;  [5,]  2  1  3</span></span>
+<span><span class="co">#&gt;  [6,]  2  2  3</span></span>
+<span><span class="co">#&gt;  [7,]  3  1  2</span></span>
+<span><span class="co">#&gt;  [8,]  2  3  4</span></span>
+<span><span class="co">#&gt;  [9,]  3  5  4</span></span>
+<span><span class="co">#&gt; [10,]  3  1  5</span></span></code></pre></div>
 <p>You can also provide a correlation matrix:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.00</span>, <span class="op">-</span><span class="fl">0.63</span>, <span class="op">-</span><span class="fl">0.39</span>, </span>
@@ -158,9 +158,9 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            Y1         Y2         Y3</span></span>
-<span><span class="co">#&gt; Y1  1.0000000 -0.5107040 -0.3641031</span></span>
-<span><span class="co">#&gt; Y2 -0.5107040  1.0000000  0.3611259</span></span>
-<span><span class="co">#&gt; Y3 -0.3641031  0.3611259  1.0000000</span></span></code></pre></div>
+<span><span class="co">#&gt; Y1  1.0000000 -0.5486188 -0.3592762</span></span>
+<span><span class="co">#&gt; Y2 -0.5486188  1.0000000  0.4172253</span></span>
+<span><span class="co">#&gt; Y3 -0.3592762  0.4172253  1.0000000</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-estimate_params">Using <code>estimate_params</code>
@@ -171,8 +171,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/estimate_params.html">estimate_params</a></span><span class="op">(</span><span class="va">data</span>, n_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>, skew <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          items</span></span>
 <span><span class="co">#&gt; estimates           Y1           Y2           Y3</span></span>
-<span><span class="co">#&gt;      mean  0.009327867 -1.061836850 -0.019093065</span></span>
-<span><span class="co">#&gt;      sd    0.785412451  0.980961288  0.965227444</span></span></code></pre></div>
+<span><span class="co">#&gt;      mean  0.014663647 -1.009504893  0.004589209</span></span>
+<span><span class="co">#&gt;      sd    0.775035961  0.955310905  1.018213994</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="transformation">Transformation<a class="anchor" aria-label="anchor" href="#transformation"></a>
@@ -194,7 +194,10 @@
 <div class="section level2">
 <h2 id="further-reading">Further Reading<a class="anchor" aria-label="anchor" href="#further-reading"></a>
 </h2>
-<p>For more detailed information and practical examples, please refer to the package <a href="https://lalovic.io/latent2likert/articles/intro_to_latent2likert.html" class="external-link">vignette</a>.</p>
+<ul>
+<li>For more detailed information and practical examples, please refer to the package <a href="https://lalovic.io/latent2likert/articles/intro_to_latent2likert.html" class="external-link">vignette</a>.</li>
+<li>The implemented algorithms are described in the functions <a href="https://lalovic.io/latent2likert/reference/index.html" class="external-link">reference</a>.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="related-r-packages">Related R Packages<a class="anchor" aria-label="anchor" href="#related-r-packages"></a>

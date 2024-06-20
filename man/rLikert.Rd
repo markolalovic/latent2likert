@@ -7,30 +7,30 @@
 rlikert(size, n_items, n_levels, mean = 0, sd = 1, skew = 0, corr = 0)
 }
 \arguments{
-\item{size:}{number of observations.}
+\item{size}{number of observations.}
 
-\item{n_items:}{number of Likert scale items (number of questions).}
+\item{n_items}{number of Likert scale items (number of questions).}
 
-\item{n_levels:}{number of response categories for each item. 
+\item{n_levels}{number of response categories for each item.
 Integer or vector of integers.}
 
-\item{mean:}{means of the latent variables. 
+\item{mean}{means of the latent variables.
 Numeric or vector of numerics. Defaults to 0.}
 
-\item{sd:}{standard deviations of the latent variables. 
+\item{sd}{standard deviations of the latent variables.
 Numeric or vector of numerics. Defaults to 1.}
 
-\item{skew:}{marginal skewness of the latent variables.
+\item{skew}{marginal skewness of the latent variables.
 Numeric or vector of numerics. Defaults to 0.}
 
-\item{corr:}{correlations between latent variables.
-Can be a single numeric value representing the same correlation for 
+\item{corr}{correlations between latent variables.
+Can be a single numeric value representing the same correlation for
 all pairs, or an actual correlation matrix. Defaults to 0.}
 }
 \value{
-A matrix of random responses with dimensions \code{size} by 
-\code{n_items}. The column names are \code{Y1, Y2, ..., Yn} where 
-\code{n} is the number of items. Each entry in the matrix represents 
+A matrix of random responses with dimensions \code{size} by
+\code{n_items}. The column names are \code{Y1, Y2, ..., Yn} where
+\code{n} is the number of items. Each entry in the matrix represents
 a Likert scale response, ranging from 1 to \code{n_levels}.
 }
 \description{
@@ -42,10 +42,20 @@ specified latent variables.
 rlikert(size = 10, n_items = 1, n_levels = 5)
 
 # Generate responses for three items with different levels and parameters
-rlikert(size = 10, n_items = 3, n_levels = c(4, 5, 6), mean = c(0, -1, 0), sd = c(0.8, 1, 1), corr = 0.5)
+rlikert(
+  size = 10, n_items = 3, n_levels = c(4, 5, 6),
+  mean = c(0, -1, 0), sd = c(0.8, 1, 1), corr = 0.5
+)
 
 # Generate responses with a correlation matrix
-corr <- matrix(c(1.00, -0.63, -0.39, -0.63, 1.00, 0.41, -0.39, 0.41, 1.00), nrow = 3)
-data <- rlikert(size = 1000, n_items = 3, n_levels = c(4, 5, 6), mean = c(0, -1, 0), sd = c(0.8, 1, 1), corr = corr)
+corr <- matrix(c(
+  1.00, -0.63, -0.39,
+  -0.63, 1.00, 0.41,
+  -0.39, 0.41, 1.00
+), nrow = 3)
+data <- rlikert(
+  size = 1000, n_items = 3, n_levels = c(4, 5, 6),
+  mean = c(0, -1, 0), sd = c(0.8, 1, 1), corr = corr
+)
 
 }

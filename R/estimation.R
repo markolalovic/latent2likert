@@ -3,49 +3,52 @@
 #' Estimates the location and scaling parameters of the latent variables from
 #' existing survey data.
 #'
-#' @param data survey responses where the columns correspond to individual items.
-#'             Apart from this, `data` can be of almost any class such as
+#' @param data survey data with columns representing individual items.
+#'             Apart from this, \code{data} can be of almost any class such as
 #'             "data.frame" "matrix" or "array".
 #' @param n_levels number of response categories, a vector or a number.
 #' @param skew marginal skewness of latent variables, defaults to 0.
 #' @return A table of estimated parameters for each latent variable.
-##examples
-##TODO: fix
-##Warning in data(part_bfi) : data set ‘part_bfi’ not found
-##data(part_bfi)
-##head(part_bfi)
+#' @examples
+#' data(part_bfi)
+#' vars <- c("A1", "A2", "A3", "A4", "A5")
+#' estimate_params(data = part_bfi[, vars], n_levels = 6)
 #' @details
-#' The relationship between the continuous random variable \eqn{X} and the 
-#' discrete probability distribution \eqn{p_k} can be described by a system 
-#' of non-linear equations:
+#' The relationship between the continuous random variable \eqn{X} and the
+#' discrete probability distribution \eqn{p_k}, for \eqn{k = 1, \dots, K},
+#' can be described by a system of non-linear equations:
 #' \deqn{
-#'   p_{k} = F_{X}\left( \frac{x_{k - 1} - \xi}{\omega} \right) 
-#'         - F_{X}\left( \frac{x_{k} - \xi}{\omega} \right) 
+#'   p_{k} = F_{X}\left( \frac{x_{k - 1} - \xi}{\omega} \right)
+#'         - F_{X}\left( \frac{x_{k} - \xi}{\omega} \right)
 #'         \quad \text{for} \ k = 1, \dots, K
 #' }
 #' where:
 #' \describe{
-#'   \item{\eqn{F_{X}}}{ is the cumulative distribution function (CDF) of \eqn{X},}
+#'   \item{\eqn{F_{X}}}{ is the cumulative distribution function of \eqn{X},}
 #'   \item{\eqn{K}}{ is the number of possible response categories,}
-#'   \item{\eqn{x_{k}}}{ are the endpoints defining the boundaries of the response categories,}
-#'   \item{\eqn{p_{k}}}{ is the probability of the \eqn{k}-th response category,}
+#'   \item{\eqn{x_{k}}}{ are the endpoints defining the boundaries of the
+#' response categories,}
+#'   \item{\eqn{p_{k}}}{ is the probability of the \eqn{k}-th
+#' response category,}
 #'   \item{\eqn{\xi}}{ is the location parameter of \eqn{X},}
 #'   \item{\eqn{\omega}}{ is the scaling parameter of \eqn{X}.}
 #' }
-#' The endpoints \eqn{x_{k}} are calculated by discretizing a random variable \eqn{Z} 
-#' with mean 0 and standard deviation 1 that follows the same distribution as \eqn{X}. 
-#' By solving the above system of non-linear equations iteratively, we can find the 
-#' parameters that best fit the observed discrete probability distribution \eqn{p_{k}}.
+#' The endpoints \eqn{x_{k}} are calculated by discretizing a
+#' random variable \eqn{Z}
+#' with mean 0 and standard deviation 1 that follows the same
+#' distribution as \eqn{X}.
+#' By solving the above system of non-linear equations iteratively,
+#' we can find the parameters that best fit the observed discrete
+#' probability distribution \eqn{p_{k}}.
+#'
+#' The function \code{estimate_params}:
+#' * Computes the proportion table of the responses for each item.
+#' * Estimates the probabilities \eqn{p_{k}} for each item.
+#' * Computes the estimates of \eqn{\xi} and \eqn{\omega} for each item.
+#' * Combines the estimated parameters for all items into a table.
 #' 
-#' The function `estimate_params`:
-#' \enumerate{ 
-#'     \item{}{Computes the proportion table of the responses for each item.}
-#'     \item{}{Estimates the probabilities \eqn{p_{k}} for each item.}
-#'     \item{}{Computes the estimates of \eqn{\xi} and \eqn{\omega}.}
-#'     \item{}{Combines the estimates parameters for each item into a table.}
-#' }
-#' @seealso \code{\link{discretize_density}} for details on calculating the endpoints,
-#' \code{\link{part_bfi}} for example of the survey data.
+#' @seealso \code{\link{discretize_density}} for details on calculating
+#' the endpoints, and \code{\link{part_bfi}} for example of the survey data.
 #' @export
 estimate_params <- function(data, n_levels, skew = 0) {
   if (is.vector(data)) {
@@ -66,13 +69,38 @@ estimate_params <- function(data, n_levels, skew = 0) {
       mat[i, ] <- estimates
     }
     tab <- as.table(t(mat))
-    dimnames(tab) <- list(estimates = c("mean", "sd"), items = colnames(data))
+    dimnames(tab) <- list(
+      estimates = c("mean", "sd"),
+      items = colnames(data)
+    )
   }
   return(tab)
 }
 
-# Solve reparameterized system for stability
-estimate_mean_and_sd <- function(prob, n_levels, skew = 0, eps = 1e-6, maxit = 100) {
+#' Estimate mean and standard deviation
+#' 
+#' Estimates the mean and standard deviation of a latent variable given the 
+#' discrete probabilities of its observed Likert scale responses.
+#' 
+#' @param prob vector of probabilities for each response category.
+#' @param n_levels number of response categories for the Likert scale item.
+#' @param skew marginal skewness of the latent variable, defaults to 0.
+#' @param eps tolerance for convergence, defaults to 1e-6.
+#' @param maxit maximum number of iterations, defaults to 100.
+#' 
+#' @return A numeric vector with two elements: the estimated mean and 
+#' standard deviation.
+#' 
+#' @details
+#' This function uses an iterative algorithm to solve the system of non-linear
+#' equations that describe the relationship between the continuous latent 
+#' variable and the observed discrete probability distribution of Likert scale
+#' responses. The algorithm ensures stability by reparameterizing the system
+#' and applying constraints to prevent stepping into invalid regions.
+#' 
+#' @noRd
+estimate_mean_and_sd <- function(prob, n_levels, skew = 0,
+                                 eps = 1e-6, maxit = 100) {
   prob <- as.vector(pad_levels(prob, n_levels))
   endp <- calc_endpoints(n_levels, skew)
   dist_funcs <- initialize_distributions(skew)
@@ -100,11 +128,21 @@ estimate_mean_and_sd <- function(prob, n_levels, skew = 0, eps = 1e-6, maxit = 1
 
   mean <- x[1]
   sd <- 1 / x[2]
-  # list("mean"=mean, "sd"=sd, "trace"=trace)
+
   return(c(mean, sd))
 }
 
-# Initialize CDF and PDF functions based on skew
+#' Initialize CDF and PDF Functions
+#'
+#' Initializes the cumulative distribution function (CDF) and probability 
+#' density function (PDF) based on the skewness parameter.
+#'
+#' @param skew numeric value representing the skewness of the distribution.
+#' 
+#' @return A list containing the CDF and PDF functions appropriate for the 
+#' given skewness.
+#' 
+#' @noRd
 initialize_distributions <- function(skew) {
   if (abs(skew) > 0) {
     check_package("sn")
@@ -119,7 +157,22 @@ initialize_distributions <- function(skew) {
   }
 }
 
-# Function to find roots
+#' Calculate Differences for Root Finding
+#'
+#' Computes the differences used in the iterative root-finding process.
+#'
+#' @param x numeric vector of current estimates for the location and scaling
+#' parameters.
+#' @param endp numeric vector of endpoints defining the boundaries of the 
+#' response categories.
+#' @param prob numeric vector of probabilities for each response category.
+#' @param cdf_X function representing the cumulative distribution function
+#' (CDF) of the latent variable.
+#' 
+#' @return A matrix of differences between the CDF evaluated at the endpoints
+#' and the observed probabilities.
+#' 
+#' @noRd
 fn <- function(x, endp, prob, cdf_X) {
   u <- x[1]
   v <- x[2]
@@ -127,7 +180,21 @@ fn <- function(x, endp, prob, cdf_X) {
   return(matrix(utils::tail(y, -1) - utils::head(y, -1) - prob))
 }
 
-# Jacobian column wise
+# Compute Jacobian Matrix
+#'
+#' Computes the Jacobian matrix used in the iterative root-finding process.
+#'
+#' @param x numeric vector of current estimates for the location and scaling 
+#' parameters.
+#' @param endp numeric vector of endpoints defining the boundaries of the 
+#' response categories.
+#' @param pdf_X function representing the probability density function (PDF)
+#' of the latent variable.
+#' 
+#' @return A matrix representing the Jacobian of the system of equations with
+#' respect to the parameters.
+#' 
+#' @noRd
 jac <- function(x, endp, pdf_X) {
   u <- x[1]
   v <- x[2]
@@ -137,21 +204,37 @@ jac <- function(x, endp, pdf_X) {
   dv <- pdf_X(v * midp - u * v) * (midp - u)
 
   du <- utils::tail(du, -1) - utils::head(du, -1)
-  dv <- c(utils::head(dv, 1), utils::tail(dv, -1) 
-      - utils::head(dv, -1), -utils::tail(dv, 1))
+  dv <- c(utils::head(dv, 1), utils::tail(dv, -1)
+  - utils::head(dv, -1), -utils::tail(dv, 1))
 
   return(cbind(du, dv))
 }
 
+#' Plot Contour
+#'
+#' Plots the contour of the objective function values over a grid
+#' of parameter values. It visualizes the norm of the function \code{fn}
+#' for different values of \code{u} (mean) and \code{v} (1/standard deviation)
+#' and overlays the trace of parameter updates during the optimization process.
+#'
+#' @param fn objective function to be minimized.
+#' @param endp endpoints of intervals that partition the continuous domain.
+#' @param prob discrete probability distribution.
+#' @param cdf_X cumulative distribution function of the latent variable.
+#' @param trace matrix of parameter updates.
+#' @noRd
 plot_contour <- function(fn, endp, prob, cdf_X, trace) {
   xlen <- 50
   ylen <- 50
-  xgrid <- seq(-3, 3, length.out = xlen) # -5, 5
-  ygrid <- seq(0.1, 3, length.out = ylen) # 0.1, 10
+  xgrid <- seq(-3, 3, length.out = xlen) # Range for mean (mu)
+  ygrid <- seq(0.1, 3, length.out = ylen) # Range for 1/sd
   zvals <- matrix(NA, ncol = xlen, nrow = ylen)
   for (i in seq_len(xlen)) {
     for (j in seq_len(ylen)) {
-      zvals[i, j] <- norm(fn(matrix(c(xgrid[i], ygrid[j])), endp, prob, cdf_X), "2")
+      zvals[i, j] <- norm(fn(
+        matrix(c(xgrid[i], ygrid[j])),
+        endp, prob, cdf_X
+      ), "2")
     }
   }
   graphics::contour(

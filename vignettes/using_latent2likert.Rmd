@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+```
+
+```{r, include = FALSE}
+library(devtools)
 devtools::load_all("/Users/markolalovic/dev/latent2likert/")
 ```
 
@@ -132,7 +136,8 @@ We will use part of [bfi](https://search.r-project.org/CRAN/refmans/psych/html/b
 Load the data:
 
 ```{r}
-load(file="/Users/markolalovic/dev/latent2likert/data/part_bfi.rda")
+#load(file="/Users/markolalovic/dev/latent2likert/data/part_bfi.rda")
+data(part_bfi)
 head(part_bfi)
 ```
 
@@ -140,8 +145,8 @@ Separate the items into two groups according to their gender:
 
 ```{r}
 vars <- c("A1", "A2", "A3", "A4", "A5")
-items_M <- part_bfi[part_bfi$gender == "Male", vars]
-items_F <- part_bfi[part_bfi$gender == "Female", vars]
+items_M <- part_bfi[part_bfi$gender == 0, vars]
+items_F <- part_bfi[part_bfi$gender == 1, vars]
 ```
 
 To reproduce the items, start by estimating the parameters of the latent variables, assuming they are normal and providing the number of possible response categories 'n_levels = 6':
@@ -173,7 +178,7 @@ The next step would be to create agreeableness scale scores for both groups of p
 ```{r}
 # Combine new items and gender in new data frame
 new_data <- data.frame(rbind(new_items_M, new_items_F))
-new_data$gender <- c(rep("Male", nrow(items_M)), rep("Female", nrow(items_F)))
+new_data$gender <- c(rep(0, nrow(items_M)), rep(1, nrow(items_F)))
 head(new_data)
 
 # We also need to reverse the first item because it has negative correlations
