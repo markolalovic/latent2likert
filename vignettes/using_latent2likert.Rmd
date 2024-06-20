@@ -66,7 +66,7 @@ data
 The results can then be visualized using a grouped bar chart:
 
 <figure>
-    <img src="/Users/markolalovic/dev/latent2likert/man/figures/vignette/courses-grouped-min.png" width="100%" alt="Grouped bar chart"/>
+    <img src="man/figures/courses-grouped-min.png" width="100%" alt="Grouped bar chart"/>
 </figure>
 
 ## Pre and Post Comparison
@@ -120,7 +120,7 @@ head(data)
 And visualize the results with a stacked bar chart:
 
 <figure>
-    <img src="/Users/markolalovic/dev/latent2likert/man/figures/vignette/courses-stacked-min.png" width="100%" alt="Stacked bar chart"/>
+    <img src="man/figures/courses-stacked-min.png" width="100%" alt="Stacked bar chart"/>
 </figure>
 
 
@@ -131,7 +131,6 @@ We will use part of [bfi](https://search.r-project.org/CRAN/refmans/psych/html/b
 Load the data:
 
 ```{r}
-#load(file="/Users/markolalovic/dev/latent2likert/data/part_bfi.rda")
 data(part_bfi)
 head(part_bfi)
 ```
@@ -188,7 +187,7 @@ new_data$agreeable <- rowMeans(new_data[, c("Y1", "Y2", "Y3", "Y4", "Y5")])
 And visualize the results with a grouped boxplot:
 
 <figure>
-    <img src="/Users/markolalovic/dev/latent2likert/man/figures/vignette/scales-min.png" width="100%" alt="Scales"/>
+    <img src="man/figures/scales-min.png" width="100%" alt="Scales"/>
 </figure>
 
 ## References
