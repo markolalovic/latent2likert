@@ -30,13 +30,8 @@ The R package **latent2likert** is designed to effectively simulate the discreti
 You can install the development version from GitHub with:
 ```{r, eval = FALSE}
 # install.packages("devtools")
-#devtools::install_github("markolalovic/latent2likert")
+devtools::install_github("markolalovic/latent2likert")
 ```
-
-```{r, include = FALSE}
-devtools::load_all("/Users/markolalovic/dev/latent2likert/")
-```
-
 
 ## Dependencies
 
@@ -62,7 +57,7 @@ To keep the package lightweight, **latent2likert** only imports [mvtnorm](https:
 To generate a sample of random responses to one item on a 5-point Likert scale, use:
 
 ```{r}
-#library(latent2likert)
+library(latent2likert)
 rlikert(size = 10, n_items = 1, n_levels = 5)
 ```
 
