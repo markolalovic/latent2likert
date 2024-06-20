@@ -131,7 +131,7 @@ Note that, depending on the value of the skewness parameter, the normal latent d
 
 ## Further Reading
 
-* For more detailed information and practical examples, please refer to the package [vignette](https://lalovic.io/latent2likert/articles/intro_to_latent2likert.html).
+* For more detailed information and practical examples, please refer to the package [vignette](https://lalovic.io/latent2likert/articles/using_latent2likert.html).
 * The implemented algorithms are described in the functions [reference](https://lalovic.io/latent2likert/reference/index.html).
 
 ## Related R Packages
