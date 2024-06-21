@@ -21,7 +21,7 @@ Simulates Likert scale item responses based on a specified number
 of response categories and the centered parameters of the latent variable.
 }
 \details{
-The simulation process uses the following model proposed by Boari and Nai-Ruscone.
+The simulation process uses the following model detailed by Boari and Nai-Ruscone.
 Let \eqn{X} be the continuous variable of interest, measured using Likert scale
 questions with \eqn{K} response categories. The observed discrete variable \eqn{Y} is
 defined as follows:
@@ -58,8 +58,8 @@ simulate_likert(n_levels = 7, cp = cp2)
 }
 \references{
 Boari, G. and Nai Ruscone, M. (2015).
-A procedure simulating likert scale item responses.
-\emph{Electronic journal of applied statistical analysis} \bold{8(3)}, 288–297.
+A procedure simulating Likert scale item responses.
+\emph{Electronic Journal of Applied Statistical Analysis} \bold{8(3)}, 288–297.
 \doi{10.1285/i20705948v8n3p288}
 }
 \seealso{

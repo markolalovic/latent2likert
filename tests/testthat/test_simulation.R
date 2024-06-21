@@ -5,7 +5,7 @@ testthat::test_that("proportions of generated responses match actual probabiliti
     n_levels <- 5
     n_items <- 3
 
-    mean <- c(0, -1, -1)
+    mean <- c(-1, 0, 1)
     sd <- c(1, 1, 0.5)
     skew <- c(0.5, 0.5, 0.5)
     corr <- 0.5
@@ -13,9 +13,8 @@ testthat::test_that("proportions of generated responses match actual probabiliti
     data <- rlikert(size, n_items, n_levels, mean, sd, skew, corr)
     for (i in seq_len(n_items)) {
         cp <- c("mu"=mean[i], "sd"=sd[i], "skew"=skew[i])
-        prob <- simulate_likert(5, cp)
-        prob <- as.numeric(prob)
-        data_prop <- as.numeric(prop.table(table(data[,i])))
+        prob <- simulate_likert(n_levels, cp)
+        data_prop <- response_prop(data[,i], n_levels)
         testthat::expect_equal(prob, data_prop, tolerance = 0.05)
     }
 })
@@ -34,9 +33,8 @@ testthat::test_that("proportions of generated responses match actual probabiliti
     data <- rlikert(size, n_items, n_levels, mean, sd, skew, corr)
     for (i in seq_len(n_items)) {
         cp <- c("mu"=mean[i], "sd"=sd[i], "skew"=skew[i])
-        prob <- simulate_likert(5, cp)
-        prob <- as.numeric(prob)        
-        data_prop <- as.numeric(prop.table(table(data[,i])))
+        prob <- simulate_likert(n_levels, cp)
+        data_prop <- response_prop(data[,i], n_levels)
         testthat::expect_equal(prob, data_prop, tolerance = 0.05)
     }
 })
