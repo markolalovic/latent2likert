@@ -1,7 +1,5 @@
 ---
 title: "Using latent2likert"
-author: "Marko Lalovic"
-date: "Last Updated: `r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Using latent2likert}
@@ -17,8 +15,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-# Using latent2likert
 
 ## Introduction
 In social sciences, variables of interest are often conceptualized as latent variables — hidden continuous variables measured through Likert scale questions, typically categorized as Strongly disagree, Disagree, Neutral, Agree, and Strongly agree. Researchers frequently aim to uncover these latent variables using various statistical techniques. Accurate modeling of survey data is essential for comparative analysis through simulation. The **latent2likert** package addresses this need by providing an effective algorithm to simulate Likert response variables from hypothetical latent variables. This vignette provides two practical workflow examples demonstrating the use of the **latent2likert** package.

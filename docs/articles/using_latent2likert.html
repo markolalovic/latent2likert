@@ -79,10 +79,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Using latent2likert</h1>
-                        <h4 data-toc-skip class="author">Marko
-Lalovic</h4>
             
-            <h4 data-toc-skip class="date">Last Updated: 2024-06-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/markolalovic/latent2likert/blob/HEAD/vignettes/using_latent2likert.Rmd" class="external-link"><code>vignettes/using_latent2likert.Rmd</code></a></small>
       <div class="d-none name"><code>using_latent2likert.Rmd</code></div>
@@ -91,11 +88,8 @@ Lalovic</h4>
     
     
 <div class="section level2">
-<h2 id="using-latent2likert">Using latent2likert<a class="anchor" aria-label="anchor" href="#using-latent2likert"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<div class="section level3">
-<h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h3>
 <p>In social sciences, variables of interest are often conceptualized as
 latent variables — hidden continuous variables measured through Likert
 scale questions, typically categorized as Strongly disagree, Disagree,
@@ -108,9 +102,9 @@ response variables from hypothetical latent variables. This vignette
 provides two practical workflow examples demonstrating the use of the
 <strong>latent2likert</strong> package.</p>
 </div>
-<div class="section level3">
-<h3 id="simulating-survey-data">Simulating Survey Data<a class="anchor" aria-label="anchor" href="#simulating-survey-data"></a>
-</h3>
+<div class="section level2">
+<h2 id="simulating-survey-data">Simulating Survey Data<a class="anchor" aria-label="anchor" href="#simulating-survey-data"></a>
+</h2>
 <p>The following hypothetical survey simulation is loosely based on an
 actual comparative study on teaching and learning R in a pair of
 introductory statistics labs <span class="citation">(<a href="#ref-mcnamara2024teaching">McNamara 2024</a>)</span>.</p>
@@ -168,9 +162,9 @@ by default):</p>
 <p>The results can then be visualized using a grouped bar chart:</p>
 <figure><img src="../reference/figures/courses-grouped-min.png" width="100%" alt="Grouped bar chart"></figure>
 </div>
-<div class="section level3">
-<h3 id="pre-and-post-comparison">Pre and Post Comparison<a class="anchor" aria-label="anchor" href="#pre-and-post-comparison"></a>
-</h3>
+<div class="section level2">
+<h2 id="pre-and-post-comparison">Pre and Post Comparison<a class="anchor" aria-label="anchor" href="#pre-and-post-comparison"></a>
+</h2>
 <p>Now suppose that the survey also asked the participants to rate their
 skills on a 5-point Likert scale, ranging from 1 (very poor) to 5 (very
 good) in:</p>
@@ -238,9 +232,9 @@ participants in Course B.</li>
 <p>And visualize the results with a stacked bar chart:</p>
 <figure><img src="../reference/figures/courses-stacked-min.png" width="100%" alt="Stacked bar chart"></figure>
 </div>
-<div class="section level3">
-<h3 id="recreating-scale-scores">Recreating Scale Scores<a class="anchor" aria-label="anchor" href="#recreating-scale-scores"></a>
-</h3>
+<div class="section level2">
+<h2 id="recreating-scale-scores">Recreating Scale Scores<a class="anchor" aria-label="anchor" href="#recreating-scale-scores"></a>
+</h2>
 <p>We will use part of the <a href="https://search.r-project.org/CRAN/refmans/psych/html/bfi.html" class="external-link">bfi</a>
 data set from <span class="citation">(<a href="#ref-psych">Revelle
 2024</a>)</span>. Specifically, we’ll focus on the first 5 items
@@ -317,9 +311,9 @@ taking the average of these 5 items:</p>
 <p>The results can be visualized with a grouped boxplot:</p>
 <figure><img src="../reference/figures/scales-min.png" width="100%" alt="Scales"></figure>
 </div>
-<div class="section level3">
-<h3 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h3>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-mcnamara2024teaching" class="csl-entry">
 McNamara, Amelia. 2024. <span>“Teaching Modeling in Introductory
@@ -329,7 +323,6 @@ Statistics: A Comparison of Formula and Tidyverse Syntaxes.”</span> <a href="h
 Revelle, William. 2024. <span>“Psych: Procedures for Psychological,
 Psychometric, and Personality Research.”</span> Evanston, Illinois:
 Northwestern University. <a href="https://CRAN.R-project.org/package=psych" class="external-link">https://CRAN.R-project.org/package=psych</a>.
-</div>
 </div>
 </div>
 </div>
