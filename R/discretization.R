@@ -18,14 +18,15 @@
 #' @examples
 #' discretize_density(density_fn = stats::dnorm, n_levels = 5)
 #' discretize_density(density_fn = function(x) {
-#'    2 * stats::dnorm(x) * stats::pnorm(0.5 * x)}, n_levels = 4)
-#' @details 
-#' The function addresses the problem of transforming a continuous random 
-#' variable \eqn{X} into a discrete random variable \eqn{Y} with minimal 
+#'   2 * stats::dnorm(x) * stats::pnorm(0.5 * x)
+#' }, n_levels = 4)
+#' @details
+#' The function addresses the problem of transforming a continuous random
+#' variable \eqn{X} into a discrete random variable \eqn{Y} with minimal
 #' distortion. Distortion is measured as mean-squared error (MSE):
 #' \deqn{
-#'   \text{E}\left[ (X - Y)^2 \right] = 
-#'   \sum_{k=1}^{K} \int_{x_{k-1}}^{x_{k}} f_{X}(x) 
+#'   \text{E}\left[ (X - Y)^2 \right] =
+#'   \sum_{k=1}^{K} \int_{x_{k-1}}^{x_{k}} f_{X}(x)
 #'   \left( x - r_{k} \right)^2 \, dx
 #' }
 #' where:
@@ -38,41 +39,41 @@
 #' }
 #' This problem is solved using the following iterative procedure:
 #' \describe{
-#'   \item{\eqn{1.}}{Start with an arbitrary initial set of representation 
+#'   \item{\eqn{1.}}{Start with an arbitrary initial set of representation
 #' points: \eqn{r_{1} < r_{2} < \dots < r_{K}}.}
-#'   \item{\eqn{2.}}{Repeat the following steps until the improvement in MSE 
+#'   \item{\eqn{2.}}{Repeat the following steps until the improvement in MSE
 #' falls below given \eqn{\varepsilon}.}
 #'    \item{\eqn{3.}}{Calculate endpoints as \eqn{x_{k} = (r_{k+1} + r_{k})/2}
-#' for each \eqn{k = 1, \dots, K-1} and set \eqn{x_{0}} and \eqn{x_{K}} to 
+#' for each \eqn{k = 1, \dots, K-1} and set \eqn{x_{0}} and \eqn{x_{K}} to
 #' \eqn{-\infty} and \eqn{\infty}, respectively.}
-#'    \item{\eqn{4.}}{Update representation points by setting \eqn{r_{k}} 
+#'    \item{\eqn{4.}}{Update representation points by setting \eqn{r_{k}}
 #' equal to the conditional mean of \eqn{X} given \eqn{X \in (x_{k-1}, x_{k})}
 #' for each \eqn{k = 1, \dots, K}.}
 #' }
-#' 
+#'
 #' With each execution of step \eqn{(3)} and step \eqn{(4)}, the MSE decreases
-#'  or remains the same. As MSE is nonnegative, it approaches a limit. 
-#' The algorithm terminates when the improvement in MSE is less than a given 
-#' \eqn{\varepsilon > 0}, ensuring convergence after a finite number 
+#'  or remains the same. As MSE is nonnegative, it approaches a limit.
+#' The algorithm terminates when the improvement in MSE is less than a given
+#' \eqn{\varepsilon > 0}, ensuring convergence after a finite number
 #' of iterations.
-#'   
-#' This procedure is known as Lloyd-Max's algorithm, initially used for scalar 
-#' quantization and closely related to the k-means algorithm. Local convergence 
-#' has been proven for log-concave density functions by Kieffer. Many common 
-#' probability distributions are log-concave including the normal and skew 
+#'
+#' This procedure is known as Lloyd-Max's algorithm, initially used for scalar
+#' quantization and closely related to the k-means algorithm. Local convergence
+#' has been proven for log-concave density functions by Kieffer. Many common
+#' probability distributions are log-concave including the normal and skew
 #' normal distribution, as shown by Azzalini.
 #'
 #' @references
-#' Azzalini, A. (1985). 
-#' A class of distributions which includes the normal ones. 
+#' Azzalini, A. (1985).
+#' A class of distributions which includes the normal ones.
 #' \emph{Scandinavian Journal of Statistics} \bold{12(2)}, 171–178.
-#' 
+#'
 #' Kieffer, J. (1983).
-#' Uniqueness of locally optimal quantizer for log-concave density and convex 
+#' Uniqueness of locally optimal quantizer for log-concave density and convex
 #' error function.
 #' \emph{IEEE Transactions on Information Theory} \bold{29}, 42–47.
-#' 
-#' Lloyd, S. (1982). 
+#'
+#' Lloyd, S. (1982).
 #' Least squares quantization in PCM.
 #' \emph{IEEE Transactions on Information Theory} \bold{28 (2)}, 129–137.
 #'
@@ -134,7 +135,7 @@ update_epresentatives <- function(density_fn, midp) {
 
 #' Compute Distortion
 #'
-#' Computes the distortion (mean-squared error) given the midpoints and 
+#' Computes the distortion (mean-squared error) given the midpoints and
 #' representation points.
 #'
 #' @param density_fn probability density function.
@@ -148,7 +149,8 @@ compute_distortion <- function(density_fn, midp, repr) {
   endp <- c(-Inf, midp, Inf)
   mse <- vapply(seq_len(n_levels), function(k) {
     stats::integrate(function(x) {
-      density_fn(x) * (x - repr[k])^2}, endp[k], endp[k + 1])[[1]]
+      density_fn(x) * (x - repr[k])^2
+    }, endp[k], endp[k + 1])[[1]]
   }, numeric(1))
   return(sum(mse))
 }
@@ -166,7 +168,8 @@ calc_probs <- function(density_fn, endp) {
   n_levels <- length(endp) - 1
   prob <- vapply(seq_len(n_levels), function(k) {
     stats::integrate(function(x) {
-      density_fn(x)}, endp[k], endp[k + 1])[[1]]
+      density_fn(x)
+    }, endp[k], endp[k + 1])[[1]]
   }, numeric(1))
   return(prob)
 }

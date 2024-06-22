@@ -17,12 +17,12 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/markolalovic/latent2likert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/latent2likert/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/markolalovic/latent2likert/branch/main/graph/badge.svg?token=HZTG6RUB2J)](https://codecov.io/gh/markolalovic/latent2likert)
+[![codecov](https://codecov.io/gh/markolalovic/latent2likert/branch/main/graph/badge.svg?token=HZTG6RUB2J)](https://app.codecov.io/gh/markolalovic/latent2likert)
 <!-- badges: end -->
 
 ## Overview
 
-The R package **latent2likert** is designed to effectively simulate the discretization process inherent to Likert scales while minimizing distortion. It converts continuous latent variables into ordinal categories to generate Likert scale item responses. This is particularly useful for accurately modeling and analyzing survey data that use Likert scales, especially when applying statistical techniques that require metric data.
+The **latent2likert** package is designed to effectively simulate the discretization process inherent to Likert scales while minimizing distortion. It converts continuous latent variables into ordinal categories to generate Likert scale item responses. This is particularly useful for accurately modeling and analyzing survey data that use Likert scales, especially when applying statistical techniques that require metric data.
 
 
 ## Installation
@@ -35,8 +35,7 @@ devtools::install_github("markolalovic/latent2likert")
 
 ## Dependencies
 
-To keep the package lightweight, **latent2likert** only imports [mvtnorm](https://cran.r-project.org/package=mvtnorm), along with the standard R packages stats and graphics, which are typically included in R releases. An additional suggested dependency is the [sn package](https://cran.r-project.org/package=sn), which is required only for generating random responses from correlated Likert items based on a multivariate skew normal distribution. The package prompts the user to install this dependency during interactive sessions if needed.
-
+To keep the package lightweight, **latent2likert** only imports [mvtnorm](https://cran.r-project.org/package=mvtnorm), along with the standard R packages stats and graphics, which are typically included in R releases. An additional suggested dependency is the package [sn](https://cran.r-project.org/package=sn), which is required only for generating random responses from correlated Likert items based on a multivariate skew normal distribution. The package prompts the user to install this dependency during interactive sessions if needed.
 
 ## Features
 
@@ -133,6 +132,6 @@ Note that, depending on the value of the skewness parameter, the normal latent d
 
 To simulate Likert item responses, the `draw_likert` function from the [fabricatr](https://CRAN.R-project.org/package=fabricatr) package can be used to recode a latent variable into a Likert response variable by specifying intervals that subdivide the continuous range. The **latent2likert** package, however, offers an advantage by automatically calculating optimal intervals that minimize distortion between the latent variable and the Likert response variable for both normal and skew normal latent distributions, eliminating the need to manually specify the intervals.
 
-There are also several alternative approaches that do not rely on latent distributions. One method involves directly defining a discrete probability distribution and sampling from it using the sample function in R or the `likert` function from the [wakefield](https://CRAN.R-project.org/package=wakefield) package. Another approach is to specify the means, standard deviations, and correlations among Likert response variables. For this, you can use [LikertMakeR](https://CRAN.R-project.org/package=LikertMakeR) or [SimCorMultRes](https://CRAN.R-project.org/package=SimCorMultRes) to generate correlated multinomial responses.
+There are also several alternative approaches that do not rely on latent distributions. One method involves directly defining a discrete probability distribution and sampling from it using the `sample` function in R or the `likert` function from the [wakefield](https://CRAN.R-project.org/package=wakefield) package. Another approach is to specify the means, standard deviations, and correlations among Likert response variables. For this, you can use [LikertMakeR](https://CRAN.R-project.org/package=LikertMakeR) or [SimCorMultRes](https://CRAN.R-project.org/package=SimCorMultRes) to generate correlated multinomial responses.
 
 Additionally, you can define a data generating process. For those familiar with item response theory, the [mirt](https://CRAN.R-project.org/package=mirt) package allows users to specify discrimination and difficulty parameters for each response category.

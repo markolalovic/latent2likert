@@ -23,7 +23,7 @@
 #'   \item{A5}{Make people feel at ease.}
 #'   \item{gender}{Gender of the respondent.}
 #' }
-#' @source {International Personality Item Pool (ipip.ori.org)}
+#' @source {International Personality Item Pool ({https://ipip.ori.org})}
 #' @source {https://search.r-project.org/CRAN/refmans/psychTools/html/bfi.html}
 #' @references
 #' Revelle, W. (2024).

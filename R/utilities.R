@@ -1,40 +1,84 @@
 #' Plot Transformation
 #'
-#' Plots the densities of latent variables in the first row 
-#' and transformed discrete probability distributions below.
+#' Plots the densities of latent variables and the corresponding
+#' transformed discrete probability distributions.
 #'
 #' @param n_items number of Likert scale items (questions).
-#' @param n_levels number of response categories for each Likert item. Integer or vector of integers.
-#' @param mean means of the latent variables. Numeric or vector of numerics. Defaults to 0.
-#' @param sd standard deviations of the latent variables. Numeric or vector of numerics. Defaults to 1.
-#' @param skew marginal skewness of the latent variables. Numeric or vector of numerics. Defaults to 0.
-#' @return a plot showing the densities of latent variables and the corresponding discrete probability distributions.
+#' @param n_levels number of response categories for each Likert item.
+#'  Integer or vector of integers.
+#' @param mean means of the latent variables.
+#'  Numeric or vector of numerics. Defaults to 0.
+#' @param sd standard deviations of the latent variables.
+#'  Numeric or vector of numerics. Defaults to 1.
+#' @param skew marginal skewness of the latent variables.
+#'  Numeric or vector of numerics. Defaults to 0.
+#' @return NULL. The function produces a plot.
 #' @examples
 #' plot_likert_transform(n_items = 3, n_levels = c(3, 4, 5))
-#' plot_likert_transform(n_items = 3, n_levels = 5, mean=c(0, 1, 2))
-#' plot_likert_transform(n_items = 3, n_levels = 5, sd=c(0.8, 1, 1.2))
-#' plot_likert_transform(n_items = 3, n_levels = 5, skew=c(-0.5, 0, 0.5))
+#' plot_likert_transform(n_items = 3, n_levels = 5, mean = c(0, 1, 2))
+#' plot_likert_transform(n_items = 3, n_levels = 5, sd = c(0.8, 1, 1.2))
+#' plot_likert_transform(n_items = 3, n_levels = 5, skew = c(-0.5, 0, 0.5))
 #' @export
-plot_likert_transform <- function(n_items, n_levels, mean=0, sd=1, skew=0) {
+plot_likert_transform <- function(
+    n_items, n_levels,
+    mean = 0, sd = 1, skew = 0) {
   n_levels <- rep(n_levels, length.out = n_items)
   mean <- rep(mean, length.out = n_items)
   sd <- rep(sd, length.out = n_items)
   skew <- rep(skew, length.out = n_items)
-  graphics::layout(matrix(seq_len(n_items * 2), nrow=2, ncol=n_items))
+  graphics::layout(matrix(seq_len(n_items * 2), nrow = 2, ncol = n_items))
   x <- seq(-3, 3, length = 1000)
   for (i in seq_len(n_items)) {
     # Draw the densities of latent variables
     cp <- c("mu" = mean[i], "sd" = sd[i], "skew" = skew[i])
     dp <- convert_params(cp)
     y <- density_sn(x, dp[["xi"]], dp[["omega"]], dp[["alpha"]])
-    graphics::plot(x, y, type="l", lwd = 2, xlab = "", ylab = "", main="")
+    graphics::plot(x, y, type = "l", lwd = 2, xlab = "", ylab = "", main = "")
     graphics::title(paste("X", i, sep = ""))
-    
+
     # Draw the corresponding discrete probability distributions
     prob <- simulate_likert(n_levels[i], cp)
     graphics::barplot(prob)
     graphics::title(paste("Y", i, sep = ""))
   }
+  invisible(NULL)
+}
+
+#' Plot Contour
+#'
+#' Plots the contour of the objective function values over a grid
+#' of parameter values. It visualizes the norm of the function \code{fn}
+#' for different values of \code{u} (mean) and \code{v} (1/standard deviation)
+#' and overlays the trace of parameter updates during the estimation process.
+#'
+#' @param fn objective function to be minimized.
+#' @param endp endpoints of intervals that partition the continuous domain.
+#' @param prob discrete probability distribution.
+#' @param cdf_X cumulative distribution function of the latent variable.
+#' @param trace matrix of parameter updates.
+#' @return NULL. The function produces a plot.
+#' @noRd
+plot_contour <- function(fn, endp, prob, cdf_X, trace) {
+  xlen <- 50
+  ylen <- 50
+  xgrid <- seq(-3, 3, length.out = xlen) # Range for mean (mu)
+  ygrid <- seq(0.1, 3, length.out = ylen) # Range for 1/sd
+  zvals <- matrix(NA, ncol = xlen, nrow = ylen)
+  for (i in seq_len(xlen)) {
+    for (j in seq_len(ylen)) {
+      zvals[i, j] <- norm(fn(
+        matrix(c(xgrid[i], ygrid[j])),
+        endp, prob, cdf_X
+      ), "2")
+    }
+  }
+  graphics::contour(
+    x = xgrid, y = ygrid, z = zvals,
+    col = "gray42", xlab = "u = mu", ylab = "v = 1/sd"
+  )
+  graphics::grid(col = "lightgray", lty = "dotted")
+  graphics::points(trace[1, ], trace[2, ], pch = 20, col = "blue")
+  invisible(NULL)
 }
 
 #' Calculate Response Proportions
@@ -65,8 +109,8 @@ response_prop <- function(data, n_levels) {
 
 #' Pad Missing Levels
 #'
-#' Helper function that takes a vector of proportions or probabilities 
-#' across possible responses and pads the missing levels with zeros up 
+#' Helper function that takes a vector of proportions or probabilities
+#' across possible responses and pads the missing levels with zeros up
 #' to the specified number of response categories.
 #'
 #' @param pr proportions or probabilities across possible responses.
@@ -92,7 +136,7 @@ pad_levels <- function(pr, n_levels) {
 #' @noRd
 validate_skewness <- function(skew) {
   if (skew > 0.95 || skew < -0.95) {
-    stop("The value of skewness must be in the range -0.95 to 0.95: 
+    stop("The value of skewness must be in the range -0.95 to 0.95:
          `skew >= -0.95` and `skew <= 0.95`.")
   }
 }
@@ -105,9 +149,11 @@ validate_skewness <- function(skew) {
 #' @noRd
 check_package <- function(pkg) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
-    stop(sprintf('Package "%s" must be installed. 
-         Please run:\n\n\tinstall.packages("%s")\n\n', 
-      pkg, pkg), call. = FALSE)
+    stop(sprintf(
+      'Package "%s" must be installed.
+         Please run:\n\n\tinstall.packages("%s")\n\n',
+      pkg, pkg
+    ), call. = FALSE)
   }
 }
 
@@ -129,7 +175,7 @@ density_sn <- function(x, xi = 0, omega = 1, alpha = 0) {
 
 #' Convert Centered Parameters
 #'
-#' Converts centered parameters to direct parameters used in the 
+#' Converts centered parameters to direct parameters used in the
 #' skew normal density.
 #'
 #' @param cp numeric vector. Centered parameters c(mu, sd, skew).

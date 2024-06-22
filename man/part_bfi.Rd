@@ -17,7 +17,7 @@ the following 6 variables:}
 }
 }
 \source{
-{International Personality Item Pool (ipip.ori.org)}
+{International Personality Item Pool ({https://ipip.ori.org})}
 
 {https://search.r-project.org/CRAN/refmans/psychTools/html/bfi.html}
 }

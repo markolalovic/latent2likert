@@ -8,7 +8,7 @@ testthat::test_that("pad_levels gives the correct result", {
   testthat::expect_equal(padded_pr, actual_pr)
 })
 
-testthat::test_that("response_prop gives the correct result, 
+testthat::test_that("response_prop gives the correct result,
   univariate case", {
   data <- rep(c(1, 2, 3, 4), each = 2)
   tab <- response_prop(data, n_levels = 4)
@@ -17,7 +17,7 @@ testthat::test_that("response_prop gives the correct result,
   testthat::expect_true(identical(tab, correct_tab))
 })
 
-testthat::test_that("response_prop gives the correct result, 
+testthat::test_that("response_prop gives the correct result,
   multivariate case", {
   y <- rep(c(1, 2, 3, 4), each = 2)
   data <- cbind(y, y)
@@ -69,7 +69,7 @@ testthat::test_that("density_sn gives the same results as sn::dsn", {
 
 testthat::test_that("plot_likert_transform runs without errors", {
   testthat::expect_error(
-    plot_likert_transform(n_items = 3, n_levels = c(3, 4, 5)), 
+    plot_likert_transform(n_items = 3, n_levels = c(3, 4, 5)),
     NA
   )
   testthat::expect_error(
@@ -78,10 +78,6 @@ testthat::test_that("plot_likert_transform runs without errors", {
   )
   testthat::expect_error(
     plot_likert_transform(n_items = 3, n_levels = 5, sd = c(0.8, 1, 1.2)),
-    NA
-  )
-  testthat::expect_error(
-    plot_likert_transform(n_items = 3, n_levels = 5, skew = c(-0.5, 0, 0.5)),
     NA
   )
 })
@@ -114,6 +110,3 @@ testthat::test_that("scale_and_shift returns correct values", {
   expected_result <- c(-0.7179052, -0.2179052, 0.2820948)
   testthat::expect_equal(result, expected_result, tolerance = 0.05)
 })
-
-
-

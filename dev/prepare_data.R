@@ -20,8 +20,5 @@ for (var in vars) {
 }
 str(part_bfi)
 
-# Save it to `./data` directory
-#save(part_bfi, file="./data/part_bfi.rda")
-
-# Save and add `LazyData: true` in DESCRIPTION
+# Save the data set
 usethis::use_data(part_bfi)

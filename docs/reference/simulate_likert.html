@@ -66,13 +66,13 @@ of response categories and the centered parameters of the latent variable.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>n_levels</dt>
-<dd><p>Integer. The number of response categories for the Likert scale item.</p></dd>
+<dd><p>number of response categories for the Likert scale item.</p></dd>
 
 
 <dt>cp</dt>
-<dd><p>Named vector. The centered parameters of the latent variable, including
-mean (<code>mu</code>), standard deviation (<code>sd</code>), and skewness (<code>skew</code>).
-Skewness must be between -0.95 and 0.95.</p></dd>
+<dd><p>centered parameters of the latent variable.
+Named vector including mean (<code>mu</code>), standard deviation (<code>sd</code>),
+and skewness (<code>skew</code>). Skewness must be between -0.95 and 0.95.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -83,10 +83,10 @@ Skewness must be between -0.95 and 0.95.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The simulation process uses the following model proposed by Boari and Nai-Ruscone.
-Let \(X\) be the continuous variable of interest, measured using Likert scale
-questions with \(K\) response categories. The observed discrete variable \(Y\) is
-defined as follows:
+    <p>The simulation process uses the following model detailed by
+Boari and Nai-Ruscone. Let \(X\) be the continuous variable of interest,
+measured using Likert scale questions with \(K\) response categories. The
+observed discrete variable \(Y\) is defined as follows:
 $$
   Y = k, \quad \text{ if } \ \ x_{k - 1} &lt; X \leq x_{k}
   \quad \text{ for } \ \ k = 1, \dots, K
@@ -96,8 +96,8 @@ of \(X\) such that:
 $$
   -\infty = x_{0} &lt; x_{1} &lt; \dots &lt; x_{K - 1} &lt; x_{K} = \infty.
 $$
-The endpoints dictate the transformation of the density \(f_{X}\) of \(X\)
-into a discrete probability distribution:
+The endpoints dictate the transformation of the density
+\(f_{X}\) of \(X\) into a discrete probability distribution:
 $$
   \text{Pr}(Y = k) = \int_{x_{k - 1}}^{x_{k}} f_{X}(x) \, dx
   \quad \text{ for } \ \ k = 1, \dots, K.
@@ -106,13 +106,15 @@ $$</p>
 The function <code>simulate_likert</code> performs the following steps:</p><ul><li><p>Ensures the centered parameters are within the acceptable range.</p></li>
 <li><p>Converts the centered parameters to direct parameters.</p></li>
 <li><p>Defines the density function for the skew normal distribution.</p></li>
-<li><p>Computes the probabilities for each response category using optimal endpoints.</p></li>
+<li><p>Computes the probabilities for each response category
+using optimal endpoints.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Boari, G. and Nai Ruscone, M. (2015).
-A procedure simulating likert scale item responses.
-<em>Electronic journal of applied statistical analysis</em> <b>8(3)</b>, 288–297.
+A procedure simulating Likert scale item responses.
+<em>Electronic Journal of Applied Statistical Analysis</em> <b>8(3)</b>,
+288–297.
 <a href="https://doi.org/10.1285/i20705948v8n3p288" class="external-link">doi:10.1285/i20705948v8n3p288</a></p>
     </div>
     <div class="section level2">

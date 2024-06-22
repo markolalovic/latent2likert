@@ -46,7 +46,7 @@
 #' * Estimates the probabilities \eqn{p_{k}} for each item.
 #' * Computes the estimates of \eqn{\xi} and \eqn{\omega} for each item.
 #' * Combines the estimated parameters for all items into a table.
-#' 
+#'
 #' @seealso \code{\link{discretize_density}} for details on calculating
 #' the endpoints, and \code{\link{part_bfi}} for example of the survey data.
 #' @export
@@ -78,26 +78,26 @@ estimate_params <- function(data, n_levels, skew = 0) {
 }
 
 #' Estimate mean and standard deviation
-#' 
-#' Estimates the mean and standard deviation of a latent variable given the 
+#'
+#' Estimates the mean and standard deviation of a latent variable given the
 #' discrete probabilities of its observed Likert scale responses.
-#' 
+#'
 #' @param prob vector of probabilities for each response category.
 #' @param n_levels number of response categories for the Likert scale item.
 #' @param skew marginal skewness of the latent variable, defaults to 0.
 #' @param eps tolerance for convergence, defaults to 1e-6.
 #' @param maxit maximum number of iterations, defaults to 100.
-#' 
-#' @return A numeric vector with two elements: the estimated mean and 
+#'
+#' @return A numeric vector with two elements: the estimated mean and
 #' standard deviation.
-#' 
+#'
 #' @details
 #' This function uses an iterative algorithm to solve the system of non-linear
-#' equations that describe the relationship between the continuous latent 
+#' equations that describe the relationship between the continuous latent
 #' variable and the observed discrete probability distribution of Likert scale
 #' responses. The algorithm ensures stability by reparameterizing the system
 #' and applying constraints to prevent stepping into invalid regions.
-#' 
+#'
 #' @noRd
 estimate_mean_and_sd <- function(prob, n_levels, skew = 0,
                                  eps = 1e-6, maxit = 100) {
@@ -134,14 +134,14 @@ estimate_mean_and_sd <- function(prob, n_levels, skew = 0,
 
 #' Initialize CDF and PDF Functions
 #'
-#' Initializes the cumulative distribution function (CDF) and probability 
+#' Initializes the cumulative distribution function (CDF) and probability
 #' density function (PDF) based on the skewness parameter.
 #'
 #' @param skew numeric value representing the skewness of the distribution.
-#' 
-#' @return A list containing the CDF and PDF functions appropriate for the 
+#'
+#' @return A list containing the CDF and PDF functions appropriate for the
 #' given skewness.
-#' 
+#'
 #' @noRd
 initialize_distributions <- function(skew) {
   if (abs(skew) > 0) {
@@ -163,15 +163,15 @@ initialize_distributions <- function(skew) {
 #'
 #' @param x numeric vector of current estimates for the location and scaling
 #' parameters.
-#' @param endp numeric vector of endpoints defining the boundaries of the 
+#' @param endp numeric vector of endpoints defining the boundaries of the
 #' response categories.
 #' @param prob numeric vector of probabilities for each response category.
 #' @param cdf_X function representing the cumulative distribution function
 #' (CDF) of the latent variable.
-#' 
+#'
 #' @return A matrix of differences between the CDF evaluated at the endpoints
 #' and the observed probabilities.
-#' 
+#'
 #' @noRd
 fn <- function(x, endp, prob, cdf_X) {
   u <- x[1]
@@ -184,16 +184,16 @@ fn <- function(x, endp, prob, cdf_X) {
 #'
 #' Computes the Jacobian matrix used in the iterative root-finding process.
 #'
-#' @param x numeric vector of current estimates for the location and scaling 
+#' @param x numeric vector of current estimates for the location and scaling
 #' parameters.
-#' @param endp numeric vector of endpoints defining the boundaries of the 
+#' @param endp numeric vector of endpoints defining the boundaries of the
 #' response categories.
 #' @param pdf_X function representing the probability density function (PDF)
 #' of the latent variable.
-#' 
+#'
 #' @return A matrix representing the Jacobian of the system of equations with
 #' respect to the parameters.
-#' 
+#'
 #' @noRd
 jac <- function(x, endp, pdf_X) {
   u <- x[1]
@@ -208,39 +208,4 @@ jac <- function(x, endp, pdf_X) {
   - utils::head(dv, -1), -utils::tail(dv, 1))
 
   return(cbind(du, dv))
-}
-
-#' Plot Contour
-#'
-#' Plots the contour of the objective function values over a grid
-#' of parameter values. It visualizes the norm of the function \code{fn}
-#' for different values of \code{u} (mean) and \code{v} (1/standard deviation)
-#' and overlays the trace of parameter updates during the optimization process.
-#'
-#' @param fn objective function to be minimized.
-#' @param endp endpoints of intervals that partition the continuous domain.
-#' @param prob discrete probability distribution.
-#' @param cdf_X cumulative distribution function of the latent variable.
-#' @param trace matrix of parameter updates.
-#' @noRd
-plot_contour <- function(fn, endp, prob, cdf_X, trace) {
-  xlen <- 50
-  ylen <- 50
-  xgrid <- seq(-3, 3, length.out = xlen) # Range for mean (mu)
-  ygrid <- seq(0.1, 3, length.out = ylen) # Range for 1/sd
-  zvals <- matrix(NA, ncol = xlen, nrow = ylen)
-  for (i in seq_len(xlen)) {
-    for (j in seq_len(ylen)) {
-      zvals[i, j] <- norm(fn(
-        matrix(c(xgrid[i], ygrid[j])),
-        endp, prob, cdf_X
-      ), "2")
-    }
-  }
-  graphics::contour(
-    x = xgrid, y = ygrid, z = zvals,
-    col = "gray42", xlab = "u = mu", ylab = "v = 1/sd"
-  )
-  graphics::grid(col = "lightgray", lty = "dotted")
-  graphics::points(trace[1, ], trace[2, ], pch = 20, col = "blue")
 }

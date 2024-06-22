@@ -32,8 +32,8 @@ The function addresses the problem of transforming a continuous random
 variable \eqn{X} into a discrete random variable \eqn{Y} with minimal
 distortion. Distortion is measured as mean-squared error (MSE):
 \deqn{
-  \text{E}\left[ (X - Y)^2 \right] = 
-  \sum_{k=1}^{K} \int_{x_{k-1}}^{x_{k}} f_{X}(x) 
+  \text{E}\left[ (X - Y)^2 \right] =
+  \sum_{k=1}^{K} \int_{x_{k-1}}^{x_{k}} f_{X}(x)
   \left( x - r_{k} \right)^2 \, dx
 }
 where:
@@ -73,7 +73,8 @@ normal distribution, as shown by Azzalini.
 \examples{
 discretize_density(density_fn = stats::dnorm, n_levels = 5)
 discretize_density(density_fn = function(x) {
-   2 * stats::dnorm(x) * stats::pnorm(0.5 * x)}, n_levels = 4)
+  2 * stats::dnorm(x) * stats::pnorm(0.5 * x)
+}, n_levels = 4)
 }
 \references{
 Azzalini, A. (1985).

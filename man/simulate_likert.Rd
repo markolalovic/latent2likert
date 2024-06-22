@@ -7,11 +7,11 @@
 simulate_likert(n_levels, cp)
 }
 \arguments{
-\item{n_levels}{Integer. The number of response categories for the Likert scale item.}
+\item{n_levels}{number of response categories for the Likert scale item.}
 
-\item{cp}{Named vector. The centered parameters of the latent variable, including
-mean (\code{mu}), standard deviation (\code{sd}), and skewness (\code{skew}).
-Skewness must be between -0.95 and 0.95.}
+\item{cp}{centered parameters of the latent variable.
+Named vector including mean (\code{mu}), standard deviation (\code{sd}),
+and skewness (\code{skew}). Skewness must be between -0.95 and 0.95.}
 }
 \value{
 A named vector of probabilities for each response category.
@@ -21,10 +21,10 @@ Simulates Likert scale item responses based on a specified number
 of response categories and the centered parameters of the latent variable.
 }
 \details{
-The simulation process uses the following model detailed by Boari and Nai-Ruscone.
-Let \eqn{X} be the continuous variable of interest, measured using Likert scale
-questions with \eqn{K} response categories. The observed discrete variable \eqn{Y} is
-defined as follows:
+The simulation process uses the following model detailed by
+Boari and Nai-Ruscone. Let \eqn{X} be the continuous variable of interest,
+measured using Likert scale questions with \eqn{K} response categories. The
+observed discrete variable \eqn{Y} is defined as follows:
 \deqn{
   Y = k, \quad \text{ if } \ \ x_{k - 1} < X \leq x_{k}
   \quad \text{ for } \ \ k = 1, \dots, K
@@ -34,8 +34,8 @@ of \eqn{X} such that:
 \deqn{
   -\infty = x_{0} < x_{1} < \dots < x_{K - 1} < x_{K} = \infty.
 }
-The endpoints dictate the transformation of the density \eqn{f_{X}} of \eqn{X}
-into a discrete probability distribution:
+The endpoints dictate the transformation of the density
+\eqn{f_{X}} of \eqn{X} into a discrete probability distribution:
 \deqn{
   \text{Pr}(Y = k) = \int_{x_{k - 1}}^{x_{k}} f_{X}(x) \, dx
   \quad \text{ for } \ \ k = 1, \dots, K.
@@ -47,7 +47,8 @@ The function \code{simulate_likert} performs the following steps:
 \item Ensures the centered parameters are within the acceptable range.
 \item Converts the centered parameters to direct parameters.
 \item Defines the density function for the skew normal distribution.
-\item Computes the probabilities for each response category using optimal endpoints.
+\item Computes the probabilities for each response category
+using optimal endpoints.
 }
 }
 \examples{
@@ -59,7 +60,8 @@ simulate_likert(n_levels = 7, cp = cp2)
 \references{
 Boari, G. and Nai Ruscone, M. (2015).
 A procedure simulating Likert scale item responses.
-\emph{Electronic Journal of Applied Statistical Analysis} \bold{8(3)}, 288–297.
+\emph{Electronic Journal of Applied Statistical Analysis} \bold{8(3)},
+288–297.
 \doi{10.1285/i20705948v8n3p288}
 }
 \seealso{
