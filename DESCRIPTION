@@ -18,15 +18,13 @@ Depends:
 Imports: 
     graphics,
     mvtnorm,
+    sn,
     stats,
     utils
 Suggests: 
-    sn,
-    devtools,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0),
-    covr
+    testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
