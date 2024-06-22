@@ -64,7 +64,7 @@ scale, use:
 ``` r
 library(latent2likert)
 rlikert(size = 10, n_items = 1, n_levels = 5)
-#>  [1] 2 5 2 3 3 1 2 2 1 5
+#>  [1] 1 2 5 5 2 3 4 2 4 4
 ```
 
 To generate responses to multiple items with specified parameters:
@@ -77,16 +77,16 @@ rlikert(size = 10,
         sd   = c(0.8, 1, 1),
         corr = 0.5)
 #>       Y1 Y2 Y3
-#>  [1,]  4  3  5
-#>  [2,]  3  2  3
-#>  [3,]  3  3  3
-#>  [4,]  2  3  4
-#>  [5,]  2  3  4
-#>  [6,]  3  2  4
-#>  [7,]  3  1  3
-#>  [8,]  2  1  3
-#>  [9,]  2  1  6
-#> [10,]  3  1  3
+#>  [1,]  3  4  5
+#>  [2,]  3  2  4
+#>  [3,]  2  1  2
+#>  [4,]  4  3  6
+#>  [5,]  3  3  4
+#>  [6,]  4  3  6
+#>  [7,]  2  1  1
+#>  [8,]  3  4  4
+#>  [9,]  2  3  4
+#> [10,]  2  1  4
 ```
 
 You can also provide a correlation matrix:
@@ -110,9 +110,9 @@ these estimates are typically lower:
 ``` r
 cor(data)
 #>            Y1         Y2         Y3
-#> Y1  1.0000000 -0.5277858 -0.3678057
-#> Y2 -0.5277858  1.0000000  0.3983187
-#> Y3 -0.3678057  0.3983187  1.0000000
+#> Y1  1.0000000 -0.5452650 -0.3539568
+#> Y2 -0.5452650  1.0000000  0.3084354
+#> Y3 -0.3539568  0.3084354  1.0000000
 ```
 
 ## Using `estimate_params`
@@ -123,8 +123,8 @@ Given the data, you can estimate the values of latent parameters using:
 estimate_params(data, n_levels = c(4, 5, 6), skew = 0)
 #>          items
 #> estimates          Y1          Y2          Y3
-#>      mean  0.08270757 -1.10356623  0.01029328
-#>      sd    0.79986937  1.06032921  1.01115089
+#>      mean  0.04691194 -1.01865288  0.01471470
+#>      sd    0.77732152  0.96811355  1.01830061
 ```
 
 ## Transformation
