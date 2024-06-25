@@ -7,6 +7,8 @@
 
 [![R-CMD-check](https://github.com/markolalovic/latent2likert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/latent2likert/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/markolalovic/latent2likert/branch/main/graph/badge.svg?token=HZTG6RUB2J)](https://app.codecov.io/gh/markolalovic/latent2likert)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/latent2likert)](https://CRAN.R-project.org/package=latent2likert)
 <!-- badges: end -->
 
 ## Overview
@@ -21,11 +23,10 @@ metric data.
 
 ## Installation
 
-You can install the development version from GitHub with:
+You can install the latest version from CRAN:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("markolalovic/latent2likert")
+install.packages("latent2likert")
 ```
 
 ## Dependencies
@@ -64,7 +65,7 @@ scale, use:
 ``` r
 library(latent2likert)
 rlikert(size = 10, n_items = 1, n_levels = 5)
-#>  [1] 1 2 5 5 2 3 4 2 4 4
+#>  [1] 4 2 3 2 3 5 2 2 3 2
 ```
 
 To generate responses to multiple items with specified parameters:
@@ -77,16 +78,16 @@ rlikert(size = 10,
         sd   = c(0.8, 1, 1),
         corr = 0.5)
 #>       Y1 Y2 Y3
-#>  [1,]  3  4  5
-#>  [2,]  3  2  4
-#>  [3,]  2  1  2
-#>  [4,]  4  3  6
-#>  [5,]  3  3  4
-#>  [6,]  4  3  6
-#>  [7,]  2  1  1
-#>  [8,]  3  4  4
-#>  [9,]  2  3  4
-#> [10,]  2  1  4
+#>  [1,]  2  1  3
+#>  [2,]  4  4  6
+#>  [3,]  3  3  4
+#>  [4,]  4  3  5
+#>  [5,]  2  1  6
+#>  [6,]  3  2  3
+#>  [7,]  3  1  4
+#>  [8,]  3  2  2
+#>  [9,]  2  2  2
+#> [10,]  2  1  2
 ```
 
 You can also provide a correlation matrix:
@@ -110,9 +111,9 @@ these estimates are typically lower:
 ``` r
 cor(data)
 #>            Y1         Y2         Y3
-#> Y1  1.0000000 -0.5452650 -0.3539568
-#> Y2 -0.5452650  1.0000000  0.3084354
-#> Y3 -0.3539568  0.3084354  1.0000000
+#> Y1  1.0000000 -0.5485779 -0.3830635
+#> Y2 -0.5485779  1.0000000  0.3787044
+#> Y3 -0.3830635  0.3787044  1.0000000
 ```
 
 ## Using `estimate_params`
@@ -122,9 +123,9 @@ Given the data, you can estimate the values of latent parameters using:
 ``` r
 estimate_params(data, n_levels = c(4, 5, 6), skew = 0)
 #>          items
-#> estimates          Y1          Y2          Y3
-#>      mean  0.04691194 -1.01865288  0.01471470
-#>      sd    0.77732152  0.96811355  1.01830061
+#> estimates           Y1           Y2           Y3
+#>      mean  0.002700821 -0.949328033  0.011770264
+#>      sd    0.790723208  1.017877712  0.995988467
 ```
 
 ## Transformation
