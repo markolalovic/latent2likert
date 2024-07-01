@@ -54,6 +54,8 @@ To keep the package lightweight, **latent2likert** only imports [mvtnorm](https:
 
 ## Using `rlikert`
 
+You can use the `rlikert` function to simulate Likert item responses.
+
 To generate a sample of random responses to one item on a 5-point Likert scale, use:
 
 ```{r}
@@ -131,7 +133,7 @@ Note that, depending on the value of the skewness parameter, the normal latent d
 
 ## Related R Packages
 
-To simulate Likert item responses, the `draw_likert` function from the [fabricatr](https://CRAN.R-project.org/package=fabricatr) package can be used to recode a latent variable into a Likert response variable by specifying intervals that subdivide the continuous range. The **latent2likert** package, however, offers an advantage by automatically calculating optimal intervals that minimize distortion between the latent variable and the Likert response variable for both normal and skew normal latent distributions, eliminating the need to manually specify the intervals.
+Alternatively, you can simulate Likert item responses using the `draw_likert` function from the [fabricatr](https://CRAN.R-project.org/package=fabricatr) package. This function recodes a latent variable into a Likert response variable by specifying intervals that subdivide the continuous range. The **latent2likert** package, however, offers an advantage by automatically calculating optimal intervals that minimize distortion between the latent variable and the Likert response variable for both normal and skew normal latent distributions, eliminating the need to manually specify the intervals.
 
 There are also several alternative approaches that do not rely on latent distributions. One method involves directly defining a discrete probability distribution and sampling from it using the `sample` function in R or the `likert` function from the [wakefield](https://CRAN.R-project.org/package=wakefield) package. Another approach is to specify the means, standard deviations, and correlations among Likert response variables. For this, you can use [LikertMakeR](https://CRAN.R-project.org/package=LikertMakeR) or [SimCorMultRes](https://CRAN.R-project.org/package=SimCorMultRes) to generate correlated multinomial responses.
 
