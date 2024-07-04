@@ -2,15 +2,10 @@
 # -*- coding: utf-8 -*-
 
 ''' 
-After running 
+After running pkgdown::build_site():
 
-pkgdown::build_site()
-
-Script:
-
-- replaces "reference/figures" with "../reference/figures" in vignette
-- adds `/docs/.nojekyll` for githubpages.
-- adds meta description to index.html DONE with pkgdown new version
+* replace "reference/figures" with "../reference/figures" in vignette
+* add `/docs/.nojekyll` for githubpages
 
 '''
 
