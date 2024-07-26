@@ -82,7 +82,7 @@ estimate_params <- function(data, n_levels, skew = 0) {
 #' Estimates the mean and standard deviation of a latent variable given the
 #' discrete probabilities of its observed Likert scale responses.
 #'
-#' @param prob vector of probabilities for each response category.
+#' @param prob named vector of probabilities for each response category.
 #' @param n_levels number of response categories for the Likert scale item.
 #' @param skew marginal skewness of the latent variable, defaults to 0.
 #' @param eps tolerance for convergence, defaults to 1e-6.
@@ -90,6 +90,11 @@ estimate_params <- function(data, n_levels, skew = 0) {
 #'
 #' @return A numeric vector with two elements: the estimated mean and
 #' standard deviation.
+#' 
+#' @examples
+#' prob <- c("1" = 0.313, "2" = 0.579, "3" = 0.105, "4" = 0.003)
+#' # returns estimates that are close to the actual mean and sd: c(-1, 0.5)
+#' estimate_mean_and_sd(prob, 5)
 #'
 #' @details
 #' This function uses an iterative algorithm to solve the system of non-linear
