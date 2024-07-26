@@ -66,7 +66,7 @@ discrete probabilities of its observed Likert scale responses.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>prob</dt>
-<dd><p>vector of probabilities for each response category.</p></dd>
+<dd><p>named vector of probabilities for each response category.</p></dd>
 
 
 <dt>n_levels</dt>
@@ -101,6 +101,15 @@ responses. The algorithm ensures stability by reparameterizing the system
 and applying constraints to prevent stepping into invalid regions.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1"</span> <span class="op">=</span> <span class="fl">0.313</span>, <span class="st">"2"</span> <span class="op">=</span> <span class="fl">0.579</span>, <span class="st">"3"</span> <span class="op">=</span> <span class="fl">0.105</span>, <span class="st">"4"</span> <span class="op">=</span> <span class="fl">0.003</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># returns estimates that are close to the actual mean and sd: c(-1, 0.5)</span></span></span>
+<span class="r-in"><span><span class="fu">estimate_mean_and_sd</span><span class="op">(</span><span class="va">prob</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.0025695  0.5004155</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
