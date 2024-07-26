@@ -1,7 +1,7 @@
 Type: Package
 Package: latent2likert
 Title: Converting Latent Variables into Likert Scale Responses
-Version: 1.2.1
+Version: 1.2.2
 Authors@R: 
     person("Marko", "Lalovic", , "marko@lalovic.io", role = c("aut", "cre"))
 Description: Effectively simulates the discretization process inherent to
@@ -11,17 +11,17 @@ Description: Effectively simulates the discretization process inherent to
     survey data that use Likert scales, especially when applying
     statistical techniques that require metric data.
 License: MIT + file LICENSE
-URL: https://lalovic.io/latent2likert/
+URL: https://latent2likert.lalovic.io/
 BugReports: https://github.com/markolalovic/latent2likert/issues/
 Depends: 
     R (>= 3.5)
 Imports: 
     graphics,
     mvtnorm,
-    sn,
     stats,
     utils
 Suggests: 
+    sn,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

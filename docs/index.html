@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">latent2likert</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,9 +89,12 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the latest version from CRAN:</p>
+<p>You can install the released version from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"latent2likert"</span><span class="op">)</span></span></code></pre></div>
+<p>Or the latest development version from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"markolalovic/latent2likert"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
@@ -120,12 +123,12 @@
 </h2>
 <p>You can use the <code>rlikert</code> function to simulate Likert item responses.</p>
 <p>To generate a sample of random responses to one item on a 5-point Likert scale, use:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lalovic.io/latent2likert/" class="external-link">latent2likert</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, n_items <span class="op">=</span> <span class="fl">1</span>, n_levels <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 2 5 2 2 3 2 4 4 3 3</span></span></code></pre></div>
-<p>To generate responses to multiple items with specified parameters:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://latent2likert.lalovic.io/" class="external-link">latent2likert</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, n_items <span class="op">=</span> <span class="fl">1</span>, n_levels <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 4 4 2 3 5 2 4 2 3 3</span></span></code></pre></div>
+<p>To generate responses to multiple items with specified parameters:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/rlikert.html">rlikert</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>        n_items <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>        n_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>,</span>
@@ -133,18 +136,18 @@
 <span>        sd   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>        corr <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       Y1 Y2 Y3</span></span>
-<span><span class="co">#&gt;  [1,]  3  4  3</span></span>
-<span><span class="co">#&gt;  [2,]  1  2  1</span></span>
-<span><span class="co">#&gt;  [3,]  3  1  3</span></span>
-<span><span class="co">#&gt;  [4,]  2  1  3</span></span>
-<span><span class="co">#&gt;  [5,]  2  1  4</span></span>
-<span><span class="co">#&gt;  [6,]  2  2  5</span></span>
-<span><span class="co">#&gt;  [7,]  3  2  5</span></span>
-<span><span class="co">#&gt;  [8,]  1  1  2</span></span>
-<span><span class="co">#&gt;  [9,]  3  2  3</span></span>
-<span><span class="co">#&gt; [10,]  2  2  3</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1,]  3  2  4</span></span>
+<span><span class="co">#&gt;  [2,]  2  1  1</span></span>
+<span><span class="co">#&gt;  [3,]  2  1  2</span></span>
+<span><span class="co">#&gt;  [4,]  3  2  4</span></span>
+<span><span class="co">#&gt;  [5,]  2  2  4</span></span>
+<span><span class="co">#&gt;  [6,]  2  3  5</span></span>
+<span><span class="co">#&gt;  [7,]  3  1  2</span></span>
+<span><span class="co">#&gt;  [8,]  2  2  3</span></span>
+<span><span class="co">#&gt;  [9,]  2  3  5</span></span>
+<span><span class="co">#&gt; [10,]  3  2  5</span></span></code></pre></div>
 <p>You can also provide a correlation matrix:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.00</span>, <span class="op">-</span><span class="fl">0.63</span>, <span class="op">-</span><span class="fl">0.39</span>, </span>
 <span>                 <span class="op">-</span><span class="fl">0.63</span>, <span class="fl">1.00</span>, <span class="fl">0.41</span>, </span>
 <span>                 <span class="op">-</span><span class="fl">0.39</span>, <span class="fl">0.41</span>, <span class="fl">1.00</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
@@ -155,30 +158,30 @@
 <span>                sd   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                corr <span class="op">=</span> <span class="va">corr</span><span class="op">)</span></span></code></pre></div>
 <p>Note that the correlations among the Likert response variables are only estimates of the actual correlations between the latent variables, and these estimates are typically lower:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            Y1         Y2         Y3</span></span>
-<span><span class="co">#&gt; Y1  1.0000000 -0.5384098 -0.3715239</span></span>
-<span><span class="co">#&gt; Y2 -0.5384098  1.0000000  0.4012943</span></span>
-<span><span class="co">#&gt; Y3 -0.3715239  0.4012943  1.0000000</span></span></code></pre></div>
+<span><span class="co">#&gt; Y1  1.0000000 -0.5223151 -0.3449648</span></span>
+<span><span class="co">#&gt; Y2 -0.5223151  1.0000000  0.3398699</span></span>
+<span><span class="co">#&gt; Y3 -0.3449648  0.3398699  1.0000000</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-estimate_params">Using <code>estimate_params</code>
 <a class="anchor" aria-label="anchor" href="#using-estimate_params"></a>
 </h2>
 <p>Given the data, you can estimate the values of latent parameters using:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/estimate_params.html">estimate_params</a></span><span class="op">(</span><span class="va">data</span>, n_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>, skew <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          items</span></span>
-<span><span class="co">#&gt; estimates          Y1          Y2          Y3</span></span>
-<span><span class="co">#&gt;      mean -0.06292803 -0.98863044  0.10704210</span></span>
-<span><span class="co">#&gt;      sd    0.81566374  1.08402520  0.95083534</span></span></code></pre></div>
+<span><span class="co">#&gt; estimates           Y1           Y2           Y3</span></span>
+<span><span class="co">#&gt;      mean  0.006261483 -0.952847125 -0.011843866</span></span>
+<span><span class="co">#&gt;      sd    0.745185144  1.012219189  0.954714824</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="transformation">Transformation<a class="anchor" aria-label="anchor" href="#transformation"></a>
 </h2>
 <p>To visualize the transformation, you can use <code><a href="reference/plot_likert_transform.html">plot_likert_transform()</a></code>. It plots the densities of latent variables in the first row and transformed discrete probability distributions below:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_likert_transform.html">plot_likert_transform</a></span><span class="op">(</span>n_items <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                      n_levels <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>                      mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,  <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, </span>

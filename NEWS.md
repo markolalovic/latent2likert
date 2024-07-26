@@ -28,3 +28,9 @@
 - Modularized core functions for improved readability.
 - Improved the structure and organization of the codebase.
 - Enhanced error handling for various correlation input scenarios.
+
+## Version 1.2.2
+- Release date: 2024-07-26
+- Exported previously internal function `estimate_mean_and_sd` based on user feedback, now available for direct use.
+- Moved the package `sn` to Suggests.
+- Fixed vignette building errors.

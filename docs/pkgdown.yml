@@ -1,9 +1,9 @@
-pandoc: '3.2'
+pandoc: 3.2.1
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   using_latent2likert: using_latent2likert.html
-last_built: 2024-07-05T11:57Z
+last_built: 2024-07-26T10:20Z
 urls:
   reference: https://markolalovic.github.io/latent2likert/reference
   article: https://markolalovic.github.io/latent2likert/articles

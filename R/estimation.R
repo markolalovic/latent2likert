@@ -98,7 +98,7 @@ estimate_params <- function(data, n_levels, skew = 0) {
 #' responses. The algorithm ensures stability by reparameterizing the system
 #' and applying constraints to prevent stepping into invalid regions.
 #'
-#' @noRd
+#' @export
 estimate_mean_and_sd <- function(prob, n_levels, skew = 0,
                                  eps = 1e-6, maxit = 100) {
   prob <- as.vector(pad_levels(prob, n_levels))

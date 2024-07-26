@@ -28,10 +28,15 @@ The **latent2likert** package is designed to effectively simulate the discretiza
 
 ## Installation
 
-You can install the latest version from CRAN:
+You can install the released version from CRAN:
 
 ```{r, eval = FALSE}
 install.packages("latent2likert")
+```
+
+Or the latest development version from GitHub:
+``` r
+devtools::install_github("markolalovic/latent2likert")
 ```
 
 ## Dependencies

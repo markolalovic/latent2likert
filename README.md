@@ -23,10 +23,16 @@ metric data.
 
 ## Installation
 
-You can install the latest version from CRAN:
+You can install the released version from CRAN:
 
 ``` r
 install.packages("latent2likert")
+```
+
+Or the latest development version from GitHub:
+
+``` r
+devtools::install_github("markolalovic/latent2likert")
 ```
 
 ## Dependencies
@@ -51,10 +57,13 @@ install this dependency during interactive sessions if needed.
 ## Structure
 
 <figure>
+
 <img src="man/figures/overview-min.png" width="80%" alt="Overview of inputs and outputs"/>
 <figcaption>
+
 <em>Overview of inputs and outputs.</em>
 </figcaption>
+
 </figure>
 
 ## Using `rlikert`
@@ -67,7 +76,7 @@ scale, use:
 ``` r
 library(latent2likert)
 rlikert(size = 10, n_items = 1, n_levels = 5)
-#>  [1] 2 5 2 2 3 2 4 4 3 3
+#>  [1] 4 4 2 3 5 2 4 2 3 3
 ```
 
 To generate responses to multiple items with specified parameters:
@@ -80,16 +89,16 @@ rlikert(size = 10,
         sd   = c(0.8, 1, 1),
         corr = 0.5)
 #>       Y1 Y2 Y3
-#>  [1,]  3  4  3
-#>  [2,]  1  2  1
-#>  [3,]  3  1  3
-#>  [4,]  2  1  3
-#>  [5,]  2  1  4
-#>  [6,]  2  2  5
-#>  [7,]  3  2  5
-#>  [8,]  1  1  2
-#>  [9,]  3  2  3
-#> [10,]  2  2  3
+#>  [1,]  3  2  4
+#>  [2,]  2  1  1
+#>  [3,]  2  1  2
+#>  [4,]  3  2  4
+#>  [5,]  2  2  4
+#>  [6,]  2  3  5
+#>  [7,]  3  1  2
+#>  [8,]  2  2  3
+#>  [9,]  2  3  5
+#> [10,]  3  2  5
 ```
 
 You can also provide a correlation matrix:
@@ -113,9 +122,9 @@ these estimates are typically lower:
 ``` r
 cor(data)
 #>            Y1         Y2         Y3
-#> Y1  1.0000000 -0.5384098 -0.3715239
-#> Y2 -0.5384098  1.0000000  0.4012943
-#> Y3 -0.3715239  0.4012943  1.0000000
+#> Y1  1.0000000 -0.5223151 -0.3449648
+#> Y2 -0.5223151  1.0000000  0.3398699
+#> Y3 -0.3449648  0.3398699  1.0000000
 ```
 
 ## Using `estimate_params`
@@ -125,9 +134,9 @@ Given the data, you can estimate the values of latent parameters using:
 ``` r
 estimate_params(data, n_levels = c(4, 5, 6), skew = 0)
 #>          items
-#> estimates          Y1          Y2          Y3
-#>      mean -0.06292803 -0.98863044  0.10704210
-#>      sd    0.81566374  1.08402520  0.95083534
+#> estimates           Y1           Y2           Y3
+#>      mean  0.006261483 -0.952847125 -0.011843866
+#>      sd    0.745185144  1.012219189  0.954714824
 ```
 
 ## Transformation
@@ -145,11 +154,14 @@ plot_likert_transform(n_items = 3,
 ```
 
 <figure>
+
 <img src="man/figures/transformation-min.png" width="80%" alt="Transformation of latent variables to Likert response variables"/>
 <figcaption>
+
 <em>Transformation of latent variables to Likert response
 variables.</em>
 </figcaption>
+
 </figure>
 
 <br>
