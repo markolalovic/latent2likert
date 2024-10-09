@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/markolalovic/latent2likert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/markolalovic/latent2likert/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/markolalovic/latent2likert/branch/main/graph/badge.svg?token=HZTG6RUB2J)](https://app.codecov.io/gh/markolalovic/latent2likert)
 [![CRAN status](https://www.r-pkg.org/badges/version/latent2likert)](https://CRAN.R-project.org/package=latent2likert)
+[![downloads](https://cranlogs.r-pkg.org/badges/latent2likert)](https://cranlogs.r-pkg.org/badges/latent2likert)
 <!-- badges: end -->
 
 ## Overview

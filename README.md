@@ -9,6 +9,7 @@
 [![codecov](https://codecov.io/gh/markolalovic/latent2likert/branch/main/graph/badge.svg?token=HZTG6RUB2J)](https://app.codecov.io/gh/markolalovic/latent2likert)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/latent2likert)](https://CRAN.R-project.org/package=latent2likert)
+[![downloads](https://cranlogs.r-pkg.org/badges/latent2likert)](https://cranlogs.r-pkg.org/badges/latent2likert)
 <!-- badges: end -->
 
 ## Overview
@@ -76,7 +77,7 @@ scale, use:
 ``` r
 library(latent2likert)
 rlikert(size = 10, n_items = 1, n_levels = 5)
-#>  [1] 4 4 2 3 5 2 4 2 3 3
+#>  [1] 1 3 3 3 2 4 1 3 3 1
 ```
 
 To generate responses to multiple items with specified parameters:
@@ -89,16 +90,16 @@ rlikert(size = 10,
         sd   = c(0.8, 1, 1),
         corr = 0.5)
 #>       Y1 Y2 Y3
-#>  [1,]  3  2  4
-#>  [2,]  2  1  1
-#>  [3,]  2  1  2
-#>  [4,]  3  2  4
-#>  [5,]  2  2  4
-#>  [6,]  2  3  5
-#>  [7,]  3  1  2
-#>  [8,]  2  2  3
-#>  [9,]  2  3  5
-#> [10,]  3  2  5
+#>  [1,]  2  1  3
+#>  [2,]  2  2  2
+#>  [3,]  4  3  2
+#>  [4,]  3  3  4
+#>  [5,]  4  5  6
+#>  [6,]  2  1  4
+#>  [7,]  1  2  3
+#>  [8,]  3  1  6
+#>  [9,]  3  3  4
+#> [10,]  3  2  6
 ```
 
 You can also provide a correlation matrix:
@@ -122,9 +123,9 @@ these estimates are typically lower:
 ``` r
 cor(data)
 #>            Y1         Y2         Y3
-#> Y1  1.0000000 -0.5223151 -0.3449648
-#> Y2 -0.5223151  1.0000000  0.3398699
-#> Y3 -0.3449648  0.3398699  1.0000000
+#> Y1  1.0000000 -0.5774145 -0.3838274
+#> Y2 -0.5774145  1.0000000  0.3856997
+#> Y3 -0.3838274  0.3856997  1.0000000
 ```
 
 ## Using `estimate_params`
@@ -134,9 +135,9 @@ Given the data, you can estimate the values of latent parameters using:
 ``` r
 estimate_params(data, n_levels = c(4, 5, 6), skew = 0)
 #>          items
-#> estimates           Y1           Y2           Y3
-#>      mean  0.006261483 -0.952847125 -0.011843866
-#>      sd    0.745185144  1.012219189  0.954714824
+#> estimates            Y1            Y2            Y3
+#>      mean -0.0526979746 -0.9696916596 -0.0009229545
+#>      sd    0.8163184862  1.0533629380  1.0381389630
 ```
 
 ## Transformation
